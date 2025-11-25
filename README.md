@@ -1,59 +1,134 @@
-# MenteActivaFrontend
+# 🧠 MenteActiva Frontend
+[![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular)]() [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)]() [![Material UI](https://img.shields.io/badge/Angular_Material-Design-orange?logo=angular)]() [![Vite](https://img.shields.io/badge/Vite-Bundler-646CFF?logo=vite)]() [![Status](https://img.shields.io/badge/Status-Stable-brightgreen)]()
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.9.
+---
 
-## Development server
+# 🧠✨ MenteActiva — Frontend
+Interfaz web moderna, segura y responsiva para la plataforma AcompañaT.
 
-To start a local development server, run:
+---
+
+## 🎨 Banner
+
+```
+  __  __            _            _        _   _            
+ |  \/  | ___ _ __ | |_ ___     / \   ___| |_(_)_   ____ _ 
+ | |\/| |/ _ \ '_ \| __/ _ \   / _ \ / __| __| \ \ / / _` |
+ | |  | |  __/ | | | ||  __/  / ___ \ (__| |_| |\ V / (_| |
+ |_|  |_|\___|_| |_|\__\___| /_/   \_\___|\__|_| \_/ \__,_|
+
+                     ✨  F R O N T E N D   M E N T E A C T I V A  ✨
+```
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+| Tecnología | Uso |
+|-----------|-----|
+| **Angular 20** | Framework principal |
+| **TypeScript** | Lenguaje |
+| **Angular Material** | Componentes UI |
+| **Vite** | Bundler |
+| **RxJS** | Estado reactivo |
+| **SCSS** | Estilos |
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+src/
+ ├─ app/
+ │   ├─ components/
+ │   ├─ pages/
+ │   ├─ services/
+ │   ├─ guards/
+ │   ├─ models/
+ │   └─ app.config.ts
+ ├─ assets/
+ ├─ environments/
+ └─ main.ts
+```
+
+---
+
+## 🧩 Características
+
+- Login, registro y manejo de JWT
+- Gestión de citas y usuarios
+- Listado de profesionales
+- Progreso de videos terapéuticos
+- UI responsiva con Angular Material
+- Servicios centralizados y escalables
+
+---
+
+## 🛠️ Ejecutar en modo desarrollo
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abrir en:  
+👉 http://localhost:4200
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## 📦 Build de producción
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Salida generada en:
 
-## Running unit tests
+```
+dist/mente-activa-frontend/
+```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
+## 🧪 Testing
+
+### Unit tests
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### E2E tests
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🔧 Generación de componentes
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+ng generate component nombre
+ng generate service nombre
+```
+
+---
+
+## 🧠 Roadmap 2025
+
+- Dark mode
+- Dashboard profesional
+- Chat en tiempo real
+- Estadísticas visuales
+- Notificaciones push
+
+---
+
+## ❤️ Créditos
+
+Desarrollado por el equipo MenteActiva  
+UPC — 2025
+
+---
+
+## 🧾 Licencia
+
+MIT License.
