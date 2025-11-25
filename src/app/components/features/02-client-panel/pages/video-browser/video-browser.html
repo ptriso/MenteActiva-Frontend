@@ -4,24 +4,34 @@
 <div class="card-grid">
 
   <mat-card class="video-card" *ngFor="let video of videos">
-
-    <div class="video-thumbnail">
-      <i class="fas fa-play"></i>
-    </div>
+    <a class="video-thumbnail"
+       [href]="video.url"
+       target="_blank"
+       rel="noopener noreferrer">
+      <img
+        src="/video-placeholder.png"
+        alt="Vista previa de {{ video.title }}">
+    </a>
 
     <mat-card-header>
       <mat-card-title>{{ video.title }}</mat-card-title>
-      <mat-card-subtitle>Duración: {{ video.duration }}</mat-card-subtitle>
+      <mat-card-subtitle>
+        Duración: {{ getDurationInMinutes(video.duration) }} min
+      </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <p>{{ video.descripcion }}</p>
     </mat-card-content>
-
     <mat-card-actions>
-      <button mat-flat-button color="primary">
+      <!-- Botón que también abre YouTube -->
+      <a mat-flat-button
+         color="primary"
+         [href]="video.url"
+         target="_blank"
+         rel="noopener noreferrer">
         Ver Video
-      </button>
+      </a>
     </mat-card-actions>
   </mat-card>
 
