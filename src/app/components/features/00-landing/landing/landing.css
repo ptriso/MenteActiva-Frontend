@@ -1,0 +1,86 @@
+:host {
+  width: 100%;
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Usamos tu fondo azul claro */
+  background-color: #eaf4ff;
+
+  /* Ocupa toda la altura visible menos el header (si tuvieras uno) */
+  min-height: 90vh;
+  padding: 2rem;
+}
+
+/* Reutilizamos tu estilo de logo-placeholder */
+.logo-placeholder {
+  width: 100px; /* Un poco más grande para el landing */
+  height: 100px;
+  background-color: #d1e7ff;
+  border: 3px solid #007BFF;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #007BFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+}
+
+.button-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* --- Reutilizamos TUS estilos de botones --- */
+
+.btn {
+  min-width: 180px; /* Ancho mínimo para los botones */
+  padding: 0.9rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 1.5 !important;
+}
+
+/* Tu botón verde */
+.btn-green {
+  background-color: #28a745 !important;
+  color: #FFFFFF !important;
+}
+.btn-green:hover {
+  background-color: #218838 !important;
+}
+
+/* Tu botón morado */
+.btn-purple {
+  background-color: #6f42c1 !important;
+  color: #FFFFFF !important;
+}
+.btn-purple:hover {
+  background-color: #5a32a3 !important;
+}

@@ -1,0 +1,44 @@
+<mat-sidenav-container class="dashboard-container">
+
+  <mat-sidenav mode="side" opened class="sidebar admin-sidebar">
+
+    <div class="sidebar-logo">
+      <img src="/mente-activa.png" alt="Mente Activa Logo" class="nav-logo">
+      <h2>Admin Panel</h2>
+    </div>
+
+    <mat-nav-list class="sidebar-nav">
+      <a mat-list-item
+         routerLink="usuarios"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-users-cog"></i>
+        <span>Gestión de Usuarios</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="sidebar-footer">
+      <a mat-list-item (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+
+    <mat-toolbar class="header admin-header">
+      <span class="spacer"></span>
+      <div class="profile-menu">
+        <span>Administrador</span>
+        <div class="profile-pic"></div>
+      </div>
+    </mat-toolbar>
+
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

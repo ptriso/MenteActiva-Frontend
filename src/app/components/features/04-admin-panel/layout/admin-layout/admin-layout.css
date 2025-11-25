@@ -1,0 +1,94 @@
+/* --- Estructura del Dashboard --- */
+mat-sidenav-container.dashboard-container {
+  height: 100vh;
+  background-color: #f8f9fa; /* Fondo gris claro */
+}
+
+/* --- 1. Barra Lateral (Sidebar) --- */
+mat-sidenav.sidebar {
+  background-color: #ffffff;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 250px;
+  border-right: none !important;
+}
+
+/* Tema de Admin (logo rojo) */
+.admin-sidebar .sidebar-logo .logo-placeholder {
+  background-color: #fde0e0;
+  border-color: #dc3545;
+  color: #dc3545;
+}
+.admin-sidebar .sidebar-logo h2 {
+  color: #343a40;
+}
+
+/* Tema de Admin (links rojos) */
+.admin-sidebar .sidebar-nav a.mat-list-item:hover,
+.admin-sidebar .sidebar-nav a.mat-list-item.active {
+  background-color: #fdf0f0;
+  color: #dc3545;
+}
+
+.sidebar-logo {
+  display: flex; align-items: center;
+  gap: 10px; margin-bottom: 3rem;
+}
+.logo-placeholder {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-family: 'Poppins', sans-serif;
+  flex-shrink: 0;
+}
+.sidebar-logo h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+}
+
+.sidebar-nav a.mat-list-item {
+  display: flex !important; align-items: center !important;
+  gap: 15px; padding-left: 1rem !important;
+  border-radius: 8px; color: #555;
+  font-weight: 500; margin-bottom: 0.5rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+.sidebar-nav a.mat-list-item .mat-list-item-content {
+  padding: 0 !important;
+}
+.sidebar-nav a.mat-list-item i {
+  width: 20px; text-align: center;
+  margin-right: 15px;
+}
+.sidebar-footer { margin-top: auto; }
+.sidebar-footer a.mat-list-item { cursor: pointer; color: #555; }
+
+/* --- Contenido Principal --- */
+mat-sidenav-content.main-content {
+  flex-grow: 1; display: flex; flex-direction: column;
+}
+
+/* --- Cabecera Superior (Header) --- */
+mat-toolbar.header {
+  display: flex; justify-content: flex-end; align-items: center;
+  padding: 1.5rem 2rem; background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.spacer { flex: 1 1 auto; }
+
+.profile-menu {
+  display: flex; align-items: center;
+  gap: 15px; cursor: pointer;
+}
+.profile-menu span { font-weight: 600; }
+
+.profile-pic {
+  width: 40px; height: 40px; border-radius: 50%;
+  background-image: url('https://placehold.co/40x40/dc3545/ffffff?text=A');
+}
+
+main.content-area {
+  padding: 2rem; flex-grow: 1;
+  overflow-y: auto;
+}

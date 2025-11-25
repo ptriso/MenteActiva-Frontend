@@ -1,0 +1,58 @@
+<div class="schedule-picker-container">
+  <button mat-button class="btn-volver" routerLink="/cliente/profesionales">
+    <i class="fas fa-arrow-left"></i> Volver a Profesionales
+  </button>
+
+  <div class="header">
+    <h1 class="title">
+      Horarios para:
+      <span class="professional-name">{{ professionalName }}</span>
+    </h1>
+
+    <div class="week-nav">
+      <button mat-icon-button (click)="changeWeek('prev')" aria-label="Semana anterior">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <span class="week-label">
+        Semana del {{ weekDays[0] | date: 'dd/MM' }} al {{ weekDays[4] | date: 'dd/MM' }}
+      </span>
+
+      <button mat-icon-button (click)="changeWeek('next')" aria-label="Semana siguiente">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="schedule-table-container mat-elevation-z2">
+    <table>
+      <thead>
+      <tr>
+        <th>Hora</th>
+        <th *ngFor="let day of weekDays">
+          {{ formatDayOfWeek(day) }} <br />
+          {{ formatFullDate(day) }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let time of timeSlots">
+        <td>{{ time }}</td>
+        <td
+          *ngFor="let day of weekDays"
+          [ngClass]="getSlotClass(scheduleGrid[time][format(day, 'yyyy-MM-dd')])"
+          (click)="agendarCita(scheduleGrid[time][format(day, 'yyyy-MM-dd')])"
+        >
+          <ng-container *ngIf="scheduleGrid[time][format(day, 'yyyy-MM-dd')] as schedule">
+            {{ schedule.isOccupied ? 'Ocupado' : 'Disponible' }}
+          </ng-container>
+
+          <ng-container *ngIf="!scheduleGrid[time][format(day, 'yyyy-MM-dd')]">
+            No Disp.
+          </ng-container>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

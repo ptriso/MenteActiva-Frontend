@@ -1,0 +1,122 @@
+/*
+  :host es un selector que apunta a este componente (app-register).
+  Lo usamos para centrar la tarjeta en la pantalla.
+*/
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 90vh;
+  padding: 40px 0; /* Añadimos padding por si el form es muy largo */
+}
+
+/* --- Tus Estilos (Copiados de tu archivo) --- */
+
+.card-container {
+  background-color: #FFFFFF;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 800px; /* Más ancho para el formulario de 2 columnas */
+  text-align: center;
+}
+
+.logo-placeholder {
+  width: 80px;
+  height: 80px;
+  background-color: #d1e7ff;
+  border: 2px solid #007BFF;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #007BFF;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* --- Estilos del Formulario (Combinados) --- */
+
+/* Grid de 2 columnas para el formulario */
+.form-group-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  gap: 0 20px; /* Espacio entre columnas */
+}
+
+/* Estilo para los campos de Material */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .form-group-grid {
+    grid-template-columns: 1fr; /* Una columna */
+    gap: 0;
+  }
+  .card-container {
+    padding: 1.5rem;
+  }
+}
+
+/* Tu lógica de autorización, pero controlada por *ngIf */
+.constancia-container {
+  background-color: #fff8e1; /* Amarillo pálido */
+  border: 1px solid #ffecb3;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.constancia-container label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Tus Estilos de Botón (Adaptados para Material) --- */
+
+/* Clase base .btn para AMBOS botones */
+.btn {
+  width: 100%;
+  padding: 0.9rem 0 !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  margin-top: 0.5rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Tu botón morado para [mat-flat-button] */
+.btn-purple {
+  background-color: #6f42c1 !important;
+  color: #FFFFFF !important;
+}
+.btn-purple:hover {
+  background-color: #5a32a3 !important;
+}
+
+/* Un botón "bordeado" verde (para volver) */
+.btn-green-stroked {
+  background-color: transparent !important;
+  color: #28a745 !important;
+  border: 2px solid #28a745 !important;
+}
+.btn-green-stroked:hover {
+  background-color: #eafaf1 !important;
+}

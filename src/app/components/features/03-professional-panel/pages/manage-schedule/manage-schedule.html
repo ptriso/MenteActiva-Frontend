@@ -1,0 +1,82 @@
+<h1>Gestionar Mi Horario</h1>
+
+<div class="content-section schedule-management" [formGroup]="scheduleForm">
+  <h2>Define tu disponibilidad semanal</h2>
+
+  <div class="day-schedule" formGroupName="lunes">
+    <span class="day-label">Lunes</span>
+    <div class="time-range">
+      <mat-form-field appearance="outline">
+        <mat-label>Inicio</mat-label>
+        <mat-select formControlName="inicio">
+          <mat-option *ngFor="let hora of horas" [value]="hora">
+            {{ hora | date: 'h:mm a' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span>a</span>
+      <mat-form-field appearance="outline">
+        <mat-label>Fin</mat-label>
+        <mat-select formControlName="fin">
+          <mat-option *ngFor="let hora of horas" [value]="hora">
+            {{ hora | date: 'h:mm a' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-slide-toggle formControlName="activo"></mat-slide-toggle>
+  </div>
+
+  <div class="day-schedule" formGroupName="martes">
+    <span class="day-label">Martes</span>
+    <div class="time-range">
+      <mat-form-field appearance="outline">
+        <mat-label>Inicio</mat-label>
+        <mat-select formControlName="inicio">
+          <mat-option *ngFor="let hora of horas" [value]="hora">
+            {{ hora | date: 'h:mm a' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span>a</span>
+      <mat-form-field appearance="outline">
+        <mat-label>Fin</mat-label>
+        <mat-select formControlName="fin">
+          <mat-option *ngFor="let hora of horas" [value]="hora">
+            {{ hora | date: 'h:mm a' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-slide-toggle formControlName="activo"></mat-slide-toggle>
+  </div>
+
+  <div class="save-button-container">
+    <button mat-flat-button class="btn btn-purple" (click)="GuardarCambios()">
+      Guardar Cambios
+    </button>
+  </div>
+</div>
+
+<div class="content-section weekly-calendar-view">
+  <h2>Vista Semanal del Horario</h2>
+
+  <div class="calendar-controls">
+    <div class="nav-buttons"><button mat-icon-button>&lt;</button></div>
+    <h3>Semana del 20 al 26 de Octubre</h3>
+    <div class="nav-buttons"><button mat-icon-button>&gt;</button></div>
+  </div>
+
+  <table class="calendar-grid">
+    <thead>
+    <tr>
+      <th class="time-header">Hora</th>
+      <th>Lunes 20</th> <th>Martes 21</th> <th>Miércoles 22</th>
+      <th>Jueves 23</th> <th>Viernes 24</th> <th>Sábado 25</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><th class="time-header">03:00 PM</th> <td class="time-slot slot-available-pro">Disponible</td> <td class="time-slot slot-booked">Ocupado</td> <td class="time-slot slot-available-pro">Disponible</td> <td class="time-slot slot-unavailable">No Disp.</td> <td class="time-slot slot-available-pro">Disponible</td> <td class="time-slot slot-unavailable">No Disp.</td></tr>
+    </tbody>
+  </table>
+</div>

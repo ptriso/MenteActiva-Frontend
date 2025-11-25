@@ -1,0 +1,59 @@
+<h1>Mis Videos</h1>
+
+<div class="controls-bar">
+  <mat-form-field class="search-bar" appearance="outline">
+    <mat-label>Buscar video por título...</mat-label>
+    <i matPrefix class="fas fa-search"></i>
+    <input matInput [formControl]="searchControl">
+  </mat-form-field>
+
+  <div class="action-buttons">
+    <button mat-flat-button class="btn btn-blue" (click)="toggleMasVistos()">
+      <i [class]="mostrarMasVistos ? 'fas fa-eye-slash' : 'fas fa-star'"></i>
+      {{ mostrarMasVistos ? 'Ocultar Más Vistos' : 'Ver Más Vistos' }}
+    </button>
+    <button mat-flat-button class="btn btn-purple" routerLink="nuevo">
+      <i class="fas fa-plus"></i> Agregar Video
+    </button>
+  </div>
+</div>
+
+<div class="most-viewed-section" *ngIf="mostrarMasVistos">
+  <h2>Videos Más Vistos</h2>
+  <div class="video-grid">
+    <div class="video-card-small" *ngFor="let video of videosMasVistos">
+      <div class="thumbnail"></div>
+      <div class="title">{{ video.title }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="video-list-section">
+  <h2>Todos mis Videos ({{ videosFiltrados.length }})</h2>
+
+  <div id="video-list-container">
+
+    <div class="video-item" *ngFor="let video of videosFiltrados">
+      <div class="video-thumbnail"></div>
+      <div class="video-details">
+        <h3>{{ video.title }}</h3>
+        <p>{{ video.descripcion }}</p>
+        <div class="video-stats">
+          <span><i class="fas fa-eye"></i> 0 vistas</span> <span><i class="fas fa-clock"></i> {{ video.duration }}</span>
+        </div>
+      </div>
+      <div class="video-actions">
+        <button mat-stroked-button class="btn-edit-outline btn-small" [routerLink]="['editar', video.id]">
+          <i class="fas fa-edit"></i> Editar
+        </button>
+        <button mat-stroked-button class="btn-danger-outline btn-small" (click)="borrarVideo(video.id)">
+          <i class="fas fa-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" *ngIf="videosFiltrados.length === 0">
+    No se encontraron videos que coincidan con tu búsqueda.
+  </div>
+</div>

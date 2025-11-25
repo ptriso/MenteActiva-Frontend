@@ -1,0 +1,45 @@
+<div class="card-container">
+
+  <img src="/mente-activa.png" alt="Mente Activa Logo" class="login-logo">
+  <h1>Iniciar Sesión</h1>
+
+  <form [formGroup]="loginForm" (ngSubmit)="Ingresar()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput
+             formControlName="username"
+             placeholder="tu.correo@ejemplo.com">
+      <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+        El correo es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput
+             formControlName="password"
+             type="password"
+             placeholder="Tu contraseña">
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        La contraseña es requerida
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-flat-button
+            class="btn btn-green"
+            (click)="Ingresar()"
+            [disabled]="loginForm.invalid">
+      Iniciar sesión
+    </button>
+
+    <button mat-stroked-button
+            class="btn btn-purple"
+            type="button"> Crear Cuenta
+    </button>
+  </form>
+
+  <div class="links-container">
+    <a>¿Olvidaste tu contraseña?</a> </div>
+
+</div>

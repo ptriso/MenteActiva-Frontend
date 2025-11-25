@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+html { scroll-behavior: smooth; }
+html, body { height: 100%; }
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body, html, p, span, div, a, input, textarea, select, button {
+  font-family: 'Montserrat', sans-serif !important;
+}
+body, html, mat-sidenav-container, mat-sidenav-content,
+.mat-typography, .mat-mdc-typography {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+/* 2. Fuente especial para los títulos */
+h1, h2, h3, h4, h5, h6,
+.mat-card-title, /* Títulos de tarjetas de Material */
+.mat-dialog-title { /* Títulos de diálogos */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; /* Peso de letra más grueso */
+}
+button, a,
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-flat-button,
+.mdc-button__label {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 500 !important;
+}
+.mat-mdc-list-item,
+.mat-mdc-list-item-title,
+.mat-mdc-list-item-content {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px;
+}
+/* 3. Asegura que los botones usen la fuente correcta */
+button, .mat-button, .mat-flat-button {
+  font-family: 'Poppins', sans-serif !important; /* !important para forzar el estilo */
+  font-weight: 600 !important;
+}
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-flat-button {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+}
+/* 4. Asegura que los campos de formulario usen la fuente correcta */
+.mat-mdc-form-field-infix {
+  font-family: 'Montserrat', sans-serif !important;
+}
+.mat-mdc-card-title {
+  font-family: 'Poppins', sans-serif !important;
+}
+.mat-mdc-card-content {
+  font-family: 'Montserrat', sans-serif !important;
+}
+input, textarea, select,
+.mat-mdc-form-field, .mat-mdc-input-element {
+  font-family: 'Montserrat', sans-serif !important;
+}
+.mat-mdc-list-item, .mat-mdc-list-item-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+}

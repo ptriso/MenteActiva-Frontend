@@ -1,0 +1,86 @@
+.appointments-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 32px 40px;
+  background-color: #f5fbff;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #1f2933;
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  color: #6b778c;
+  font-size: 14px;
+}
+
+.section {
+  margin-top: 32px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #374151;
+}
+
+/* Tabla */
+.appointments-table {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.appointments-table th.mat-header-cell {
+  background-color: #6d28d9; /* morado como horarios */
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.appointments-table td.mat-cell {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* filas */
+.appointments-table tr.mat-row:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.appointments-table tr.mat-row:hover {
+  background-color: #eef2ff;
+}
+
+/* botón cancelar */
+.appointments-table button[mat-button] {
+  font-size: 13px;
+  text-transform: none;
+  font-weight: 500;
+  padding: 0;
+}
+
+/* estado vacío */
+.empty-state {
+  margin-top: 32px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background-color: #e5f2ff;
+  color: #2b4c7e;
+  font-size: 14px;
+}
+
+/* progress bar */
+mat-progress-bar {
+  margin-bottom: 16px;
+  border-radius: 999px;
+  overflow: hidden;
+}

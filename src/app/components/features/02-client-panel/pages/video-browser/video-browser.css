@@ -1,0 +1,46 @@
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem; /* Menos espacio */
+}
+
+.subtitulo {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Reutilizamos el grid del dashboard --- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- Estilo para la tarjeta de video --- */
+.video-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.video-thumbnail {
+  height: 180px;
+  background-color: #d1e7ff; /* Tu color azul */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #007BFF;
+  font-size: 3rem;
+}
+
+mat-card-header {
+  padding-top: 16px;
+}
+
+mat-card-actions {
+  padding: 0 16px 16px;
+}

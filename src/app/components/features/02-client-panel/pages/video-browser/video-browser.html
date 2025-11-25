@@ -1,0 +1,32 @@
+<h1>Explorar Videos</h1>
+<p class="subtitulo">Aprende técnicas de bienestar de nuestros profesionales.</p>
+
+<div class="card-grid">
+
+  <mat-card class="video-card" *ngFor="let video of videos">
+
+    <div class="video-thumbnail">
+      <i class="fas fa-play"></i>
+    </div>
+
+    <mat-card-header>
+      <mat-card-title>{{ video.title }}</mat-card-title>
+      <mat-card-subtitle>Duración: {{ video.duration }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>{{ video.descripcion }}</p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-flat-button color="primary">
+        Ver Video
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div *ngIf="videos.length === 0">
+    <p>No hay videos disponibles en este momento.</p>
+  </div>
+
+</div>

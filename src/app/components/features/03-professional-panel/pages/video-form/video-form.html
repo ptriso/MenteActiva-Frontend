@@ -1,0 +1,53 @@
+<h1>Mis Videos</h1>
+
+<div class="form-container" [formGroup]="videoForm">
+
+  <h2 *ngIf="videoId === 0">Registrar Nuevo Video</h2>
+  <h2 *ngIf="videoId > 0">Editar Video</h2>
+
+  <form (ngSubmit)="Grabar()">
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Título del Video</mat-label>
+        <input matInput formControlName="title" placeholder="Ej: Técnicas de respiración">
+        <mat-error>El título es requerido</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcion"
+                  placeholder="Describe brevemente el contenido del video..."></textarea>
+        <mat-error>La descripción es requerida</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>URL del Video</mat-label>
+        <input matInput formControlName="url" placeholder="https://youtube.com/...">
+        <mat-hint>Pega aquí el enlace de YouTube, Vimeo, etc.</mat-hint>
+        <mat-error>La URL es requerida</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline" class="duration-input">
+        <mat-label>Duración</mat-label>
+        <input matInput formControlName="duration" type="number" placeholder="Ej: 10" min="1">
+        <span matTextSuffix>minutos</span>
+        <mat-error>La duración es requerida</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <a mat-stroked-button class="btn btn-secondary" routerLink="/profesional/videos">
+        Cancelar
+      </a>
+      <button type="submit" mat-flat-button class="btn btn-purple" [disabled]="videoForm.invalid">
+        Guardar Video
+      </button>
+    </div>
+  </form>
+</div>

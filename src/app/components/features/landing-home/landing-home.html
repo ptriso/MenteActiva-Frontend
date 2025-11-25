@@ -1,0 +1,146 @@
+<div class="landing-container">
+
+  <header class="header">
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/mente-activa.png" alt="Mente Activa Logo" class="nav-logo">
+        <span>Mente Activa</span>
+      </div>
+      <div class="nav-links">
+        <a href="#quienes-somos">¿Quiénes Somos?</a>
+        <a href="#mision-vision">Misión y Visión</a>
+        <a href="#que-ofrecemos">¿Qué Ofrecemos?</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="nav-action">
+        <button mat-flat-button class="btn btn-primary" routerLink="/auth/login">
+          Unete ahora
+        </button>
+      </div>
+    </nav>
+
+    <section class="hero-section" id="quienes-somos">
+      <div class="hero-content">
+        <h1>¿Quiénes Somos?</h1>
+        <p>Mente Activa es una plataforma enfocada en apoyar la salud mental de jóvenes que enfrentan estrés, ansiedad o presión académica.</p>
+        <p>Ofrecemos un espacio seguro con recursos interactivos y acompañamiento profesional. Nuestra meta es mejorar el bienestar emocional de forma accesible y moderna.</p>
+        <button mat-flat-button class="btn btn-secondary">Más información</button>
+      </div>
+      <div class="hero-image">
+        <img src="/personas-conectadas.png" alt="Personas conectadas">
+      </div>
+    </section>
+  </header>
+
+  <section class="mission-section" id="mision-vision">
+    <div class="mission-card">
+      <h3>Misión</h3>
+      <ul>
+        <li>Brindar apoyo emocional accesible a jóvenes mediante herramientas digitales confiables.</li>
+        <li>Ofrecer contenido personalizado, acompañamiento profesional y recursos que fomenten el bienestar.</li>
+        <li>Promover una cultura de autocuidado y crecimiento personal en un entorno seguro.</li>
+      </ul>
+    </div>
+    <div class="mission-card">
+      <h3>Visión</h3>
+      <ul>
+        <li>Convertirnos en la plataforma líder de salud emocional juvenil en Latinoamérica.</li>
+        <li>Ser un referente en innovación, accesibilidad y calidad en apoyo psicológico digital.</li>
+        <li>Construir una comunidad sólida donde los jóvenes encuentren orientación y apoyo constante.</li>
+      </ul>
+    </div>
+    <div class="mission-card">
+      <h3>Valores</h3>
+      <ul>
+        <li><strong>Empatía:</strong> Escuchamos y comprendemos las necesidades emocionales de nuestros usuarios.</li>
+        <li><strong>Confianza:</strong> Creamos un entorno seguro, transparente y protegido.</li>
+        <li><strong>Innovación:</strong> Utilizamos tecnología moderna para mejorar la experiencia y el acompañamiento.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="offer-section" id="que-ofrecemos">
+    <div class="offer-text">
+      <h2>¿Qué Ofrecemos?</h2>
+      <p>No tienes que atravesar este viaje solo. Únete a Mente Activa, una comunidad y solución de software diseñada para jóvenes de 13 a 19 años que enfrentan los desafíos de la ansiedad y la depresión.</p>
+      <p>Estamos aquí para apoyarte en cada paso, ofreciéndote un espacio seguro con acceso a herramientas de Inteligencia Artificial para soporte personalizado, videos interactivos, talleres en vivo, asistencia profesional en tiempo real y una comunidad donde podrás compartir experiencias y encontrar motivación.</p>
+      <p><strong>¡Conéctate y sé parte de algo más grande!</strong></p>
+      <button mat-flat-button class="btn btn-green" routerLink="/auth/register">Únete a la comunidad</button>
+    </div>
+    <div class="offer-image">
+      <img src="/comunidad-conectada.png" alt="Comunidad conectada">
+    </div>
+  </section>
+
+  <section class="team-section" id="equipo">
+    <h2>Conoce al equipo</h2>
+
+    <div class="team-scroller-container">
+      <div class="team-scroll-track">
+        <div class="team-card" *ngFor="let member of teamMembers">
+          <img [src]="member.img" [alt]="member.name">
+          <h3>{{ member.name }}</h3>
+          <p>{{ member.role }}</p>
+        </div>
+        <div class="team-card" *ngFor="let member of teamMembers" aria-hidden="true">
+          <img [src]="member.img" [alt]="member.name">
+          <h3>{{ member.name }}</h3>
+          <p>{{ member.role }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" id="faq">
+    <div class="faq-header">
+      <h2>Preguntas frecuentes</h2>
+      <img src="/icono-cerebro.png" alt="Icono cerebro" class="faq-icon">
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let faq of faqs">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ faq.question }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ faq.answer }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-cta">
+      <div class="search-bar-wrapper">
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <span>www.menteactiva.com.pe</span>
+        </div>
+      </div>
+      <button mat-flat-button class="btn btn-green btn-join" routerLink="/auth/login">
+        Unete ahora
+      </button>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-links">
+        <p>© 2025 Mente Activa. Todos los derechos reservados.</p>
+        <a href="#">[Términos de Servicio]</a>
+        <a href="#">[Política de Privacidad]</a>
+      </div>
+      <div class="footer-social">
+        <p>Nuestras Redes Sociales:</p>
+        <div class="social-icons">
+          <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

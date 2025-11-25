@@ -1,0 +1,60 @@
+<mat-sidenav-container class="dashboard-container">
+
+  <mat-sidenav mode="side" opened class="sidebar">
+
+    <div class="sidebar-logo">
+      <img src="/mente-activa.png" alt="Mente Activa Logo" class="sidebar-img">
+      <h2>Mente Activa</h2>
+    </div>
+    <mat-nav-list class="sidebar-nav">
+
+      <a mat-list-item
+         routerLink="dashboard"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+      </a>
+
+      <a mat-list-item routerLink="videos" routerLinkActive="active">
+        <i class="fas fa-video"></i>
+        <span>Videos</span>
+      </a>
+
+      <a mat-list-item routerLink="profesionales" routerLinkActive="active">
+        <i class="fas fa-user-md"></i>
+        <span>Profesionales</span>
+      </a>
+
+      <a mat-list-item routerLink="progreso" routerLinkActive="active">
+        <i class="fas fa-chart-line"></i>
+        <span>Mi Progreso</span>
+      </a>
+
+      <a mat-list-item routerLink="citas" routerLinkActive="active">
+        <i class="fas fa-calendar-check"></i>
+        <span>Mis Citas</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="sidebar-footer">
+      <a mat-list-item (click)="logout()" style="cursor: pointer;"> <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+
+    <mat-toolbar class="header">
+      <span class="spacer"></span> <div class="profile-menu">
+      <span>Marcelo Rodrigo</span> <div class="profile-pic"></div>
+    </div>
+    </mat-toolbar>
+
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

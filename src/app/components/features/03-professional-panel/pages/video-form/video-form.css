@@ -1,0 +1,65 @@
+h1 { font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 1.5rem; }
+
+/* --- Estilos para el Formulario --- */
+.form-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  padding: 2.5rem;
+  max-width: 700px; /* Ancho máximo */
+  margin: 0 auto; /* Centrar el formulario */
+}
+
+.form-container h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem; margin-bottom: 1.5rem;
+  border-bottom: 2px solid #eee; padding-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Hacemos que mat-form-field ocupe todo el ancho */
+.form-group mat-form-field {
+  width: 100%;
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+/* Ancho fijo para el input de duración */
+.form-group .duration-input {
+  width: 150px;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end; /* Botones a la derecha */
+  gap: 1rem;
+}
+
+/* --- Botones --- */
+.btn {
+  padding: 0.8rem 1.8rem !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 1.5 !important;
+}
+.btn-purple { background-color: #6f42c1; color: white; }
+.btn-purple:hover { background-color: #5a32a3; }
+
+/* Botón gris para Cancelar (stroked) */
+.btn-secondary {
+  background-color: transparent !important;
+  color: #6c757d !important;
+  border: 2px solid #6c757d !important;
+}
+.btn-secondary:hover {
+  background-color: #f8f9fa !important;
+}

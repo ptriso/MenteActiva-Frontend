@@ -1,0 +1,26 @@
+<h1>Nuestros Profesionales</h1>
+<p class="subtitulo">Elige con quién te gustaría agendar una cita.</p>
+
+<div class="card-grid">
+
+  <div class="action-card professional-card" *ngFor="let prof of professionals">
+
+    <div class="profile-pic-large">
+      {{ prof.name.charAt(0) }}
+    </div>
+
+    <h3>{{ prof.name }} {{ prof.lastname }}</h3>
+    <h4>{{ prof.specialization }}</h4>
+
+    <p class="description">{{ prof.description }}</p>
+
+    <a routerLink="../agendar/{{prof.id}}" class="btn btn-purple">
+      Ver Horarios
+    </a>
+  </div>
+
+  <div *ngIf="professionals.length === 0">
+    <p>No hay profesionales disponibles en este momento.</p>
+  </div>
+
+</div>

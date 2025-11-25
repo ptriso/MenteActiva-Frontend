@@ -1,0 +1,101 @@
+.progress-container {
+  font-family: 'Poppins', sans-serif;
+  padding: 0 1rem;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-family: 'Poppins', sans-serif;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.search {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.table-container {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+}
+
+table {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+}
+
+/* Estilo para la columna de Video (Negrita) */
+.bold-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #333;
+}
+
+/* --- NUEVO: Forzar fuente en Autor y Duración --- */
+/* Angular Material crea estas clases automáticamente basadas en el nombre de la columna */
+.mat-column-professionalName,
+.mat-column-duration {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Barra de progreso */
+.progress-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 120px;
+}
+.progress-text {
+  font-family: 'Poppins', sans-serif; /* También aquí por si acaso */
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 35px;
+}
+mat-progress-bar {
+  border-radius: 4px;
+  height: 8px;
+}
+
+/* Badges de Estado (Si/No) */
+.status-badge {
+  font-family: 'Poppins', sans-serif; /* También aquí */
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  min-width: 40px;
+}
+
+.status-yes {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+.status-no {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.total-records {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: right;
+}

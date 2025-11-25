@@ -1,0 +1,112 @@
+/*
+  :host es un selector que apunta a este componente (app-login).
+  Lo usamos para centrar la tarjeta en la pantalla.
+*/
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 90vh; /* Altura para centrar verticalmente */
+}
+
+/* --- Tus Estilos (Copiados de tu archivo) --- */
+
+.card-container {
+  background-color: #FFFFFF;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+.login-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: block;
+}
+
+.logo-placeholder {
+  width: 80px;
+  height: 80px;
+  background-color: #d1e7ff;
+  border: 2px solid #007BFF;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #007BFF;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* --- Tus Estilos (Adaptados para Material) --- */
+
+/* Reemplazamos tu .form-group con esto.
+  Aplica a <mat-form-field>
+*/
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem; /* Un poco menos de espacio */
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Clase base .btn para AMBOS botones.
+  Usamos !important para forzar tus estilos sobre Material.
+*/
+.btn {
+  width: 100%;
+  padding: 0.9rem 0 !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  margin-top: 0.5rem !important;
+  line-height: 1.5 !important; /* Ajuste para altura de botón */
+}
+
+/* Tu botón verde para [mat-flat-button] */
+.btn-green {
+  background-color: #28a745 !important;
+  color: #FFFFFF !important;
+}
+.btn-green:hover {
+  background-color: #218838 !important;
+}
+
+/* Tu botón morado para [mat-stroked-button] (bordeado) */
+.btn-purple {
+  /* Hacemos que sea bordeado (stroked) */
+  background-color: transparent !important;
+  color: #6f42c1 !important;
+  border: 2px solid #6f42c1 !important;
+}
+.btn-purple:hover {
+  background-color: #f1ecf9 !important; /* Hover morado claro */
+  border-color: #5a32a3 !important;
+  color: #5a32a3 !important;
+}
+
+/* --- Tus Estilos (Sin cambios) --- */
+
+.links-container {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+.links-container a {
+  color: #007BFF;
+  text-decoration: none;
+  cursor: pointer; /* Añadido */
+}

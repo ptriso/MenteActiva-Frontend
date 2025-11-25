@@ -1,0 +1,83 @@
+<div class="card-container">
+
+  <div class="logo-placeholder">Logo</div>
+  <h1>Crear Cuenta</h1>
+
+  <form [formGroup]="registerForm" (ngSubmit)="Grabar()">
+
+    <div class="form-group-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name">
+        <mat-error>Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="lastname">
+        <mat-error>Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email (para perfil)</mat-label>
+        <input matInput formControlName="mail" type="email">
+        <mat-error>Email inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone">
+        <mat-error>Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Usuario (tu email de login)</mat-label>
+        <input matInput formControlName="username" type="email">
+        <mat-error>Email inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error>Mínimo 6 caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" placeholder="MM/DD/YYYY">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Edad (se calcula solo)</mat-label>
+        <input matInput formControlName="age" type="number" readonly>
+      </mat-form-field>
+    </div>
+
+    <div class="constancia-container" *ngIf="esMenorDeEdad">
+      <label>
+        Eres menor de edad. Por favor, adjunta la constancia de tu apoderado:
+      </label>
+      <input type="file" (change)="onFileSelected($event)">
+    </div>
+
+    <button mat-flat-button
+            class="btn btn-purple"
+            (click)="Grabar()"
+            [disabled]="registerForm.invalid">
+      Crear Cuenta
+    </button>
+
+    <button mat-stroked-button
+            class="btn btn-green-stroked"
+            type="button"
+            routerLink="/auth/login">
+      Volver a Login
+    </button>
+
+  </form>
+
+</div>

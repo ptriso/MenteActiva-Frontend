@@ -1,0 +1,127 @@
+/* --- Estructura del Dashboard --- */
+mat-sidenav-container.dashboard-container {
+  height: 100vh;
+  background-color: #eaf4ff; /* ¡Tu fondo azul! */
+}
+
+/* --- 1. Barra Lateral (Sidebar) --- */
+mat-sidenav.sidebar {
+  background-color: #ffffff;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+  width: 260px;
+  border-right: none !important;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  gap: 12px;           /* Espacio entre imagen y texto */
+  padding: 2rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar-logo img {
+  width: 40px;       /* Tamaño fijo pequeño */
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Si tienes el h2 y el logo ya tiene letras, oculta el h2 */
+.sidebar-logo h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem; /* Tamaño de letra ajustado */
+  font-weight: 700;
+  color: #0056b3;
+  margin: 0;         /* Quita márgenes extra */
+  line-height: 1.2;
+}
+
+/* Estilos para los <a> de <mat-nav-list> */
+.sidebar-nav a.mat-list-item {
+  font-family: 'Montserrat', sans-serif !important; /* Fuente limpia */
+  font-weight: 500;
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+  border-radius: 0 50px 50px 0; /* Efecto redondeado solo a la derecha */
+  transition: all 0.3s ease;
+}
+
+.sidebar-nav a.mat-list-item i {
+  width: 20px;
+  text-align: center;
+  margin-right: 15px; /* (gap) */
+}
+.sidebar-nav i {
+  margin-right: 15px;
+  font-size: 1.1rem;
+  width: 25px;
+  text-align: center;
+}
+
+.sidebar-nav a.mat-list-item:hover,
+.sidebar-nav a.mat-list-item.active {
+  background-color: #eaf4ff;
+  color: #007BFF;
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-bottom: 1rem;
+}
+.sidebar-footer a.mat-list-item {
+  cursor: pointer;
+  color: #555;
+}
+.sidebar-footer a.mat-list-item:hover {
+  background-color: #fbebee;
+  color: #d9534f;
+}
+
+/* --- 2. Contenido Principal --- */
+mat-sidenav-content.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- 2a. Cabecera Superior (Header) --- */
+mat-toolbar.header {
+  position: sticky; /* Se pega arriba */
+  top: 0;
+  z-index: 100;     /* Se mantiene encima del contenido */
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  height: 70px;
+  padding: 0 2rem;
+}
+.spacer { flex: 1 1 auto; }
+
+.profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+}
+.profile-menu span { font-weight: 600; }
+
+.profile-pic {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background-color: #6f42c1; /* Color de fondo por si no carga */
+  background-image: url('https://placehold.co/40x40/6f42c1/ffffff?text=U'); /* Avatar temporal */
+  background-size: cover;
+}
+
+/* --- 2b. Área de Contenido (Donde va <router-outlet>) --- */
+main.content-area {
+  padding: 2rem;
+  overflow-y: auto; /* El scroll ocurre aquí */
+}
+
+.sidebar-footer a {
+  color: #d32f2f !important; /* Rojo para cerrar sesión */
+  font-family: 'Montserrat', sans-serif !important;
+}
