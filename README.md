@@ -132,3 +132,4 @@ UPC — 2025
 ## 🧾 Licencia
 
 MIT License.
+
