@@ -1,5 +1,11 @@
-<div class="card-container">
+<div class="go-landing">
+  <button mat-button class="landing-btn-fixed" (click)="IrALanding()">
+    <mat-icon>home</mat-icon>
+    Ir a inicio
+  </button>
+</div>
 
+<div class="card-container">
   <img src="/mente-activa.png" alt="Mente Activa Logo" class="login-logo">
   <h1>Iniciar Sesión</h1>
 
@@ -9,6 +15,7 @@
       <mat-label>Correo electrónico</mat-label>
       <input matInput
              formControlName="username"
+             type="email"
              placeholder="tu.correo@ejemplo.com">
       <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
         El correo es requerido
@@ -35,11 +42,16 @@
 
     <button mat-stroked-button
             class="btn btn-purple"
-            type="button"> Crear Cuenta
+            type="button"
+            (click)="IrARegistro()">
+      Crear Cuenta
     </button>
   </form>
 
   <div class="links-container">
-    <a>¿Olvidaste tu contraseña?</a> </div>
+    <a class="forgot-link" (click)="IrARecuperar()">
+      ¿Olvidaste tu contraseña?
+    </a>
+  </div>
 
 </div>

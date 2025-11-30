@@ -1,6 +1,6 @@
 <div class="card-container">
 
-  <div class="logo-placeholder">Logo</div>
+  <img src="/mente-activa.png" alt="Mente Activa Logo" class="login-logo">
   <h1>Crear Cuenta</h1>
 
   <form [formGroup]="registerForm" (ngSubmit)="Grabar()">
@@ -66,7 +66,7 @@
 
     <button mat-flat-button
             class="btn btn-purple"
-            (click)="Grabar()"
+            type="submit"
             [disabled]="registerForm.invalid">
       Crear Cuenta
     </button>
@@ -74,7 +74,7 @@
     <button mat-stroked-button
             class="btn btn-green-stroked"
             type="button"
-            routerLink="/auth/login">
+            (click)="IrALogin()">
       Volver a Login
     </button>
 

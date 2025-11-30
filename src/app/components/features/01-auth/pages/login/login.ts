@@ -34,6 +34,15 @@ export class Login implements OnInit { // (Usando tu convención de nombres)
   ngOnInit(): void {
     this.CargarFormulario();
   }
+  IrALanding(): void {
+    this.router.navigate(['/']);
+  }
+  IrARegistro(): void {
+    this.router.navigate(['/auth/register']);
+  }
+  IrARecuperar(): void {
+    this.router.navigate(['/auth/forgot-password']);
+  }
 
   CargarFormulario(): void {
     this.loginForm = this.formBuilder.group({
@@ -52,10 +61,9 @@ export class Login implements OnInit { // (Usando tu convención de nombres)
     }
 
     const loginDto: LoginDTO = {
-      username: this.loginForm.get("username")?.value,
-      password: this.loginForm.get("password")?.value
+      username: this.loginForm.get('username')?.value,
+      password: this.loginForm.get('password')?.value
     };
-
     this.authService.login(loginDto).subscribe({
       next: (data) => {
         // --- ¡ESTA ES LA LÓGICA DE DEPURACIÓN! ---
@@ -88,10 +96,11 @@ export class Login implements OnInit { // (Usando tu convención de nombres)
       },
       error: (err) => {
         console.error("Error en login:", err);
-        this.snackBar.open("Error: Usuario o contraseña incorrectos", "Cerrar", {
+        this.snackBar.open("Error: Correo o contraseña incorrectos", "Cerrar", {
           duration: 5000,
         });
       }
     });
+
   }
 }

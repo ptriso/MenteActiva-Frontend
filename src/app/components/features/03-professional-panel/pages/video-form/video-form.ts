@@ -79,7 +79,14 @@ export class VideoForm implements OnInit {
     }
 
     const profId = this.authService.getUserId();
-
+    if (profId == null) {
+      this.snackBar.open(
+        "Error: No se pudo identificar al profesional. Inicia sesión nuevamente.",
+        "Cerrar",
+        { duration: 4000 }
+      );
+      return;
+    }
     const videoDto: VideoRequestDTO = {
       title: this.videoForm.get('title')?.value,
       descripcion: this.videoForm.get('descripcion')?.value,

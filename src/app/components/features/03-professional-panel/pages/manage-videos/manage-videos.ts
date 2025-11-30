@@ -39,13 +39,23 @@ export class ManageVideos implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
+
   ngOnInit(): void {
     this.cargarVideos();
     this.escucharBuscador(); // Lógica de tu script [cite: 573-580]
   }
 
+
   cargarVideos(): void {
     const profId = this.authService.getUserId();
+    if (profId == null) {
+      this.snackBar.open(
+        'Error: No se pudo identificar al profesional. Inicia sesión nuevamente.',
+        'Cerrar',
+        { duration: 4000 }
+      );
+      return;
+    }
     this.profVideoService.getVideosByProfessionalId(profId).subscribe({
       next: (data) => {
         // Filtramos solo los videos de este profesional

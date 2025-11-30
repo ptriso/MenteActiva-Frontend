@@ -1,0 +1,57 @@
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Tarjetas tipo dashboard */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.action-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.action-card i {
+  font-size: 2rem;
+}
+
+.action-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.action-card p {
+  margin: 0;
+  color: #555;
+}
+
+/* Botones */
+.btn {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-green { background-color: #28a745; }
+.btn-green:hover { background-color: #218838; }
+
+.btn-purple { background-color: #6f42c1; }
+.btn-purple:hover { background-color: #5a32a3; }

@@ -33,7 +33,7 @@ export class SchedulePicker implements OnInit {
   format = format;
 
   professionalId: number = 0;
-  clientId: number = 0;
+  clientId!: number
   professionalName: string = '';
 
   allProfessionalSchedules: (ScheduleResponseDTO & { dateObject?: Date; isOccupied?: boolean })[] = [];
@@ -57,7 +57,17 @@ export class SchedulePicker implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.clientId = this.authService.getProfileId();
+    const profileId = this.authService.getProfileId();
+
+    if (profileId == null) {
+      this.snackBar.open('Debes iniciar sesión como cliente para agendar citas.', 'Cerrar', {
+        duration: 4000,
+      });
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
+    this.clientId = profileId;
 
     this.route.paramMap.subscribe(params => {
       this.professionalId = Number(params.get('id'));
@@ -219,19 +229,18 @@ export class SchedulePicker implements OnInit {
   }
 
   crearCita(scheduleId: number): void {
-    const clientId = this.authService.getProfileId();
-
-    if (clientId === 0) {
+    if (this.clientId == null) {
       this.snackBar.open(
-        'Error: No se pudo verificar tu ID de cliente.',
+        'Error: No se pudo verificar tu perfil de cliente. Inicia sesión nuevamente.',
         'Cerrar',
         { duration: 5000 }
       );
+      this.router.navigate(['/auth/login']);
       return;
     }
 
     const appointmentDto: AppointmentRequestDTO = {
-      clientId,
+      clientId: this.clientId,  // <-- aquí ya es number seguro
       statusId: 1,
       scheduleId,
     };

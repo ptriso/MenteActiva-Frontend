@@ -1,0 +1,84 @@
+<div class="profile-wrapper" *ngIf="!loading; else loadingTpl">
+
+  <div class="profile-header">
+    <div class="avatar-circle">
+    <span>{{ form.get('name')?.value?.charAt(0) || 'U' }}</span>
+  </div>
+    <div>
+      <h2>Mi perfil</h2>
+      <p class="subtitle">
+        Aquí puedes revisar y actualizar tus datos personales que usas en Mente Activa.
+      </p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+
+    <div class="profile-grid">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nombres</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="form.get('name')?.hasError('required')">
+          El nombre es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="lastname">
+        <mat-error *ngIf="form.get('lastname')?.hasError('required')">
+          Los apellidos son obligatorios
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo de contacto</mat-label>
+        <input matInput formControlName="mail" type="email">
+        <mat-error *ngIf="form.get('mail')?.hasError('email')">
+          Ingresa un correo válido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone">
+        <mat-error *ngIf="form.get('phone')?.hasError('required')">
+          El teléfono es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <div class="consent-section">
+      <div class="consent-text">
+        <h3>Consentimiento</h3>
+        <p>
+          El consentimiento de tu apoderado es necesario si eres menor de edad.
+          Si tienes dudas, comunícate con nuestro equipo de soporte.
+        </p>
+      </div>
+
+      <div class="consent-status">
+        <span>Estado: </span>
+        <strong *ngIf="hasConsent === true" class="yes">Registrado</strong>
+        <strong *ngIf="hasConsent === false" class="no">No registrado</strong>
+        <strong *ngIf="hasConsent === null">No disponible</strong>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-flat-button color="primary" class="btn-save"
+              type="submit" [disabled]="form.invalid">
+        Guardar cambios
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    Cargando perfil...
+  </div>
+</ng-template>

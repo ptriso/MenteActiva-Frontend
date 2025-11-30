@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { AuthService } from '../../../../core/services/auth';
 import { Router } from '@angular/router';
+import {ProfessionalService} from '../../../02-client-panel/services/professional.service';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-prof-layout',
@@ -16,14 +18,61 @@ import { Router } from '@angular/router';
   templateUrl: './prof-layout.html',
   styleUrls: ['./prof-layout.css']
 })
-export class ProfLayout {
+export class ProfLayout implements OnInit, OnDestroy {
+  displayName = 'Profesional';
+  avatarLetter = 'P';
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private authService: AuthService,
+    private professionalService: ProfessionalService,
     private router: Router
   ) {}
 
-  // Lógica para cerrar sesión
+  ngOnInit(): void {
+    const profileId = this.authService.getProfileId();
+
+    if (!profileId) {
+      this.displayName = 'Profesional';
+      this.avatarLetter = 'P';
+      return;
+    }
+
+    // 🔹 1) Me suscribo a los cambios del perfil
+    this.professionalService.profile$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((prof) => {
+        if (prof) {
+          this.setHeaderFromProfile(prof);
+        }
+      });
+
+    // 🔹 2) Cargo por primera vez desde el backend y lo guardo en el servicio
+    this.professionalService.getById(profileId).subscribe({
+      next: (prof) => {
+        // esto dispara también el header porque está suscrito
+        this.professionalService.setCurrentProfile(prof);
+      },
+      error: (err) => {
+        console.error('Error cargando profesional en layout:', err);
+        this.displayName = 'Profesional';
+        this.avatarLetter = 'P';
+      }
+    });
+  }
+
+  private setHeaderFromProfile(prof: any): void {
+    const fullName = `${prof.name} ${prof.lastname ?? ''}`.trim();
+    this.displayName = `Dr. ${fullName}`;
+    this.avatarLetter = (prof.name?.charAt(0) || 'P').toUpperCase();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/auth/login']);

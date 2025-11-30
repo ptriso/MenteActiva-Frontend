@@ -18,6 +18,8 @@ import { Router } from '@angular/router';
 })
 export class AdminLayout {
 
+  avatarLetter = 'A';
+
   constructor(
     private authService: AuthService,
     private router: Router

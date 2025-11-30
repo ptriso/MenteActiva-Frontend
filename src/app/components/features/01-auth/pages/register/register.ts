@@ -103,7 +103,7 @@ export class RegisterComponent implements OnInit {
     const userDto: RegisterUserDTO = {
       username: this.registerForm.get('username')?.value,
       password: this.registerForm.get('password')?.value,
-      authorities: 'ROLE_USER'
+      authorities: 'ROLE_USER;ROLE_CLIENT'
     };
 
     // --- 2. Iniciar el proceso de registro en 3 pasos ---
@@ -118,7 +118,7 @@ export class RegisterComponent implements OnInit {
           mail: this.registerForm.get('mail')?.value,
           phone: this.registerForm.get('phone')?.value,
           age: this.registerForm.get('age')?.value,
-          user_id: nuevoUserId
+          userId: nuevoUserId
         };
 
         this.authService.registerClientProfile(clientDto).subscribe({
@@ -161,5 +161,8 @@ export class RegisterComponent implements OnInit {
   mostrarError(error: any, paso: string): void {
     console.error(`Error en ${paso}:`, error);
     this.snackBar.open(`Error al registrar ${paso}. Intenta de nuevo.`, "Cerrar", { duration: 5000 });
+  }
+  IrALogin(): void {
+    this.router.navigate(['/auth/login']);
   }
 }

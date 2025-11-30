@@ -45,12 +45,35 @@
 
   <mat-sidenav-content class="main-content">
 
+    <!-- HEADER -->
     <mat-toolbar class="header">
-      <span class="spacer"></span> <div class="profile-menu">
-      <span>Marcelo Rodrigo</span> <div class="profile-pic"></div>
-    </div>
+      <span class="welcome">Bienvenido, {{ displayName }}</span>
+
+      <span class="spacer"></span>
+
+      <!-- Botón que abre el menú SOLO con el círculo -->
+      <div class="profile-menu" [matMenuTriggerFor]="profileMenu">
+        <div class="avatar-circle">
+          <span>{{ avatarLetter }}</span>
+        </div>
+      </div>
     </mat-toolbar>
 
+
+    <!-- 🔹 Aquí va el menú desplegable -->
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item routerLink="/cliente/perfil">
+        <mat-icon>person</mat-icon>
+        <span>Ver perfil</span>
+      </button>
+
+      <button mat-menu-item (click)="logout()" class="logout-item">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar sesión</span>
+      </button>
+    </mat-menu>
+
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-area">
       <router-outlet></router-outlet>
     </main>

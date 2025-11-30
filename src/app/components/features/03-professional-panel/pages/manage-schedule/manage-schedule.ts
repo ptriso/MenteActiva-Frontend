@@ -72,6 +72,14 @@ export class ManageSchedule implements OnInit {
 
     // 1. Obtener el ID del profesional logueado
     const profId = this.authService.getUserId(); // (Asumimos que el ID de User es el ID de Profesional)
+    if (profId == null) {
+      this.snackBar.open(
+        'Error: No se pudo identificar al profesional. Inicia sesión nuevamente.',
+        'Cerrar',
+        { duration: 4000 }
+      );
+      return;
+    }
 
     // 2. Recorrer el formulario
     const formValue = this.scheduleForm.value;

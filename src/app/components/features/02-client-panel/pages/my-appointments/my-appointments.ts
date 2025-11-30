@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {Router} from '@angular/router';
 // Servicios
 import { AppointmentService } from '../../services/appointment.service';
 import { AuthService } from '../../../../core/services/auth';
@@ -7,6 +8,7 @@ import { AuthService } from '../../../../core/services/auth';
 import {MaterialModule} from '../../../../shared/material/material.imports';
 import {AppointmentClientDTO} from '../../../../core/models/appointment-client.dto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {RouterModule} from '@angular/router';
 
 
 interface AppointmentViewModel {
@@ -21,7 +23,7 @@ interface AppointmentViewModel {
 @Component({
   selector: 'app-my-appointments',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, RouterModule],
   templateUrl: './my-appointments.html',
   styleUrls: ['./my-appointments.css']
 })
@@ -38,14 +40,20 @@ export class MyAppointments implements OnInit {
   constructor(
     private appointmentService: AppointmentService,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     const clientId = this.authService.getProfileId();
-    this.loadAppointments(clientId);
-  }
 
+    if (clientId == null) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
+    this.loadAppointments(clientId); // ✅ ahora es number
+  }
   // 🔹 Carga las citas del cliente
   private loadAppointments(clientId: number): void {
     this.loading = true;
@@ -95,13 +103,16 @@ export class MyAppointments implements OnInit {
   cancelAppointment(app: AppointmentClientDTO): void {
     if (!confirm('¿Seguro que deseas cancelar esta cita?')) return;
 
+    const clientId = this.authService.getProfileId();
+    if (clientId == null) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
     this.appointmentService.cancelAppointment(app.id).subscribe({
       next: () => {
         this.snackBar.open('Cita cancelada correctamente', 'Cerrar', {
           duration: 3000,
         });
-
-        const clientId = this.authService.getProfileId();
         this.loadAppointments(clientId); // 👈 refrescamos la lista
       },
       error: (err) => {

@@ -7,6 +7,7 @@ import { ManageSchedule } from './pages/manage-schedule/manage-schedule';
 import { ManageVideos } from './pages/manage-videos/manage-videos';
 import { VideoForm } from './pages/video-form/video-form';
 import { MyPatients} from './pages/my-patients/my-patients';
+import {ProfessionalProfile} from './pages/professional-profile/professional-profile';
 
 export const PROFESSIONAL_ROUTES: Routes = [
   {
@@ -40,6 +41,7 @@ export const PROFESSIONAL_ROUTES: Routes = [
         path: 'pacientes', // Ruta: /profesional/pacientes
         component: MyPatients
       },
+      { path: 'perfil', component: ProfessionalProfile },
       {
         path: '',
         redirectTo: 'dashboard',

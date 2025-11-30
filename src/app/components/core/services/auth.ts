@@ -29,8 +29,12 @@ export class AuthService {
         localStorage.setItem('jwtToken', data.jwtToken);
         localStorage.setItem('user_id', data.id.toString());
         localStorage.setItem('authorities', data.authorities);
+
         if (data.profileId) {
           localStorage.setItem('profile_id', data.profileId.toString());
+        }
+        if (data.username) {
+          localStorage.setItem('username', data.username);
         }
       })
     );
@@ -76,11 +80,12 @@ export class AuthService {
    * Tu backend los separa por ";"
    */
   getAuthorities(): string[] {
-    const authorities = localStorage.getItem('authorities');
-    if (authorities) {
-      return authorities.split(';'); // Ej: ["ROLE_USER", "ROLE_ADMIN"]
-    }
-    return [];
+    const raw = localStorage.getItem('authorities');
+    if (!raw) return [];
+    return raw
+      .split(';')
+      .map(r => r.trim())
+      .filter(r => !!r);
   }
 
   /**
@@ -93,15 +98,16 @@ export class AuthService {
   /**
    * Obtiene el ID del usuario logueado desde localStorage.
    */
-  getUserId(): number {
-    if (localStorage.getItem('user_id') !== null) {
-      // Usa ! para decirle a TypeScript que "sabemos que no es nulo"
-      return parseInt(localStorage.getItem('user_id')!.toString());
-    }
-    return 0; // Devuelve 0 si no está logueado
+  getUserId(): number | null {
+    const raw = localStorage.getItem('user_id');
+    return raw ? Number(raw) : null;
   }
-  getProfileId(): number {
-    const profileId = localStorage.getItem('profile_id');
-    return profileId ? parseInt(profileId) : 0;
+  getProfileId(): number | null {
+    const raw = localStorage.getItem('profile_id');
+    return raw ? Number(raw) : null;
   }
+  getUsername(): string | null {
+    return localStorage.getItem('username');
+  }
+
 }

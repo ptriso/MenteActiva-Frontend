@@ -2,6 +2,28 @@
   :host es un selector que apunta a este componente (app-login).
   Lo usamos para centrar la tarjeta en la pantalla.
 */
+.landing-btn-fixed {
+  position: fixed;
+  top: 20px;
+  left: 24px;   /* ✅ Ahora se alinea a la izquierda */
+  z-index: 1000;
+
+  font-weight: 600;
+  color: #007bff;
+  background: transparent;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: 0.2s ease;
+}
+
+.landing-btn-fixed:hover {
+  background: rgba(0, 123, 255, 0.12);
+}
 :host {
   display: flex;
   justify-content: center;
@@ -109,4 +131,8 @@ mat-form-field {
   color: #007BFF;
   text-decoration: none;
   cursor: pointer; /* Añadido */
+}
+.landing-btn:hover {
+  background: rgba(0,123,255,0.12);
+  transform: translateX(-2px);
 }

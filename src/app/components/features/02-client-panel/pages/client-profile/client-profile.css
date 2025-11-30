@@ -1,0 +1,98 @@
+.profile-wrapper {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  max-width: 900px;
+  margin: 24px auto;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.avatar-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007bff, #6f42c1); /* azul → morado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.profile-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.consent-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.consent-text h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+
+.consent-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.consent-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.consent-status .yes {
+  color: #2e7d32;
+}
+
+.consent-status .no {
+  color: #c62828;
+}
+
+.actions {
+  margin-top: 24px;
+  text-align: right;
+}
+
+.btn-save {
+  min-width: 180px;
+}
+
+.loading {
+  text-align: center;
+  padding: 32px;
+  color: #6c757d;
+}
+

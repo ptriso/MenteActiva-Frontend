@@ -8,6 +8,7 @@ import { ProfessionalBrowser } from './pages/professional-browser/professional-b
 import { SchedulePicker } from './pages/schedule-picker/schedule-picker';
 import { MyAppointments } from './pages/my-appointments/my-appointments';
 import {ClientProgress} from './pages/client-progress/client-progress';
+import {ClientProfile} from './pages/client-profile/client-profile';
 
 export const CLIENT_ROUTES: Routes = [
   {
@@ -21,7 +22,7 @@ export const CLIENT_ROUTES: Routes = [
       { path: 'agendar/:id', component: SchedulePicker },
       {path: 'progreso', component: ClientProgress},
       { path: 'citas', component: MyAppointments },
-
+      { path: 'perfil', component: ClientProfile },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }
