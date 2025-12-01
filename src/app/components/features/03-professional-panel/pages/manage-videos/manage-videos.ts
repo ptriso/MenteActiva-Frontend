@@ -27,10 +27,11 @@ export class ManageVideos implements OnInit {
 
   listaCompletaVideos: VideoResponseDTO[] = [];
   videosFiltrados: VideoResponseDTO[] = [];
-  videosMasVistos: any[] = [];
+  videosMasVistos: any[] = []; // Usamos 'any' porque el DTO del ranking es distinto
 
   mostrarMasVistos = false;
   searchControl = new FormControl('');
+  loading = true;
 
   constructor(
     private profVideoService: ProfVideoService,
@@ -39,59 +40,64 @@ export class ManageVideos implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-
   ngOnInit(): void {
     this.cargarVideos();
-    this.escucharBuscador(); // Lógica de tu script [cite: 573-580]
+    this.escucharBuscador();
   }
 
-
+  // 1. Carga la lista normal de videos
   cargarVideos(): void {
     const profId = this.authService.getUserId();
-    if (profId == null) {
-      this.snackBar.open(
-        'Error: No se pudo identificar al profesional. Inicia sesión nuevamente.',
-        'Cerrar',
-        { duration: 4000 }
-      );
-      return;
-    }
-    this.profVideoService.getVideosByProfessionalId(profId).subscribe({
+
+    this.profVideoService.getVideosByProfessionalId(Number(profId)).subscribe({
       next: (data) => {
-        // Filtramos solo los videos de este profesional
-        this.listaCompletaVideos = data.filter(v => v.professional_id === profId);
-        this.videosFiltrados = this.listaCompletaVideos;
+        this.listaCompletaVideos = data;
+        this.videosFiltrados = data;
+        this.loading = false;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.loading = false;
+      }
     });
   }
 
-  // Lógica de tu script de búsqueda [cite: 573-580]
+  // 2. Buscador en tiempo real
   escucharBuscador(): void {
     this.searchControl.valueChanges.subscribe(searchTerm => {
       const term = (searchTerm || '').toLowerCase();
       this.videosFiltrados = this.listaCompletaVideos.filter(video =>
-        video.title.toLowerCase().includes(term)
+        video.title.toLowerCase().includes(term) ||
+        (video.description && video.description.toLowerCase().includes(term))
       );
     });
   }
 
-  // Lógica de tu script de "Más Vistos" [cite: 570-572]
+  // 3. Lógica del Ranking (Filtrado Frontend)
   toggleMasVistos(): void {
     this.mostrarMasVistos = !this.mostrarMasVistos;
+
     if (this.mostrarMasVistos && this.videosMasVistos.length === 0) {
-      this.profVideoService.getMostViewedVideos().subscribe(data => {
-        this.videosMasVistos = data;
+
+      const myId = this.authService.getUserId();
+
+      this.profVideoService.getMostViewedVideos().subscribe({
+        next: (data) => {
+          console.log("Ranking Global:", data);
+          this.videosMasVistos = data.filter((v: any) => {
+            return Number(v.author_id) === Number(myId);
+          });
+        },
+        error: (err) => console.error("Error al cargar ranking", err)
       });
     }
   }
 
-  // Lógica de borrado (como la de tu profesor)
+  // 4. Borrar Video
   borrarVideo(id: number): void {
     const dialogRef = this.dialog.open(ConfirmAppointmentDialogComponent, {
       width: '400px',
       data: {
-        // Pasamos datos genéricos al diálogo de confirmación
         schedule: { date: 'este video', time_start: 'permanentemente' }
       }
     });
@@ -100,12 +106,18 @@ export class ManageVideos implements OnInit {
       if (result) {
         this.profVideoService.deleteVideo(id).subscribe({
           next: () => {
-            this.snackBar.open("Video eliminado con éxito", "Ok", { duration: 3000 });
-            this.cargarVideos(); // Recargamos la lista
+            this.snackBar.open("Video eliminado", "Ok", { duration: 3000 });
+            this.cargarVideos(); // Recargar lista
+            this.videosMasVistos = [];
           },
-          error: (err) => this.snackBar.open("Error al eliminar el video", "Cerrar", { duration: 5000 })
+          error: () => this.snackBar.open("Error al eliminar", "Cerrar")
         });
       }
     });
+  }
+  getDurationInMinutes(duration: any): number {
+    const seconds = Number(duration);
+    if (isNaN(seconds)) return 0;
+    return Math.floor(seconds / 60);
   }
 }

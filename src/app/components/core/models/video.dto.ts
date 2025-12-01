@@ -2,17 +2,17 @@
 export interface VideoResponseDTO {
   id: number;
   title: string;
-  descripcion: string;
+  description: string;
   url: string;
-  duration: string;
-  professional_id: number;
+  duration: number;
+  professionalId: number;
 }
   // (Podemos añadir más campos si los necesitas)
 
   export interface VideoRequestDTO {
   title: string;
-  descripcion: string;
+  description: string;
   url: string;
-  duration: string;
-  professional_id: number;
+  duration: number;
+  professionalId: number;
 }

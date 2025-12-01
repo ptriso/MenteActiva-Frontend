@@ -1,53 +1,55 @@
-<h1>Mis Videos</h1>
+<div class="container">
+  <h1>{{ videoId > 0 ? 'Editar Video' : 'Subir Nuevo Video' }}</h1>
 
-<div class="form-container" [formGroup]="videoForm">
+  <div class="form-box mat-elevation-z4">
+    <form [formGroup]="videoForm" (ngSubmit)="Grabar()">
 
-  <h2 *ngIf="videoId === 0">Registrar Nuevo Video</h2>
-  <h2 *ngIf="videoId > 0">Editar Video</h2>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Título del Video</mat-label>
+          <input matInput formControlName="title" placeholder="Ej: Técnicas de respiración">
+          <mat-error *ngIf="videoForm.get('title')?.hasError('required')">Requerido</mat-error>
+          <mat-error *ngIf="videoForm.get('title')?.hasError('minlength')">Mínimo 5 caracteres</mat-error>
+        </mat-form-field>
+      </div>
 
-  <form (ngSubmit)="Grabar()">
-    <div class="form-group">
-      <mat-form-field appearance="outline">
-        <mat-label>Título del Video</mat-label>
-        <input matInput formControlName="title" placeholder="Ej: Técnicas de respiración">
-        <mat-error>El título es requerido</mat-error>
-      </mat-form-field>
-    </div>
+      <div class="form-row split-row">
 
-    <div class="form-group">
-      <mat-form-field appearance="outline">
-        <mat-label>Descripción</mat-label>
-        <textarea matInput formControlName="descripcion"
-                  placeholder="Describe brevemente el contenido del video..."></textarea>
-        <mat-error>La descripción es requerida</mat-error>
-      </mat-form-field>
-    </div>
+        <mat-form-field appearance="outline" class="url-field">
+          <mat-label>URL del Video</mat-label>
+          <mat-icon matPrefix>link</mat-icon>
+          <input matInput formControlName="url" placeholder="https://youtube.com/...">
+          <mat-error>Requerido</mat-error>
+        </mat-form-field>
 
-    <div class="form-group">
-      <mat-form-field appearance="outline">
-        <mat-label>URL del Video</mat-label>
-        <input matInput formControlName="url" placeholder="https://youtube.com/...">
-        <mat-hint>Pega aquí el enlace de YouTube, Vimeo, etc.</mat-hint>
-        <mat-error>La URL es requerida</mat-error>
-      </mat-form-field>
-    </div>
+        <mat-form-field appearance="outline" class="duration-field">
+          <mat-label>Duración (Segundos)</mat-label>
+          <input matInput type="number" formControlName="duration" min="1" placeholder="60">
+          <span matTextSuffix>seg</span>
+          <mat-error>Requerido</mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="form-group">
-      <mat-form-field appearance="outline" class="duration-input">
-        <mat-label>Duración</mat-label>
-        <input matInput formControlName="duration" type="number" placeholder="Ej: 10" min="1">
-        <span matTextSuffix>minutos</span>
-        <mat-error>La duración es requerida</mat-error>
-      </mat-form-field>
-    </div>
+      <div class="form-group">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="description" rows="5" placeholder="Contenido del video..."></textarea>
+          <mat-error *ngIf="videoForm.get('description')?.hasError('required')">Requerido</mat-error>
+          <mat-error *ngIf="videoForm.get('description')?.hasError('minlength')">Mínimo 10 caracteres</mat-error>
+        </mat-form-field>
+      </div>
 
-    <div class="form-actions">
-      <a mat-stroked-button class="btn btn-secondary" routerLink="/profesional/videos">
-        Cancelar
-      </a>
-      <button type="submit" mat-flat-button class="btn btn-purple" [disabled]="videoForm.invalid">
-        Guardar Video
-      </button>
-    </div>
-  </form>
+      <div class="form-actions">
+        <a mat-stroked-button color="warn" routerLink="/profesional/videos">
+          Cancelar
+        </a>
+        <button type="submit" mat-flat-button color="primary"
+                [disabled]="videoForm.invalid || isSaving">
+          <mat-icon>save</mat-icon> {{ isSaving ? 'Guardando...' : 'Guardar Video' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>
+

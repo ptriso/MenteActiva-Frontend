@@ -39,7 +39,8 @@ export class VideoBrowser implements OnInit {
       }
     });
   }
-  getDurationInMinutes(duration: string): number {
+
+  getDurationInMinutes(duration: number): number {
     const seconds = Number(duration);
     if (isNaN(seconds)) return 0;
     return Math.floor(seconds / 60); // solo minutos enteros

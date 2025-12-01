@@ -9,7 +9,7 @@ import { MaterialModule } from '../../../../shared/material/material.imports';
 import { AdminService } from '../../services/admin.service';
 import { UserResponseDTO } from '../../../../core/models/user.dto';
 import { AuthorityResponseDTO } from '../../../../core/models/authority.dto';
-import {UserAuthorityRequestDTO} from '../../../../core/models/user-authority.dto';
+import {UserAuthorityRequestDTO, UserAuthorityResponseDTO} from '../../../../core/models/user-authority.dto';
 
 @Component({
   selector: 'app-user-management',
@@ -28,6 +28,7 @@ export class UserManagement implements OnInit {
   dataSource = new MatTableDataSource<UserResponseDTO>([]);
 
   allRoles: AuthorityResponseDTO[] = [];
+  userAuthorities: UserAuthorityResponseDTO[] = [];  // 👈 relaciones user-rol (con id)
   loading = true;
 
   constructor(
@@ -38,6 +39,7 @@ export class UserManagement implements OnInit {
   ngOnInit(): void {
     this.cargarUsuarios();
     this.cargarRoles();
+    this.cargarUserAuthorities();
   }
 
   private cargarUsuarios(): void {
@@ -65,6 +67,17 @@ export class UserManagement implements OnInit {
     });
   }
 
+  private cargarUserAuthorities(): void {
+    this.adminService.getUserAuthorities().subscribe({
+      next: (ua) => {
+        this.userAuthorities = ua;
+      },
+      error: (err) => {
+        console.error('Error al cargar relaciones usuario-rol:', err);
+      }
+    });
+  }
+
   // Filtro de la tabla
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -87,14 +100,19 @@ export class UserManagement implements OnInit {
     }
 
     const dto: UserAuthorityRequestDTO = {
-      user_id: usuario.id,
-      authority_id: rolId
+      userId: usuario.id,
+      authorityId: rolId
     };
 
     this.adminService.assignRole(dto).subscribe({
-      next: () => {
+      next: (ua: UserAuthorityResponseDTO) => {
+        // Actualizamos la lista de relaciones en memoria
+        this.userAuthorities = [...this.userAuthorities, ua];
+
+        // Añadimos el nombre del rol al array de authorities del usuario (para la tabla)
         usuario.authorities = [...usuario.authorities, rol.name];
         this.dataSource.data = [...this.dataSource.data];
+
         this.snackBar.open(`Rol "${rol.name}" añadido a ${usuario.username}`, 'Ok', { duration: 3000 });
       },
       error: (err) => {
@@ -105,39 +123,40 @@ export class UserManagement implements OnInit {
   }
 
   // === ELIMINAR ROL ===
-  eliminarRol(usuario: UserResponseDTO, rolName: string): void {
-    const rol = this.allRoles.find(r => r.name === rolName);
+  eliminarRol(usuario: UserResponseDTO, roleName: string): void {
+    // 1. Encontramos el Authority para obtener authorityId
+    const rol = this.allRoles.find(r => r.name === roleName);
     if (!rol) {
+      console.warn('No se encontró el rol en allRoles para', roleName);
       return;
     }
 
-    // 🔴 IMPORTANTE:
-    // Aquí necesitas conocer el "userAuthorityId" real (la fila en la tabla intermedia).
-    // Si tu backend sólo te devuelve nombres, puedes:
-    //  - ampliar tu DTO para incluir el id de User_Authority
-    //  - o crear un endpoint que reciba userId + authorityId
-    //
-    // Por ahora dejo el llamado genérico y tú ajustas el id correcto:
+    // 2. Buscamos la relación en userAuthorities: mismo userId + authorityId
+    const relacion = this.userAuthorities.find(
+      ua => ua.userId === usuario.id && ua.authorityId === rol.id
+    );
 
-    const userAuthorityId = 0; // <-- reemplázalo por el id REAL (cuando lo tengas)
-
-    if (userAuthorityId === 0) {
-      // Simulación sólo en front para que veas el comportamiento en la tabla
-      usuario.authorities = usuario.authorities.filter(a => a !== rolName);
-      this.dataSource.data = [...this.dataSource.data];
-      this.snackBar.open(`Rol "${rolName}" eliminado de ${usuario.username} (solo front)`, 'Ok', { duration: 3000 });
+    if (!relacion) {
+      console.warn('No se encontró la relación User_Authority para borrar', { userId: usuario.id, authorityId: rol.id });
+      this.snackBar.open('No se encontró la relación usuario-rol en el sistema.', 'Cerrar', { duration: 3000 });
       return;
     }
 
-    this.adminService.removeRole(userAuthorityId).subscribe({
+    // 3. Llamamos al DELETE /eliminar/{id}
+    this.adminService.deleteUserAuthority(relacion.id).subscribe({
       next: () => {
-        usuario.authorities = usuario.authorities.filter(a => a !== rolName);
+        // Quitamos el rol del usuario en la tabla
+        usuario.authorities = usuario.authorities.filter(a => a !== roleName);
         this.dataSource.data = [...this.dataSource.data];
-        this.snackBar.open(`Rol "${rolName}" eliminado de ${usuario.username}`, 'Ok', { duration: 3000 });
+
+        // Quitamos la relación de nuestra lista local
+        this.userAuthorities = this.userAuthorities.filter(ua => ua.id !== relacion.id);
+
+        this.snackBar.open(`Rol "${roleName}" eliminado`, 'Ok', { duration: 2500 });
       },
       error: (err) => {
         console.error('Error eliminando rol:', err);
-        this.snackBar.open('Error al eliminar rol', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error al eliminar rol.', 'Cerrar', { duration: 3000 });
       }
     });
   }
