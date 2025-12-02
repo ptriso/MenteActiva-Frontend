@@ -1,23 +1,30 @@
 import { Routes } from '@angular/router';
 
-// 1. Importa las clases
+// Importaciones existentes
 import { AdminLayout } from './layout/admin-layout/admin-layout';
 import { UserManagement } from './pages/user-management/user-management';
-import {AdminDashboard} from './pages/admin-dashboard/admin-dashboard';
+import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
+
+// ✅ NUEVA IMPORTACIÓN
+import { StatisticsDashboard } from './pages/statistics-dashboard/statistics-dashboard';
 
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    component: AdminLayout, // El Layout es el PADRE
+    component: AdminLayout,
     children: [
-      // Página principal del admin
       {
         path: 'dashboard',
         component: AdminDashboard
       },
       {
-        path: 'usuarios', // Ruta: /admin/usuarios
+        path: 'usuarios',
         component: UserManagement
+      },
+      // ✅ NUEVA RUTA DE ESTADÍSTICAS
+      {
+        path: 'estadisticas',
+        component: StatisticsDashboard
       },
       {
         path: '',

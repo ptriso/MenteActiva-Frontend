@@ -2,12 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Usaremos el DTO de Schedule que ya creamos
 import { ScheduleResponseDTO } from '../../../core/models/schedule.dto';
-
-// (Necesitamos crear este DTO)
 import { ScheduleRequestDTO } from '../../../core/models/schedule.dto';
-
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +15,7 @@ export class ProfScheduleService {
   constructor(private http: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('jwtToken'); // o sessionStorage.getItem('token')
+    const token = localStorage.getItem('jwtToken');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -37,6 +33,13 @@ export class ProfScheduleService {
   getSchedulesByProfessionalId(profId: number): Observable<ScheduleResponseDTO[]> {
     return this.http.get<ScheduleResponseDTO[]>(
       `${this.API_URL}/profesional/${profId}`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  deleteSchedule(scheduleId: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.API_URL}/eliminar/${scheduleId}`,
       { headers: this.getHeaders() }
     );
   }

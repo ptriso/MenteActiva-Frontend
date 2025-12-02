@@ -68,7 +68,7 @@ export class ManageSchedule implements OnInit, OnDestroy {
   }
 
   crearGrupo() {
-    return this.fb.group({ activo: [false], inicio: ['09:00:00'], fin: ['18:00:00'] });
+    return this.fb.group({activo: [false], inicio: ['09:00:00'], fin: ['18:00:00']});
   }
 
   // --- LÓGICA DE AUTO-UPDATE ---
@@ -130,7 +130,7 @@ export class ManageSchedule implements OnInit, OnDestroy {
         const group = this.scheduleForm.get(dia.key);
 
         // Solo actualizamos si los valores son diferentes para evitar loops o bloqueos de UI
-        if(group && !group.dirty) {
+        if (group && !group.dirty) {
           group.patchValue({
             activo: true,
             inicio: this.normHora(inicio),
@@ -146,11 +146,43 @@ export class ManageSchedule implements OnInit, OnDestroy {
   // --- GUARDADO ---
   GuardarCambios(): void {
     const profId = this.authService.getUserId() || 1;
-    let intentos = 0;
-    let guardados = 0;
 
     // Pausamos la actualización mientras guardamos
     if (this.updateSubscription) this.updateSubscription.unsubscribe();
+
+    //  Construir el horario DESEADO basado en el formulario
+    const horariosDeseados: Set<string> = new Set();
+
+    this.diasSemana.forEach(diaInfo => {
+      const group = this.scheduleForm.get(diaInfo.key);
+      if (group && group.value.activo) {
+        const fecha = format(diaInfo.dateObj, 'yyyy-MM-dd');
+        const ini = parseInt(group.value.inicio.split(':')[0], 10);
+        const fin = parseInt(group.value.fin.split(':')[0], 10);
+
+        for (let h = ini; h < fin; h++) {
+          const start = `${h < 10 ? '0'+h : h}:00:00`;
+          horariosDeseados.add(`${fecha}|${start}`);
+        }
+      }
+    });
+
+    //  Identificar qué ELIMINAR (existen pero ya no están en el formulario)
+    const horariosAEliminar = this.misHorariosExistentes.filter(existente => {
+      const key = `${existente.date}|${existente.time_start}`;
+
+      //  NO ELIMINAR si tiene una cita ocupada
+      const estaOcupado = this.citasOcupadas.has(`${existente.date} ${existente.time_start}`);
+      if (estaOcupado) {
+        return false; // No lo eliminamos si hay cita
+      }
+
+      //  ELIMINAR si ya no está en el formulario
+      return !horariosDeseados.has(key);
+    });
+
+    // Identificar qué CREAR (están en el formulario pero no existen)
+    const horariosACrear: ScheduleRequestDTO[] = [];
 
     this.diasSemana.forEach(diaInfo => {
       const group = this.scheduleForm.get(diaInfo.key);
@@ -163,35 +195,74 @@ export class ManageSchedule implements OnInit, OnDestroy {
           const start = `${h < 10 ? '0'+h : h}:00:00`;
           const end = `${(h+1) < 10 ? '0'+(h+1) : (h+1)}:00:00`;
 
+          //  Solo crear si NO existe ya
           const yaExiste = this.misHorariosExistentes.some(existente =>
             existente.date === fecha && existente.time_start === start
           );
 
-          if (yaExiste) continue;
-
-          intentos++;
-
-          this.profScheduleService.createSchedule({
-            profesionalId: Number(profId), date: fecha, time_start: start, time_ends: end
-          }).subscribe({
-            next: () => {
-              guardados++;
-              if(guardados === intentos) {
-                this.snackBar.open("¡Disponibilidad guardada!", "Ok", {duration: 3000});
-                // Reiniciamos el auto-update
-                this.iniciarAutoUpdate();
-              }
-            },
-            error: (e) => console.error("Error guardando:", e)
-          });
+          if (!yaExiste) {
+            horariosACrear.push({
+              profesionalId: Number(profId),
+              date: fecha,
+              time_start: start,
+              time_ends: end
+            });
+          }
         }
       }
     });
 
-    if(intentos === 0) {
-      this.snackBar.open("No hay cambios nuevos.", "Ok", {duration: 2000});
-      this.iniciarAutoUpdate(); // Reiniciar si no hubo nada que guardar
+    //  Ejecutar ELIMINACIONES
+    const deleteRequests = horariosAEliminar.map(horario =>
+      this.profScheduleService.deleteSchedule(horario.id!).pipe(
+        catchError(err => {
+          console.error(`Error eliminando horario ${horario.id}:`, err);
+          return of(null);
+        })
+      )
+    );
+
+    //  Ejecutar CREACIONES
+    const createRequests = horariosACrear.map(horario =>
+      this.profScheduleService.createSchedule(horario).pipe(
+        catchError(err => {
+          console.error('Error creando horario:', err);
+          return of(null);
+        })
+      )
+    );
+
+    //  Ejecutar
+    const allRequests = [...deleteRequests, ...createRequests];
+
+    if (allRequests.length === 0) {
+      this.snackBar.open('No hay cambios para guardar', 'Ok', { duration: 2000 });
+      this.iniciarAutoUpdate();
+      return;
     }
+
+    forkJoin(allRequests).subscribe({
+      next: (results) => {
+        const eliminados = deleteRequests.length;
+        const creados = createRequests.length;
+
+        console.log(`✅ Eliminados: ${eliminados}, Creados: ${creados}`);
+
+        this.snackBar.open(
+          `¡Horario actualizado! (${eliminados} eliminados, ${creados} creados)`,
+          'Ok',
+          { duration: 4000 }
+        );
+
+        // Reiniciar auto-update
+        this.iniciarAutoUpdate();
+      },
+      error: (err) => {
+        console.error('Error guardando cambios:', err);
+        this.snackBar.open('Error al guardar cambios', 'Cerrar', { duration: 3000 });
+        this.iniciarAutoUpdate();
+      }
+    });
   }
 
   // --- VISUALES ---
@@ -205,27 +276,37 @@ export class ManageSchedule implements OnInit, OnDestroy {
     if (hora < ini || hora >= fin) return 'oculto';
 
     const fechaStr = format(dateObj, 'yyyy-MM-dd');
-    const horaStr = `${hora < 10 ? '0'+hora : hora}:00:00`;
+    const horaStr = `${hora < 10 ? '0' + hora : hora}:00:00`;
 
     if (this.citasOcupadas.has(`${fechaStr} ${horaStr}`)) return 'ocupado';
 
     return 'disponible';
   }
 
-  normHora(h: string) { return h.length === 5 ? h+':00' : h; }
+  normHora(h: string) {
+    return h.length === 5 ? h + ':00' : h;
+  }
 
   generarHoras() {
-    this.horas = []; this.horasTabla = []; const d = new Date(); d.setMinutes(0); d.setSeconds(0);
-    for(let i=8; i<=21; i++) {
+    this.horas = [];
+    this.horasTabla = [];
+    const d = new Date();
+    d.setMinutes(0);
+    d.setSeconds(0);
+    for (let i = 8; i <= 21; i++) {
       d.setHours(i);
-      this.horas.push({valor: `${i<10?'0'+i:i}:00:00`, fecha: new Date(d)});
+      this.horas.push({valor: `${i < 10 ? '0' + i : i}:00:00`, fecha: new Date(d)});
       this.horasTabla.push(i);
     }
   }
 
   calcularDiasSemanaActual() {
-    const start = startOfWeek(new Date(), { weekStartsOn: 1 });
+    const start = startOfWeek(new Date(), {weekStartsOn: 1});
     const names = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-    this.diasSemana = names.map((key, i) => ({ key, label: format(addDays(start, i), 'EEEE d'), dateObj: addDays(start, i) }));
+    this.diasSemana = names.map((key, i) => ({
+      key,
+      label: format(addDays(start, i), 'EEEE d'),
+      dateObj: addDays(start, i)
+    }));
   }
 }
