@@ -3,80 +3,70 @@
 <div class="content-section schedule-management" [formGroup]="scheduleForm">
   <h2>Define tu disponibilidad semanal</h2>
 
-  <div class="day-schedule" formGroupName="lunes">
-    <span class="day-label">Lunes</span>
-    <div class="time-range">
-      <mat-form-field appearance="outline">
+  <div class="day-schedule" *ngFor="let dia of diasSemana" [formGroupName]="dia.key">
+    <div class="day-info">
+      <mat-slide-toggle formControlName="activo" color="primary"></mat-slide-toggle>
+      <span class="day-label">{{ dia.key | titlecase }}</span>
+    </div>
+    <div class="time-range" [style.opacity]="scheduleForm.get(dia.key)?.value.activo ? '1' : '0.5'">
+      <mat-form-field appearance="outline" class="small-field">
         <mat-label>Inicio</mat-label>
         <mat-select formControlName="inicio">
-          <mat-option *ngFor="let hora of horas" [value]="hora">
-            {{ hora | date: 'h:mm a' }}
-          </mat-option>
+          <mat-option *ngFor="let h of horas" [value]="h.valor">{{ h.fecha | date:'h:mm a' }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <span>a</span>
-      <mat-form-field appearance="outline">
+      <span class="separator">a</span>
+      <mat-form-field appearance="outline" class="small-field">
         <mat-label>Fin</mat-label>
         <mat-select formControlName="fin">
-          <mat-option *ngFor="let hora of horas" [value]="hora">
-            {{ hora | date: 'h:mm a' }}
-          </mat-option>
+          <mat-option *ngFor="let h of horas" [value]="h.valor">{{ h.fecha | date:'h:mm a' }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <mat-slide-toggle formControlName="activo"></mat-slide-toggle>
-  </div>
-
-  <div class="day-schedule" formGroupName="martes">
-    <span class="day-label">Martes</span>
-    <div class="time-range">
-      <mat-form-field appearance="outline">
-        <mat-label>Inicio</mat-label>
-        <mat-select formControlName="inicio">
-          <mat-option *ngFor="let hora of horas" [value]="hora">
-            {{ hora | date: 'h:mm a' }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <span>a</span>
-      <mat-form-field appearance="outline">
-        <mat-label>Fin</mat-label>
-        <mat-select formControlName="fin">
-          <mat-option *ngFor="let hora of horas" [value]="hora">
-            {{ hora | date: 'h:mm a' }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <mat-slide-toggle formControlName="activo"></mat-slide-toggle>
   </div>
 
   <div class="save-button-container">
     <button mat-flat-button class="btn btn-purple" (click)="GuardarCambios()">
-      Guardar Cambios
+      Guardar Disponibilidad
     </button>
   </div>
 </div>
 
 <div class="content-section weekly-calendar-view">
-  <h2>Vista Semanal del Horario</h2>
+  <h2>Vista Previa del Horario (Semana Actual)</h2>
 
-  <div class="calendar-controls">
-    <div class="nav-buttons"><button mat-icon-button>&lt;</button></div>
-    <h3>Semana del 20 al 26 de Octubre</h3>
-    <div class="nav-buttons"><button mat-icon-button>&gt;</button></div>
+  <div class="table-responsive">
+    <table class="calendar-grid">
+      <thead>
+      <tr>
+        <th class="time-header">Hora</th>
+        <th *ngFor="let dia of diasSemana">
+          {{ dia.key | titlecase }} <br>
+          <small style="font-weight: normal;">{{ dia.dateObj | date:'dd/MM' }}</small>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let hora of horasTabla">
+        <td class="time-header">{{ hora }}:00</td>
+
+        <td *ngFor="let dia of diasSemana"
+            class="time-slot"
+            [ngClass]="{
+                'slot-available-pro': getEstadoVisual(dia.key, dia.dateObj, hora) === 'disponible',
+                'slot-occupied-pro': getEstadoVisual(dia.key, dia.dateObj, hora) === 'ocupado',
+                'slot-unavailable': getEstadoVisual(dia.key, dia.dateObj, hora) === 'oculto'
+              }">
+
+          <ng-container [ngSwitch]="getEstadoVisual(dia.key, dia.dateObj, hora)">
+            <span *ngSwitchCase="'disponible'">Disponible</span>
+            <span *ngSwitchCase="'ocupado'">Ocupado</span>
+            <span *ngSwitchCase="'oculto'">No Disp.</span>
+          </ng-container>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-
-  <table class="calendar-grid">
-    <thead>
-    <tr>
-      <th class="time-header">Hora</th>
-      <th>Lunes 20</th> <th>Martes 21</th> <th>Miércoles 22</th>
-      <th>Jueves 23</th> <th>Viernes 24</th> <th>Sábado 25</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr><th class="time-header">03:00 PM</th> <td class="time-slot slot-available-pro">Disponible</td> <td class="time-slot slot-booked">Ocupado</td> <td class="time-slot slot-available-pro">Disponible</td> <td class="time-slot slot-unavailable">No Disp.</td> <td class="time-slot slot-available-pro">Disponible</td> <td class="time-slot slot-unavailable">No Disp.</td></tr>
-    </tbody>
-  </table>
 </div>

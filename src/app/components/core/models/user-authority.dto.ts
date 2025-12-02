@@ -1,4 +1,9 @@
 export interface UserAuthorityRequestDTO {
-  user_id: number;
-  authority_id: number;
+  userId: number;
+  authorityId: number;
+}
+export interface UserAuthorityResponseDTO {
+  id: number;
+  userId: number;
+  authorityId: number;
 }

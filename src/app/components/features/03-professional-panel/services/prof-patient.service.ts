@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 // (Necesitamos crear este DTO)
 import { UserClientDTO } from '../../../core/models/user-client.dto';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,20 @@ import { UserClientDTO } from '../../../core/models/user-client.dto';
 export class ProfPatientService {
 
   // Apunta al UserController
-  private API_URL = 'http://localhost:8080/upc/MenteActiva/User';
+  private API_URL = 'http://localhost:8080/upc/MenteActiva/Clients';
 
   constructor(private http: HttpClient) { }
+  getPatients(professionalId: number): Observable<UserClientDTO[]> {
+    const token = localStorage.getItem('auth_token');
+    const headers = { Authorization: `Bearer ${token}` };
 
-  /**
-   * Llama a /UsuariosClientes
-   */
-  getPatients(): Observable<UserClientDTO[]> {
-    return this.http.get<UserClientDTO[]>(`${this.API_URL}/UsuariosClientes`);
+    // Usamos TU RUTA nueva directamente
+    const url = `${this.API_URL}/listByProfessional/${professionalId}`;
+
+    console.log("Llamando a la API:", url);
+
+    return this.http.get<UserClientDTO[]>(url, { headers }).pipe(
+      tap(data => console.log("Datos recibidos de listByProfessional:", data))
+    );
   }
 }

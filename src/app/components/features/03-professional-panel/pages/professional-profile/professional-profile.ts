@@ -22,12 +22,17 @@ export class ProfessionalProfile implements OnInit{
     private professionalService: ProfessionalService,
     private snackBar: MatSnackBar
   ) {}
-
+  specializations = [
+    { value: 'Psiquiatra', label: 'Psiquiatra' },
+    { value: 'Psicologo', label: 'Psicólogo' },
+    { value: 'Neurologo', label: 'Neurólogo' },
+    { value: 'NONE', label: 'Sin especialidad' }
+  ];
   ngOnInit(): void {
     this.form = this.fb.group({
       name: ['', Validators.required],
       lastname: ['', Validators.required],
-      specialization: [{ value: '', disabled: true }], // solo lectura
+      specialization: ['', Validators.required],
       mail: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
     });

@@ -24,7 +24,8 @@ import { VideoRequestDTO } from '../../../../core/models/video.dto';
 export class VideoForm implements OnInit {
 
   videoForm!: FormGroup;
-  videoId: number = 0; // Para saber si estamos editando
+  videoId: number = 0;
+  isSaving = false;
 
   constructor(
     private fb: FormBuilder,
@@ -32,87 +33,103 @@ export class VideoForm implements OnInit {
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute // Para leer el ID de la URL
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.CargarFormulario();
 
-    // Lógica de "Editar" (como la de tu profesor [cite: 73-82])
-    this.videoId = Number(this.route.snapshot.paramMap.get('id'));
+    const idParam = this.route.snapshot.paramMap.get('id');
+    this.videoId = idParam ? Number(idParam) : 0;
 
     if (this.videoId > 0) {
-      // (Descomenta esto cuando tengamos la ruta GET /Videos/{id})
-      /*
-      this.profVideoService.getVideoById(this.videoId).subscribe({
-        next: (data) => {
-          this.videoForm.patchValue({
-            title: data.title,
-            descripcion: data.descripcion,
-            url: data.url,
-            duration: data.duration
-          });
-        },
-        error: (err) => {
-          this.snackBar.open("Error al cargar el video", "Cerrar", { duration: 3000 });
-          console.error(err);
-        }
-      });
-      */
+      this.cargarDatosParaEditar();
     }
   }
 
   CargarFormulario(): void {
     this.videoForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(5)]],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
       url: ['', [Validators.required]],
-      duration: ['', [Validators.required]] // (Tu HTML pide 'number', pero el DTO es 'string')
+      duration: ['', [Validators.required, Validators.min(1)]]
+    });
+  }
+
+  cargarDatosParaEditar() {
+    const profId = this.authService.getUserId();
+
+    // Usamos el método correcto de tu servicio (con 'Id' al final)
+    this.profVideoService.getVideosByProfessionalId(Number(profId)).subscribe({
+      next: (videos) => {
+        const videoEncontrado = videos.find(v => v.id === this.videoId);
+
+        if (videoEncontrado) {
+          // CAMBIO 1: Asignamos el valor directo (ya es número en el DTO)
+          this.videoForm.patchValue({
+            title: videoEncontrado.title,
+            description: videoEncontrado.description,
+            url: videoEncontrado.url,
+            duration: videoEncontrado.duration
+          });
+        } else {
+          this.snackBar.open("Video no encontrado", "Cerrar");
+          this.router.navigate(['/profesional/videos']);
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open("Error al cargar datos", "Cerrar");
+      }
     });
   }
 
   Grabar(): void {
     if (this.videoForm.invalid) {
       this.videoForm.markAllAsTouched();
-      this.snackBar.open("Por favor, completa todos los campos.", "Cerrar", { duration: 3000 });
+      this.snackBar.open("Completa todos los campos obligatorios", "Cerrar");
       return;
     }
 
+    this.isSaving = true;
     const profId = this.authService.getUserId();
-    if (profId == null) {
-      this.snackBar.open(
-        "Error: No se pudo identificar al profesional. Inicia sesión nuevamente.",
-        "Cerrar",
-        { duration: 4000 }
-      );
-      return;
-    }
+
     const videoDto: VideoRequestDTO = {
-      title: this.videoForm.get('title')?.value,
-      descripcion: this.videoForm.get('descripcion')?.value,
-      url: this.videoForm.get('url')?.value,
-      duration: `${this.videoForm.get('duration')?.value} min`, // Convertimos a string
-      professional_id: profId
+      title: this.videoForm.value.title,
+      description: this.videoForm.value.description,
+      url: this.videoForm.value.url,
+
+      // CAMBIO 2: Enviamos SOLO el número (sin " min")
+      // Esto soluciona el error 400 Bad Request
+      duration: Number(this.videoForm.value.duration),
+
+      professionalId: Number(profId)
     };
 
     if (this.videoId > 0) {
-      // --- MODO EDICIÓN ---
+      // EDITAR
       this.profVideoService.updateVideo(this.videoId, videoDto).subscribe({
-        next: () => {
-          this.snackBar.open("Video actualizado con éxito", "Ok", { duration: 3000 });
-          this.router.navigate(['/profesional/videos']); // Volvemos a la lista
-        },
-        error: (err) => this.snackBar.open("Error al actualizar", "Cerrar", { duration: 5000 })
+        next: () => this.alFinalizar("¡Video actualizado!"),
+        error: (e) => this.alError(e)
       });
     } else {
-      // --- MODO NUEVO ---
+      // CREAR
       this.profVideoService.createVideo(videoDto).subscribe({
-        next: () => {
-          this.snackBar.open("Video registrado con éxito", "Ok", { duration: 3000 });
-          this.router.navigate(['/profesional/videos']); // Volvemos a la lista
-        },
-        error: (err) => this.snackBar.open("Error al registrar", "Cerrar", { duration: 5000 })
+        next: () => this.alFinalizar("¡Video creado exitosamente!"),
+        error: (e) => this.alError(e)
       });
     }
+  }
+
+  alFinalizar(mensaje: string) {
+    this.isSaving = false;
+    this.snackBar.open(mensaje, "Ok", { duration: 3000 });
+    this.router.navigate(['/profesional/videos']);
+  }
+
+  alError(err: any) {
+    this.isSaving = false;
+    console.error(err);
+    this.snackBar.open("Error al guardar. Intenta de nuevo.", "Cerrar");
   }
 }

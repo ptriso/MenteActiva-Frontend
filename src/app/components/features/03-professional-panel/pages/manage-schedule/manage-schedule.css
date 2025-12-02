@@ -1,78 +1,57 @@
-h1 { font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 1.5rem; }
+/* Estilos Generales */
+h1 { font-family: 'Roboto', sans-serif; font-size: 24px; color: #333; margin-bottom: 20px; }
+h2 { font-size: 18px; color: #444; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+.content-section { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 30px; }
 
-/* --- Contenedores de secciones --- */
-.content-section {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
-  padding: 2rem;
-  margin-bottom: 2rem;
+/* Filas del Horario */
+.day-schedule { display: flex; align-items: center; gap: 20px; padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
+.day-info { display: flex; align-items: center; gap: 15px; width: 180px; }
+.day-label { font-weight: 500; font-size: 16px; color: #333; }
+
+/* Inputs de Hora */
+.time-range { display: flex; align-items: center; gap: 15px; transition: opacity 0.3s; }
+.small-field { width: 140px !important; }
+.separator { font-weight: bold; color: #777; }
+
+/* --- ARREGLO DE COLORES MATERIAL (TEXTO INVISIBLE) --- */
+::ng-deep .mat-mdc-select-value,
+::ng-deep .mat-mdc-option,
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+  color: #333 !important;
+}
+::ng-deep .mat-mdc-form-field-flex { background-color: #fff; }
+/* ... tus estilos anteriores ... */
+
+/* Color Rojo para cuando un cliente ya reservó */
+.slot-occupied-pro {
+  background-color: #ffebee; /* Rojo muy suave */
+  color: #c62828;            /* Rojo fuerte */
+  border: 1px solid #ffcdd2;
+  font-weight: bold;
+  text-decoration: line-through; /* Opcional: tachado */
 }
 
-.content-section h2 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.5rem; margin-bottom: 1.5rem;
-  border-bottom: 2px solid #eee; padding-bottom: 0.5rem;
+/* Botón Guardar */
+.save-button-container { margin-top: 25px; text-align: right; }
+.btn-purple { background-color: #6200ea !important; color: white !important; padding: 10px 25px !important; border-radius: 8px !important; }
+
+/* Tabla */
+.table-responsive { overflow-x: auto; margin-top: 20px; }
+.calendar-grid { width: 100%; border-collapse: separate; border-spacing: 4px; }
+.calendar-grid th { background-color: #f1f3f5; color: #333; padding: 12px; border: 1px solid #ddd; min-width: 100px; text-align: center; }
+.calendar-grid td { padding: 12px; text-align: center; border: 1px solid #eee; border-radius: 4px; font-size: 13px; }
+.time-header { background-color: #e9ecef !important; font-weight: bold; }
+
+/* COLORES VERDE / ROJO */
+.slot-unavailable {
+  background-color: #fff5f5; /* Fondo Rojo claro */
+  color: #c0392b;            /* Texto Rojo */
+  border: 1px solid #fadbd8;
 }
 
-/* Estilos para definir horario */
-.day-schedule {
-  display: grid;
-  grid-template-columns: 100px 1fr 1fr auto; /* Columna para Inicio y Fin */
-  align-items: center;
-  gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem;
-  border-bottom: 1px solid #f0f0f0;
+.slot-available-pro {
+  background-color: #d4edda; /* Fondo Verde claro */
+  color: #155724;            /* Texto Verde */
+  border: 1px solid #c3e6cb;
+  font-weight: bold;
 }
-.day-schedule:last-child { border-bottom: none; }
-
-.day-label { font-weight: 600; font-size: 1.1rem; }
-
-.time-range { display: contents; } /* Hacemos que los hijos se pongan en el grid */
-
-/* Ajustamos el tamaño de los select de Material */
-.day-schedule mat-form-field {
-  width: 100%;
-  font-family: 'Montserrat', sans-serif;
-}
-
-/* Quitamos el espacio extra de mat-form-field */
-:host ::ng-deep .day-schedule .mat-mdc-form-field-subscript-wrapper {
-  display: none;
-}
-
-.save-button-container { margin-top: 1rem; text-align: right; }
-
-/* --- Estilos para la VISTA de Calendario --- */
-.calendar-controls {
-  display: flex;
-  justify-content: space-between; align-items: center;
-  margin-bottom: 1rem;
-}
-.calendar-controls h3 { font-family: 'Poppins', sans-serif; font-size: 1.4rem; }
-
-.calendar-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
-.calendar-grid th, .calendar-grid td {
-  border: 1px solid #eee;
-  padding: 0.5rem; text-align: center;
-  vertical-align: middle;
-  height: 50px;
-}
-.calendar-grid th { font-family: 'Poppins', sans-serif; padding: 0.75rem; background-color: #f9f9f9; }
-.time-header { width: 100px; font-weight: 600; }
-
-.time-slot { font-size: 0.9rem; }
-.slot-unavailable { background-color: #f8f9fa; color: #ccc; }
-.slot-available-pro { background-color: #e6ffee; color: #28a745; }
-.slot-booked { background-color: #ffe6e6; color: #dc3545; font-weight: 500; }
-
-/* Botón */
-.btn {
-  padding: 0.9rem 1.8rem !important; /* Forzar padding */
-  border-radius: 8px !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
-  font-family: 'Poppins', sans-serif !important;
-  line-height: 1.5 !important;
-}
-.btn-purple { background-color: #6f42c1; color: white; }
-.btn-purple:hover { background-color: #5a32a3; }

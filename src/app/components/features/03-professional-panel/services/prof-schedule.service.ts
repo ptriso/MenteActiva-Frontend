@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // Usaremos el DTO de Schedule que ya creamos
@@ -18,12 +18,26 @@ export class ProfScheduleService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Llama a /registrar para crear un nuevo bloque de horario
-   */
-  createSchedule(dto: ScheduleRequestDTO): Observable<ScheduleResponseDTO> {
-    return this.http.post<ScheduleResponseDTO>(`${this.API_URL}/registrar`, dto);
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('jwtToken'); // o sessionStorage.getItem('token')
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
   }
 
-  // (Aquí podemos añadir métodos para getMySchedules, update, delete, etc.)
+  createSchedule(schedule: ScheduleRequestDTO): Observable<ScheduleResponseDTO> {
+    return this.http.post<ScheduleResponseDTO>(
+      `${this.API_URL}/registrar`,
+      schedule,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getSchedulesByProfessionalId(profId: number): Observable<ScheduleResponseDTO[]> {
+    return this.http.get<ScheduleResponseDTO[]>(
+      `${this.API_URL}/profesional/${profId}`,
+      { headers: this.getHeaders() }
+    );
+  }
 }

@@ -41,7 +41,7 @@
         <mat-chip-set>
           <mat-chip *ngFor="let role of user.authorities" removable (removed)="eliminarRol(user, role)">
             {{ role }}
-            <button mat-icon-button matChipRemove matTooltip="Eliminar ROL">
+            <button mat-icon-button matChipRemove>
               <mat-icon>close</mat-icon>
             </button>
           </mat-chip>
@@ -49,23 +49,17 @@
       </td>
     </ng-container>
 
-    <!-- ACCIONES: AÑADIR ROL -->
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let user" class="acciones-cell">
-
         <mat-form-field appearance="outline" class="add-role-field">
           <mat-label>AÑADIR ROL</mat-label>
-          <mat-select
-            (selectionChange)="anadirRol(user, $event.value)">
-            <mat-option
-              *ngFor="let rol of rolesDisponibles(user)"
-              [value]="rol.id">
+          <mat-select (selectionChange)="anadirRol(user, $event.value)">
+            <mat-option *ngFor="let rol of rolesDisponibles(user)" [value]="rol.id">
               {{ rol.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
       </td>
     </ng-container>
 
