@@ -1,0 +1,48 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #3f3d56;
+  margin: 0;
+}
+
+.header-btn {
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-weight: 500;
+}
+
+.table-container {
+  padding: 20px;
+}
+
+.custom-table th {
+  background: #ececff;
+  color: #3f3d56;
+  font-weight: 600;
+}
+
+.custom-table td {
+  padding: 12px 10px;
+}
+
+.actions button {
+  margin-right: 10px;
+}
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  font-size: 18px;
+  color: #666;
+}
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

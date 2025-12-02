@@ -1,0 +1,21 @@
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #3f3d56;
+}
+
+.detail-container {
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+}
+
+.input-full {
+  width: 100%;
+}
+
+.btn-save {
+  margin-top: 20px;
+  width: 100%;
+}

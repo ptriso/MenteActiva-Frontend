@@ -1,0 +1,10 @@
+<h2>Conclusión de la Cita</h2>
+
+<mat-form-field appearance="fill" class="w-100">
+  <mat-label>Resumen / Conclusión</mat-label>
+  <textarea matInput rows="6" [(ngModel)]="summary"></textarea>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="save()">
+  Guardar Conclusión
+</button>

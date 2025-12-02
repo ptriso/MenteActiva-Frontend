@@ -1,0 +1,19 @@
+<h2 class="chat-title">Conversación de la Sesión</h2>
+
+<div class="chat-container">
+
+  <div *ngFor="let line of lines"
+       class="chat-line"
+       [ngClass]="line.includes('Paciente') ? 'paciente' : 'doctor'">
+
+    {{ line }}
+  </div>
+
+</div>
+
+<div class="actions">
+  <button mat-button mat-dialog-close class="close-btn">
+    Cerrar chat
+  </button>
+</div>
+

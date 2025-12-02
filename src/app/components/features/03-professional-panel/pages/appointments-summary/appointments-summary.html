@@ -1,0 +1,22 @@
+<div class="summary-page">
+
+  <div class="summary-header">
+    <h1 class="title">Conclusión de la Cita</h1>
+
+    <button mat-stroked-button color="primary"
+            routerLink="/profesional/appointments">
+      Volver al listado
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Cargando conclusión...
+  </div>
+
+  <div *ngIf="!loading && summary" class="summary-card mat-elevation-z4">
+    <p class="summary-text">
+      {{ summary }}
+    </p>
+  </div>
+
+</div>
