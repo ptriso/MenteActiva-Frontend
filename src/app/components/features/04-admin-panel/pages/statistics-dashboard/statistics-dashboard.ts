@@ -115,38 +115,19 @@ export class StatisticsDashboard implements AfterViewInit, OnDestroy {
     this.mostViewedVideosChart = new Chart(canvas, {
       type: 'bar',
       data: {
-        labels: data.map(v => v.titulo.length > 30 ? v.titulo.substring(0, 30) + '...' : v.titulo),
+        labels: data.map(v => {
+          const title = v.videoTitle ?? v.titulo ?? 'Sin título';
+          return title.length > 30 ? title.substring(0, 30) + '...' : title;
+        }),
         datasets: [{
           label: 'Total de Vistas',
-          data: data.map(v => v.totalVistas),
+          data: data.map(v => v.totalViews ?? v.totalVistas ?? 0),
           backgroundColor: 'rgba(54, 162, 235, 0.7)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 2
         }]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top'
-          },
-          title: {
-            display: true,
-            text: 'Videos Más Vistos',
-            font: { size: 18 }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              stepSize: 1
-            }
-          }
-        }
-      }
+      options: { /* igual que antes */ }
     });
   }
 

@@ -68,8 +68,6 @@ export class MyAppointments implements OnInit {
       }
     });
 
-    this.loading = true;
-
     this.appointmentService.getAppointmentsByClientId(clientId).subscribe({
       next: (citas) => {
         this.loading = false;
@@ -91,11 +89,18 @@ export class MyAppointments implements OnInit {
 
     citas.forEach(c => {
       const fechaHora = new Date(`${c.date}T${c.timeStart}`);
+      const status = (c.status || '').toUpperCase();
 
-      if (fechaHora >= now) {
-        this.upcomingAppointments.push(c);
-      } else {
+      // Estados cerrados -> siempre historial
+      const esCerrada =
+        status === 'COMPLETADA' ||
+        status === 'CANCELADA'  ||
+        status === 'INASISTENCIA';
+
+      if (esCerrada || fechaHora < now) {
         this.historyAppointments.push(c);
+      } else {
+        this.upcomingAppointments.push(c);
       }
     });
   }

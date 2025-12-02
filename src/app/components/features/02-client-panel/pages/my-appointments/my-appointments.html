@@ -49,7 +49,11 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let row">
-          <button mat-button color="warn" (click)="cancelAppointment(row)">
+          <button
+            mat-button
+            color="warn"
+            *ngIf="row.status === 'PROGRAMADA' || row.status === 'CONFIRMADA'"
+            (click)="cancelAppointment(row)">
             Cancelar
           </button>
         </td>
