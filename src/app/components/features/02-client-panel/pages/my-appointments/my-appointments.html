@@ -70,7 +70,7 @@
 
     <table mat-table [dataSource]="historyAppointments" class="appointments-table mat-elevation-z1">
 
-      <!-- Reutilizamos las mismas columnas pero sin 'actions' -->
+      <!-- Profesional -->
       <ng-container matColumnDef="professional">
         <th mat-header-cell *matHeaderCellDef> Profesional </th>
         <td mat-cell *matCellDef="let row">
@@ -78,11 +78,13 @@
         </td>
       </ng-container>
 
+      <!-- Fecha -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Fecha </th>
         <td mat-cell *matCellDef="let row"> {{ row.date }} </td>
       </ng-container>
 
+      <!-- Hora -->
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef> Hora </th>
         <td mat-cell *matCellDef="let row">
@@ -90,9 +92,54 @@
         </td>
       </ng-container>
 
+      <!-- Estado -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Estado </th>
         <td mat-cell *matCellDef="let row"> {{ row.status }} </td>
+      </ng-container>
+
+      <!-- Acciones solo lectura -->
+      <!-- Acciones (historial) -->
+      <ng-container matColumnDef="historyActions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+
+          <!-- Caso 1: COMPLETADA -> Ver chat + Ver conclusión -->
+          <ng-container *ngIf="row.status === 'COMPLETADA'; else otherStates">
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="showChat(row.id)">
+              Ver chat
+            </button>
+
+            <button
+              mat-stroked-button
+              color="accent"
+              style="margin-left: 8px"
+              (click)="showSummary(row.id)">
+              Ver conclusión
+            </button>
+          </ng-container>
+
+          <!-- Caso 2: CANCELADA o INASISTENCIA -> solo Ver conclusión -->
+          <ng-template #otherStates>
+            <ng-container *ngIf="row.status === 'CANCELADA' || row.status === 'INASISTENCIA'; else noActions">
+              <button
+                mat-stroked-button
+                color="accent"
+                (click)="showSummary(row.id)">
+                Ver conclusión
+              </button>
+            </ng-container>
+
+            <!-- Caso 3: otros estados -> nada -->
+            <ng-template #noActions>
+              <span>-</span>
+            </ng-template>
+          </ng-template>
+
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory"></tr>
@@ -100,4 +147,3 @@
     </table>
   </div>
 </div>
-
