@@ -1,0 +1,29 @@
+<h1>📊 Visión General - Estadísticas de la Plataforma</h1>
+<p class="subtitulo">Análisis y métricas del uso de Mente Activa</p>
+
+<!-- Loading overlay -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando estadísticas...</p>
+  </div>
+</div>
+
+<!-- Los canvas SIEMPRE están en el DOM, solo ocultos -->
+<div class="charts-grid" [class.hidden]="isLoading">
+  <div class="chart-card">
+    <canvas id="mostViewedVideosChart"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <canvas id="citasPorProfesionalChart"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <canvas id="topEspecialidadesChart"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <canvas id="topProfesionalesChart"></canvas>
+  </div>
+</div>
