@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Historial del Chat</h2>
+
+<mat-dialog-content class="chat-content">
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && messages.length === 0" class="no-messages">
+    <p>No hay mensajes en este historial.</p>
+  </div>
+
+  <div class="message-list" *ngIf="!isLoading && messages.length > 0">
+
+    <div *ngFor="let msg of messages"
+         class="message-bubble"
+         [ngClass]="{
+           'bubble-client': msg.sender_type === 'CLIENTE',
+           'bubble-prof': msg.sender_type === 'PROFESIONAL'
+         }">
+
+      <div class="sender-label">
+        {{ msg.sender_type === 'CLIENTE' ? 'Tú' : 'Profesional' }}
+      </div>
+
+      <p>{{ msg.mensaje }}</p>
+
+      <div class="timestamp">
+        {{ msg.timestamp | date: 'd/M/yy, h:mm a' }}
+      </div>
+    </div>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="onCloseClick()">Cerrar</button>
+</mat-dialog-actions>
