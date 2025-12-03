@@ -23,9 +23,7 @@ export class StatisticsDashboard implements AfterViewInit, OnDestroy {
 
   constructor(private statisticsService: StatisticsService) { }
 
-  // ✅ CAMBIO IMPORTANTE: ngOnInit → ngAfterViewInit
   ngAfterViewInit(): void {
-    // Pequeño delay para asegurar que el DOM está listo
     setTimeout(() => {
       this.loadAllStatistics();
     }, 100);
@@ -43,7 +41,6 @@ export class StatisticsDashboard implements AfterViewInit, OnDestroy {
       }
     };
 
-    // Videos más vistos
     this.statisticsService.getMostViewedVideos().subscribe({
       next: (data) => {
         if (data && data.length > 0) {
@@ -57,7 +54,6 @@ export class StatisticsDashboard implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Citas por profesional
     this.statisticsService.getCitasPorProfesional().subscribe({
       next: (data) => {
         if (data && data.length > 0) {
@@ -71,7 +67,6 @@ export class StatisticsDashboard implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Top especialidades
     this.statisticsService.getTopEspecialidades(5).subscribe({
       next: (data) => {
         if (data && data.length > 0) {
@@ -85,7 +80,6 @@ export class StatisticsDashboard implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Top profesionales
     this.statisticsService.getTopProfesionales(5).subscribe({
       next: (data) => {
         if (data && data.length > 0) {

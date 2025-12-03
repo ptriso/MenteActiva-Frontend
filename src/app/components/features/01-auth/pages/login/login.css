@@ -1,11 +1,7 @@
-/*
-  :host es un selector que apunta a este componente (app-login).
-  Lo usamos para centrar la tarjeta en la pantalla.
-*/
 .landing-btn-fixed {
   position: fixed;
   top: 20px;
-  left: 24px;   /* ✅ Ahora se alinea a la izquierda */
+  left: 24px;
   z-index: 1000;
 
   font-weight: 600;
@@ -29,10 +25,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 90vh; /* Altura para centrar verticalmente */
+  min-height: 90vh;
 }
-
-/* --- Tus Estilos (Copiados de tu archivo) --- */
 
 .card-container {
   background-color: #FFFFFF;
@@ -73,21 +67,13 @@ h1 {
   color: #333;
 }
 
-/* --- Tus Estilos (Adaptados para Material) --- */
-
-/* Reemplazamos tu .form-group con esto.
-  Aplica a <mat-form-field>
-*/
 mat-form-field {
   width: 100%;
-  margin-bottom: 1rem; /* Un poco menos de espacio */
+  margin-bottom: 1rem;
   text-align: left;
   font-family: 'Roboto', sans-serif;
 }
 
-/* Clase base .btn para AMBOS botones.
-  Usamos !important para forzar tus estilos sobre Material.
-*/
 .btn {
   width: 100%;
   padding: 0.9rem 0 !important;
@@ -96,10 +82,9 @@ mat-form-field {
   font-weight: 600 !important;
   font-family: 'Poppins', sans-serif !important;
   margin-top: 0.5rem !important;
-  line-height: 1.5 !important; /* Ajuste para altura de botón */
+  line-height: 1.5 !important;
 }
 
-/* Tu botón verde para [mat-flat-button] */
 .btn-green {
   background-color: #28a745 !important;
   color: #FFFFFF !important;
@@ -108,20 +93,17 @@ mat-form-field {
   background-color: #218838 !important;
 }
 
-/* Tu botón morado para [mat-stroked-button] (bordeado) */
 .btn-purple {
-  /* Hacemos que sea bordeado (stroked) */
   background-color: transparent !important;
   color: #6f42c1 !important;
   border: 2px solid #6f42c1 !important;
 }
 .btn-purple:hover {
-  background-color: #f1ecf9 !important; /* Hover morado claro */
+  background-color: #f1ecf9 !important;
   border-color: #5a32a3 !important;
   color: #5a32a3 !important;
 }
 
-/* --- Tus Estilos (Sin cambios) --- */
 
 .links-container {
   margin-top: 1.5rem;
@@ -130,7 +112,7 @@ mat-form-field {
 .links-container a {
   color: #007BFF;
   text-decoration: none;
-  cursor: pointer; /* Añadido */
+  cursor: pointer;
 }
 .landing-btn:hover {
   background: rgba(0,123,255,0.12);

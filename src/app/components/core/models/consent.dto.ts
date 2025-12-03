@@ -1,5 +1,5 @@
 export interface ConsentDTO {
-  doc_consent: string; // Asumiremos que es la URL del archivo subido
+  doc_consent: string;
   text: string;
   client_id: number;
 }

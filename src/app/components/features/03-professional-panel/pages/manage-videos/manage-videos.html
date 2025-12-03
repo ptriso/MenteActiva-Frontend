@@ -25,18 +25,15 @@
   <div class="ranking-list" *ngIf="videosMasVistos.length > 0; else noData">
     <div class="ranking-item" *ngFor="let video of videosMasVistos; let i = index">
 
-      <!-- Número del ranking -->
       <div class="rank-number" [class.top-1]="i === 0">
         {{ i + 1 }}
       </div>
 
-      <!-- Información del video -->
       <div class="video-info">
         <div class="video-title">{{ video.videoTitle }}</div>
         <div class="video-author">{{ video.authorName }} {{ video.authorLastname }}</div>
       </div>
 
-      <!-- Contador de vistas -->
       <div class="view-count">
         <i class="fas fa-eye"></i> {{ video.totalViews }} vistas
       </div>

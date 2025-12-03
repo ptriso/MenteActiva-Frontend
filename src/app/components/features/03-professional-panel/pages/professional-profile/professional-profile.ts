@@ -79,7 +79,7 @@ export class ProfessionalProfile implements OnInit{
     const dto: any = {
       name: this.form.get('name')?.value,
       lastname: this.form.get('lastname')?.value,
-      specialization: this.form.get('specialization')?.value, // aunque venga disabled, el backend puede ignorarlo
+      specialization: this.form.get('specialization')?.value,
       mail: this.form.get('mail')?.value,
       phone: this.form.get('phone')?.value,
       userId: userId

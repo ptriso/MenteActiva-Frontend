@@ -1,4 +1,3 @@
-// my-appointments.ts (ACTUALIZADO)
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,19 +5,16 @@ import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
-// Servicios
 import { AppointmentService } from '../../services/appointment.service';
 import { AuthService } from '../../../../core/services/auth';
 import { ProfAppointmentsService } from '../../../03-professional-panel/services/prof-appointments.service';
 
-// Componentes
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { ChatDialogComponent } from '../../../03-professional-panel/pages/appointments-chat-dialog/chat-dialog.component';
 import { SummaryDialogComponent } from './summary-dialog.component';
 import { SharedHistoryDialogComponent } from './shared-history-dialog.component';
-import { ConfirmDialogComponent } from './confirm-dialog.component'; // 👈 NUEVO
+import { ConfirmDialogComponent } from './confirm-dialog.component';
 
-// Modelos
 import { AppointmentClientDTO } from '../../../../core/models/appointment-client.dto';
 
 @Component({
@@ -38,7 +34,7 @@ export class MyAppointments implements OnInit {
 
   upcomingAppointments: AppointmentClientDTO[] = [];
   historyAppointments: AppointmentClientDTO[] = [];
-  allAppointments: AppointmentClientDTO[] = []; // 👈 NUEVO: guardamos todas las citas
+  allAppointments: AppointmentClientDTO[] = [];
 
   displayedColumnsUpcoming = ['professional', 'date', 'time', 'status', 'actions'];
   displayedColumnsHistory = ['professional', 'date', 'time', 'status', 'historyActions'];
@@ -63,13 +59,12 @@ export class MyAppointments implements OnInit {
     this.loadAppointments(clientId);
   }
 
-  // 🔹 Carga las citas del cliente
   private loadAppointments(clientId: number): void {
     this.loading = true;
     this.appointmentService.getAppointmentsByClientId(clientId).subscribe({
       next: (citas) => {
         this.loading = false;
-        this.allAppointments = citas; // 👈 NUEVO: guardamos todas las citas
+        this.allAppointments = citas;
         this.splitUpcomingAndHistory(citas);
       },
       error: (err) => {
@@ -80,7 +75,6 @@ export class MyAppointments implements OnInit {
     });
   }
 
-  // 🔹 Separa próximas vs historial
   private splitUpcomingAndHistory(citas: AppointmentClientDTO[]) {
     const now = new Date();
 
@@ -103,7 +97,6 @@ export class MyAppointments implements OnInit {
       }
     });
 
-    // Ordenar: próximas por fecha ASC, historial por fecha DESC
     this.upcomingAppointments.sort((a, b) =>
       new Date(`${a.date}T${a.timeStart}`).getTime() - new Date(`${b.date}T${b.timeStart}`).getTime()
     );
@@ -113,7 +106,6 @@ export class MyAppointments implements OnInit {
     );
   }
 
-  // 🎨 Helpers de visualización
   getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
     switch (status?.toUpperCase()) {
       case 'COMPLETADA':
@@ -162,7 +154,6 @@ export class MyAppointments implements OnInit {
     return dateStr === today;
   }
 
-  // 🔹 Ver chat de la cita
   showChat(appointmentId: number): void {
     this.profApptService.generateChat(appointmentId).subscribe({
       next: (resp) => {
@@ -182,7 +173,6 @@ export class MyAppointments implements OnInit {
     });
   }
 
-  // 🔹 Ver conclusión de la cita
   showSummary(appointmentId: number): void {
     this.profApptService.getSummary(appointmentId).subscribe({
       next: (data) => {
@@ -203,12 +193,10 @@ export class MyAppointments implements OnInit {
     });
   }
 
-  // 🆕 Ver historial compartido con un profesional específico
   showSharedHistory(appointment: AppointmentClientDTO): void {
     const professionalId = appointment.professionalId;
     const professionalName = `${appointment.professionalName} ${appointment.professionalLastname}`;
 
-    // Filtrar todas las citas con este profesional
     const sharedAppointments = this.allAppointments.filter(
       appt => appt.professionalId === professionalId
     );
@@ -223,7 +211,6 @@ export class MyAppointments implements OnInit {
     });
   }
 
-  // 🔹 Cancelar cita
   cancelAppointment(app: AppointmentClientDTO): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '450px',

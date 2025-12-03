@@ -9,17 +9,14 @@
   justify-content: center;
   text-align: center;
 
-  /* Usamos tu fondo azul claro */
   background-color: #eaf4ff;
 
-  /* Ocupa toda la altura visible menos el header (si tuvieras uno) */
   min-height: 90vh;
   padding: 2rem;
 }
 
-/* Reutilizamos tu estilo de logo-placeholder */
 .logo-placeholder {
-  width: 100px; /* Un poco más grande para el landing */
+  width: 100px;
   height: 100px;
   background-color: #d1e7ff;
   border: 3px solid #007BFF;
@@ -55,10 +52,9 @@ h1 {
   gap: 1.5rem;
 }
 
-/* --- Reutilizamos TUS estilos de botones --- */
 
 .btn {
-  min-width: 180px; /* Ancho mínimo para los botones */
+  min-width: 180px;
   padding: 0.9rem 1.5rem !important;
   border-radius: 8px !important;
   font-size: 1rem !important;
@@ -67,7 +63,6 @@ h1 {
   line-height: 1.5 !important;
 }
 
-/* Tu botón verde */
 .btn-green {
   background-color: #28a745 !important;
   color: #FFFFFF !important;
@@ -76,7 +71,6 @@ h1 {
   background-color: #218838 !important;
 }
 
-/* Tu botón morado */
 .btn-purple {
   background-color: #6f42c1 !important;
   color: #FFFFFF !important;

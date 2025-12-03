@@ -1,4 +1,3 @@
-// shared-history-dialog.component.ts
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -182,7 +181,6 @@ interface DialogData {
       margin-right: 8px;
     }
 
-    /* Scrollbar personalizado */
     .dialog-content::-webkit-scrollbar {
       width: 8px;
     }
@@ -210,7 +208,6 @@ export class SharedHistoryDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Ordenar por fecha descendente (más reciente primero)
     this.data.appointments.sort((a, b) => {
       const dateA = new Date(`${a.date}T${a.timeStart}`);
       const dateB = new Date(`${b.date}T${b.timeStart}`);

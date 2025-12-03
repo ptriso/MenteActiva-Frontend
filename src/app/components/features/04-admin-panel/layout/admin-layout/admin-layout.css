@@ -1,9 +1,7 @@
-/* Contenedor principal */
 .dashboard-container {
   height: 100vh;
 }
 
-/* SIDEBAR */
 .sidebar {
   width: 260px;
   background-color: #ffffff;
@@ -43,7 +41,6 @@
   padding-top: 0.5rem;
 }
 
-/* Items del menú */
 .sidebar-nav a {
   font-family: 'Poppins', sans-serif;
   font-size: 0.95rem;
@@ -54,13 +51,11 @@
   font-size: 1rem;
 }
 
-/* Item activo */
 .sidebar-nav a.active {
   background-color: #f3e7ff;
   color: #6f42c1;
 }
 
-/* Footer de sidebar */
 .sidebar-footer {
   margin-top: auto;
   padding: 1rem 1.5rem;
@@ -72,14 +67,12 @@
   opacity: 0.9;
 }
 
-/* CONTENIDO PRINCIPAL */
 .main-content {
   background-color: #f7f8fc;
   display: flex;
   flex-direction: column;
 }
 
-/* HEADER */
 .header {
   background-color: #ffffff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
@@ -99,7 +92,6 @@
   flex: 1 1 auto;
 }
 
-/* Icono de perfil */
 .profile-menu {
   cursor: pointer;
   display: flex;
@@ -110,7 +102,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #e53935; /* rojo tipo Google */
+  background-color: #e53935;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -120,12 +112,10 @@
   font-size: 1rem;
 }
 
-/* Contenido */
 .content-area {
   padding: 1.5rem 2rem;
 }
 
-/* Item del menú "Cerrar sesión" */
 .logout-item mat-icon {
   margin-right: 0.5rem;
 }

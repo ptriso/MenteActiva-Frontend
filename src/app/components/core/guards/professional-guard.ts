@@ -7,7 +7,6 @@ export const professionalGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authorities = authService.getAuthorities();
 
-  // (Asumo que el rol se llama 'ROLE_PROFESSIONAL', lo podemos ajustar luego)
   if (authorities.includes('ROLE_PROFESSIONAL')) {
     return true;
   }

@@ -6,7 +6,6 @@ h1 { font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 0.5rem;
   margin-bottom: 1.5rem;
 }
 
-/* --- Controles Superiores --- */
 .controls-bar {
   margin-bottom: 2rem;
   background-color: #fff;
@@ -18,7 +17,6 @@ h1 { font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 0.5rem;
 :host ::ng-deep .search-bar .mat-mdc-form-field-subscript-wrapper { display: none; }
 :host ::ng-deep .search-bar .mat-mdc-text-field-wrapper { height: 50px !important; }
 
-/* --- Contenedor de la Lista --- */
 .list-container {
   background-color: #ffffff;
   border-radius: 12px;
@@ -27,23 +25,20 @@ h1 { font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 0.5rem;
 }
 table { width: 100%; }
 
-/* --- Estilos para los Chips de Roles --- */
 .role-client {
-  background-color: #e6f7ff !important; /* Azul */
+  background-color: #e6f7ff !important;
   color: #007BFF !important;
 }
 .role-prof {
-  background-color: #f0e6ff !important; /* Morado */
+  background-color: #f0e6ff !important;
   color: #6f42c1 !important;
 }
 .role-admin {
-  background-color: #fde0e0 !important; /* Rojo */
+  background-color: #fde0e0 !important;
   color: #dc3545 !important;
 }
 
-/* --- Estilo para el Select de Acciones --- */
 .role-select {
-  /* Quitamos el padding inferior para que quepa en la fila */
   :host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
     display: none;
   }

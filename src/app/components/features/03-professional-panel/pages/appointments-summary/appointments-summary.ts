@@ -27,7 +27,6 @@ export class AppointmentsSummaryComponent implements OnInit {
 
     this.profApptService.getSummary(this.appointmentId).subscribe({
       next: (data) => {
-        // data = { conclusion: '...' }
         this.summary = data?.conclusion || 'Esta cita no tiene conclusión registrada.';
         this.loading = false;
       },

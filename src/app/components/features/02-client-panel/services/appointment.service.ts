@@ -16,9 +16,6 @@ export class AppointmentService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Llama a /registrar para crear una nueva cita
-   */
   createAppointment(dto: AppointmentRequestDTO): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/registrar`, dto);
   }

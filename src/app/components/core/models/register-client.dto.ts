@@ -4,5 +4,5 @@ export interface RegisterClientDTO {
   mail: string;
   phone: string;
   age: number;
-  userId: number; // El ID que nos devuelve el registro de usuario
+  userId: number;
 }

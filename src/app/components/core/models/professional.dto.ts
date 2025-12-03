@@ -1,4 +1,3 @@
-// src/app/core/models/professional.dto.ts
 export interface ProfessionalResponseDTO {
   id: number;
   name: string;

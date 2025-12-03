@@ -10,21 +10,18 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
-/* --- Reutilizamos el grid del dashboard --- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-/* --- Estilos del Dashboard (Copiados para consistencia) --- */
 .action-card {
   background-color: #ffffff;
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
   transition: transform 0.3s, box-shadow 0.3s;
-  /* Añadimos flex-direction para centrar el botón */
   display: flex;
   flex-direction: column;
 }
@@ -37,7 +34,7 @@ h1 {
 .action-card h3 {
   font-family: 'Poppins', sans-serif;
   font-size: 1.3rem;
-  margin-bottom: 0.25rem; /* Menos espacio */
+  margin-bottom: 0.25rem;
 }
 
 .btn {
@@ -46,13 +43,12 @@ h1 {
   font-family: 'Poppins', sans-serif; cursor: pointer;
   transition: background-color 0.3s ease; text-decoration: none;
   display: inline-block;
-  margin-top: auto; /* <-- Esto empuja el botón al fondo de la card */
+  margin-top: auto;
 }
 
 .btn-purple { background-color: #6f42c1; }
 .btn-purple:hover { background-color: #5a32a3; }
 
-/* --- Nuevos Estilos para esta página --- */
 
 .professional-card {
   text-align: center;
@@ -62,7 +58,7 @@ h1 {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #d1e7ff; /* Tu color azul */
+  background-color: #d1e7ff;
   color: #007BFF;
   display: flex;
   align-items: center;
@@ -85,5 +81,5 @@ h1 {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 1.5rem;
-  flex-grow: 1; /* <-- Esto hace que el texto ocupe el espacio */
+  flex-grow: 1;
 }

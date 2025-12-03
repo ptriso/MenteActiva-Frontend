@@ -1,6 +1,3 @@
-/* my-patients.css */
-
-/* Contenedor principal */
 :host {
   display: block;
   width: 100%;
@@ -18,7 +15,6 @@ h1 {
   font-weight: 600;
 }
 
-/* Badge de cantidad de pacientes */
 .patient-count {
   display: inline-flex;
   align-items: center;
@@ -39,7 +35,6 @@ h1 {
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
-/* Animación de entrada */
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -51,7 +46,6 @@ h1 {
   }
 }
 
-/* Barra de búsqueda */
 .controls-bar {
   display: flex;
   width: 100%;
@@ -63,12 +57,10 @@ h1 {
 }
 
 ::ng-deep .search-bar .mat-mdc-form-field-subscript-wrapper {
-  display: none; /* Oculta espacio extra debajo del input */
+  display: none;
 }
 
-/* --- ESTILOS DE LA TABLA (FORZADOS) --- */
 
-/* El contenedor de la tabla */
 .list-container {
   display: block;
   width: 100%;
@@ -78,13 +70,11 @@ h1 {
   background: white;
 }
 
-/* La tabla en sí - IMPORTANTE */
 table.mat-table {
-  width: 100% !important; /* Fuerza el ancho al 100% */
+  width: 100% !important;
   table-layout: auto;
 }
 
-/* Encabezados */
 th.mat-header-cell {
   background-color: #f5f5f5;
   color: #333;
@@ -93,30 +83,26 @@ th.mat-header-cell {
   border-bottom: 2px solid #ddd;
 }
 
-/* Celdas */
 td.mat-cell {
   padding: 16px;
   border-bottom: 1px solid #eee;
   color: #555;
 }
 
-/* Fila de "No encontrado" */
 .mat-no-data-row td {
   padding: 24px;
   text-align: center;
   font-style: italic;
   color: #999;
   background-color: #fafafa;
-  width: 100%; /* Asegura que ocupe todo */
+  width: 100%;
 }
 
-/* Columna de acciones */
 .mat-column-acciones {
   width: 120px;
   text-align: center;
 }
 
-/* Responsive para el badge */
 @media (max-width: 768px) {
   h1 {
     flex-direction: column;

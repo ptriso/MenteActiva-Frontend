@@ -15,5 +15,5 @@ import { MaterialModule } from '../../../../shared/material/material.imports';
   styleUrls: ['./prof-dashboard.css']
 })
 export class ProfDashboard {
-  // (Aquí pondremos lógica para cargar las 4 citas de hoy, etc.)
+
 }

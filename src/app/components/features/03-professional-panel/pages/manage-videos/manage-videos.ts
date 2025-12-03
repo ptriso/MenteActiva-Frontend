@@ -1,4 +1,3 @@
-// manage-videos.ts
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -30,7 +29,7 @@ export class ManageVideos implements OnInit {
 
   listaCompletaVideos: VideoResponseDTO[] = [];
   videosFiltrados: VideoResponseDTO[] = [];
-  videosMasVistos: MostViewedVideoDTO[] = []; // 🔥 TIPADO CORRECTO
+  videosMasVistos: MostViewedVideoDTO[] = [];
 
   mostrarMasVistos = false;
   searchControl = new FormControl('');
@@ -74,13 +73,11 @@ export class ManageVideos implements OnInit {
     });
   }
 
-  // 🔥 MÉTODO CORREGIDO
   toggleMasVistos(): void {
     this.mostrarMasVistos = !this.mostrarMasVistos;
 
-    // Solo carga si aún no se han cargado
     if (this.mostrarMasVistos && this.videosMasVistos.length === 0) {
-      const myId = Number(this.authService.getUserId()); // 🔥 Convertir a número
+      const myId = Number(this.authService.getUserId());
 
       console.log("Mi ID de profesional:", myId);
 
@@ -88,7 +85,6 @@ export class ManageVideos implements OnInit {
         next: (data: MostViewedVideoDTO[]) => {
           console.log("📊 Ranking Global recibido:", data);
 
-          // 🔥 FILTRADO CORRECTO
           this.videosMasVistos = data.filter(video => video.authorId === myId);
 
           console.log("✅ Videos filtrados para mi ID:", this.videosMasVistos);
@@ -118,7 +114,7 @@ export class ManageVideos implements OnInit {
           next: () => {
             this.snackBar.open("Video eliminado", "Ok", { duration: 3000 });
             this.cargarVideos();
-            this.videosMasVistos = []; // Resetear ranking
+            this.videosMasVistos = [];
           },
           error: () => this.snackBar.open("Error al eliminar", "Cerrar")
         });

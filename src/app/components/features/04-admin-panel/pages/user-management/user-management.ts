@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-// Módulos y Servicios
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { AdminService } from '../../services/admin.service';
 import { UserResponseDTO } from '../../../../core/models/user.dto';
@@ -28,7 +27,7 @@ export class UserManagement implements OnInit {
   dataSource = new MatTableDataSource<UserResponseDTO>([]);
 
   allRoles: AuthorityResponseDTO[] = [];
-  userAuthorities: UserAuthorityResponseDTO[] = [];  // 👈 relaciones user-rol (con id)
+  userAuthorities: UserAuthorityResponseDTO[] = [];
   loading = true;
 
   constructor(
@@ -78,18 +77,15 @@ export class UserManagement implements OnInit {
     });
   }
 
-  // Filtro de la tabla
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // Roles que todavía NO tiene el usuario → para el select de "Añadir rol"
   rolesDisponibles(usuario: UserResponseDTO): AuthorityResponseDTO[] {
     return this.allRoles.filter(r => !usuario.authorities.includes(r.name));
   }
 
-  // === AÑADIR ROL ===
   anadirRol(usuario: UserResponseDTO, rolId: number): void {
     const rol = this.allRoles.find(r => r.id === rolId);
     if (!rol) return;
@@ -106,10 +102,7 @@ export class UserManagement implements OnInit {
 
     this.adminService.assignRole(dto).subscribe({
       next: (ua: UserAuthorityResponseDTO) => {
-        // Actualizamos la lista de relaciones en memoria
         this.userAuthorities = [...this.userAuthorities, ua];
-
-        // Añadimos el nombre del rol al array de authorities del usuario (para la tabla)
         usuario.authorities = [...usuario.authorities, rol.name];
         this.dataSource.data = [...this.dataSource.data];
 
@@ -122,16 +115,13 @@ export class UserManagement implements OnInit {
     });
   }
 
-  // === ELIMINAR ROL ===
   eliminarRol(usuario: UserResponseDTO, roleName: string): void {
-    // 1. Encontramos el Authority para obtener authorityId
     const rol = this.allRoles.find(r => r.name === roleName);
     if (!rol) {
       console.warn('No se encontró el rol en allRoles para', roleName);
       return;
     }
 
-    // 2. Buscamos la relación en userAuthorities: mismo userId + authorityId
     const relacion = this.userAuthorities.find(
       ua => ua.userId === usuario.id && ua.authorityId === rol.id
     );
@@ -142,14 +132,11 @@ export class UserManagement implements OnInit {
       return;
     }
 
-    // 3. Llamamos al DELETE /eliminar/{id}
     this.adminService.deleteUserAuthority(relacion.id).subscribe({
       next: () => {
-        // Quitamos el rol del usuario en la tabla
         usuario.authorities = usuario.authorities.filter(a => a !== roleName);
         this.dataSource.data = [...this.dataSource.data];
 
-        // Quitamos la relación de nuestra lista local
         this.userAuthorities = this.userAuthorities.filter(ua => ua.id !== relacion.id);
 
         this.snackBar.open(`Rol "${roleName}" eliminado`, 'Ok', { duration: 2500 });

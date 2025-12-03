@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // Para los [routerLink]
-import { MaterialModule } from '../../shared/material/material.imports'; // Para el acordeón
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../shared/material/material.imports';
 
 @Component({
   selector: 'app-landing-home',
@@ -9,14 +9,13 @@ import { MaterialModule } from '../../shared/material/material.imports'; // Para
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule    // <-- Necesario para MatExpansionModule
+    MaterialModule
   ],
   templateUrl: './landing-home.html',
   styleUrls: ['./landing-home.css']
 })
-export class LandingHome { // (O LandingHomeComponent)
+export class LandingHome {
 
-  // --- Datos del Equipo (de image_555bc3.png y image_555bdf.png) ---
   teamMembers = [
     { name: 'Pietro Paolo Trisoglio Rossini', role: 'Team Leader', img: '/pietro.png' },
     { name: 'Alexander Junior Aquino Perez', role: 'Desarrollador', img: '/alexander.png' },
@@ -26,7 +25,6 @@ export class LandingHome { // (O LandingHomeComponent)
     { name: 'Diego Aarón Peralta Pinedo', role: 'Desarrollador', img: '/diego.png' }
   ];
 
-  // --- Datos de FAQ (de image_555c1a.png / image_565000.png) ---
   faqs = [
     {
       question: '¿Qué puedo hacer dentro de la aplicación?',

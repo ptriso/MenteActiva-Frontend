@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-// Nuestros Módulos y Servicios
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { VideoService } from '../../services/video.service';
 import { VideoResponseDTO } from '../../../../core/models/video.dto';
@@ -35,7 +34,6 @@ export class VideoBrowser implements OnInit {
       },
       error: (err) => {
         console.error("Error al cargar videos:", err);
-        // (Aquí podrías usar MatSnackBar)
       }
     });
   }
@@ -43,6 +41,6 @@ export class VideoBrowser implements OnInit {
   getDurationInMinutes(duration: number): number {
     const seconds = Number(duration);
     if (isNaN(seconds)) return 0;
-    return Math.floor(seconds / 60); // solo minutos enteros
+    return Math.floor(seconds / 60);
   }
 }

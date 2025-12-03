@@ -1,4 +1,3 @@
-<!-- my-appointments.html (ACTUALIZADO) -->
 
 <div class="appointments-container">
   <h1 class="title">
@@ -7,10 +6,8 @@
   </h1>
   <p class="subtitle">Aquí puedes ver tus citas agendadas y tu historial.</p>
 
-  <!-- Loader -->
   <mat-progress-bar *ngIf="loading" mode="indeterminate" color="primary"></mat-progress-bar>
 
-  <!-- Cuando no hay citas -->
   <div
     *ngIf="!loading && upcomingAppointments.length === 0 && historyAppointments.length === 0"
     class="empty-state">
@@ -21,7 +18,6 @@
     </button>
   </div>
 
-  <!-- Próximas citas -->
   <div *ngIf="!loading && upcomingAppointments.length > 0" class="section">
     <h2 class="section-title">
       <i class="fas fa-clock"></i>
@@ -30,7 +26,6 @@
 
     <table mat-table [dataSource]="upcomingAppointments" class="appointments-table mat-elevation-z2">
 
-      <!-- Profesional -->
       <ng-container matColumnDef="professional">
         <th mat-header-cell *matHeaderCellDef> Profesional </th>
         <td mat-cell *matCellDef="let row">
@@ -41,7 +36,6 @@
         </td>
       </ng-container>
 
-      <!-- Fecha -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Fecha </th>
         <td mat-cell *matCellDef="let row">
@@ -52,7 +46,6 @@
         </td>
       </ng-container>
 
-      <!-- Hora -->
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef> Hora </th>
         <td mat-cell *matCellDef="let row">
@@ -63,7 +56,6 @@
         </td>
       </ng-container>
 
-      <!-- Estado -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Estado </th>
         <td mat-cell *matCellDef="let row">
@@ -73,7 +65,6 @@
         </td>
       </ng-container>
 
-      <!-- Acciones -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let row">
@@ -93,7 +84,6 @@
     </table>
   </div>
 
-  <!-- Historial -->
   <div *ngIf="!loading && historyAppointments.length > 0" class="section">
     <h2 class="section-title">
       <i class="fas fa-history"></i>
@@ -102,7 +92,6 @@
 
     <table mat-table [dataSource]="historyAppointments" class="appointments-table mat-elevation-z2">
 
-      <!-- Profesional -->
       <ng-container matColumnDef="professional">
         <th mat-header-cell *matHeaderCellDef> Profesional </th>
         <td mat-cell *matCellDef="let row">
@@ -113,7 +102,6 @@
         </td>
       </ng-container>
 
-      <!-- Fecha -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Fecha </th>
         <td mat-cell *matCellDef="let row">
@@ -124,7 +112,6 @@
         </td>
       </ng-container>
 
-      <!-- Hora -->
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef> Hora </th>
         <td mat-cell *matCellDef="let row">
@@ -135,7 +122,6 @@
         </td>
       </ng-container>
 
-      <!-- Estado -->
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Estado </th>
         <td mat-cell *matCellDef="let row">
@@ -145,13 +131,11 @@
         </td>
       </ng-container>
 
-      <!-- Acciones del historial -->
       <ng-container matColumnDef="historyActions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let row">
           <div class="actions-group">
 
-            <!-- 🆕 BOTÓN DE HISTORIAL COMPARTIDO - SIEMPRE VISIBLE -->
             <button
               mat-stroked-button
               color="primary"
@@ -161,7 +145,6 @@
               <i class="fas fa-history"></i> Historial
             </button>
 
-            <!-- COMPLETADA: Ver chat + Ver conclusión -->
             <ng-container *ngIf="row.status === 'COMPLETADA'">
               <button
                 mat-stroked-button
@@ -180,7 +163,6 @@
               </button>
             </ng-container>
 
-            <!-- CANCELADA o INASISTENCIA: Solo conclusión -->
             <ng-container *ngIf="row.status === 'CANCELADA' || row.status === 'INASISTENCIA'">
               <button
                 mat-stroked-button

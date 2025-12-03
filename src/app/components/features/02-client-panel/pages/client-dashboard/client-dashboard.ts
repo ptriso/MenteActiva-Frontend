@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // Para los routerLink de los botones
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../../shared/material/material.imports';
 
 @Component({

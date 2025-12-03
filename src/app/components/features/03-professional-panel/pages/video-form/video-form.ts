@@ -59,13 +59,11 @@ export class VideoForm implements OnInit {
   cargarDatosParaEditar() {
     const profId = this.authService.getUserId();
 
-    // Usamos el método correcto de tu servicio (con 'Id' al final)
     this.profVideoService.getVideosByProfessionalId(Number(profId)).subscribe({
       next: (videos) => {
         const videoEncontrado = videos.find(v => v.id === this.videoId);
 
         if (videoEncontrado) {
-          // CAMBIO 1: Asignamos el valor directo (ya es número en el DTO)
           this.videoForm.patchValue({
             title: videoEncontrado.title,
             description: videoEncontrado.description,
@@ -99,21 +97,17 @@ export class VideoForm implements OnInit {
       description: this.videoForm.value.description,
       url: this.videoForm.value.url,
 
-      // CAMBIO 2: Enviamos SOLO el número (sin " min")
-      // Esto soluciona el error 400 Bad Request
       duration: Number(this.videoForm.value.duration),
 
       professionalId: Number(profId)
     };
 
     if (this.videoId > 0) {
-      // EDITAR
       this.profVideoService.updateVideo(this.videoId, videoDto).subscribe({
         next: () => this.alFinalizar("¡Video actualizado!"),
         error: (e) => this.alError(e)
       });
     } else {
-      // CREAR
       this.profVideoService.createVideo(videoDto).subscribe({
         next: () => this.alFinalizar("¡Video creado exitosamente!"),
         error: (e) => this.alError(e)

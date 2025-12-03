@@ -15,7 +15,6 @@ export class ProfessionalService {
   constructor(private http: HttpClient) {}
 
   getById(id: number): Observable<any> {
-    // tu backend tiene algo tipo GET /Professionals/listar/{id}
     return this.http.get<any>(`${this.baseUrl}/listar/${id}`);
   }
 
@@ -26,7 +25,6 @@ export class ProfessionalService {
     this.profileSubject.next(profile);
   }
 
-  // (opcional) para leer sincrónicamente el último valor
   getCurrentProfile(): any | null {
     return this.profileSubject.value;
   }

@@ -26,7 +26,6 @@ export class ProfAppointmentsList implements OnInit {
 
   displayedColumns = ['client', 'date', 'time', 'status', 'actions'];
 
-  // 🔵 AQUÍ DEFINIMOS LAS PROPIEDADES QUE TE FALTABAN
   constructor(
     public profApptService: ProfAppointmentsService,
     public auth: AuthService,
@@ -53,7 +52,6 @@ export class ProfAppointmentsList implements OnInit {
     });
   }
 
-  // 🔵 MOSTRAR EL CHAT GENERADO
   showChat(appointmentId: number): void {
     this.profApptService.generateChat(appointmentId).subscribe({
       next: (resp) => {
@@ -74,7 +72,6 @@ export class ProfAppointmentsList implements OnInit {
   confirmAppointment(a: AppointmentProfessionalDTO): void {
     this.profApptService.updateStatus(a.id, 'CONFIRMADA').subscribe({
       next: () => {
-        // Actualizamos el estado en la tabla sin recargar todo
         a.status = 'CONFIRMADA';
 
         this.snackBar.open('Cita confirmada correctamente', 'Cerrar', {
@@ -92,7 +89,6 @@ export class ProfAppointmentsList implements OnInit {
   goToUpcoming(): void {
     this.router.navigate(['/profesional/appointments-upcoming']);
   }
-  // 🔵 IR A LA PANTALLA DE CONCLUSIONES
   goToSummary(appointmentId: number): void {
     this.router.navigate(['/profesional/appointments-summary', appointmentId ]);
   }

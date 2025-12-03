@@ -3,13 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { forkJoin } from 'rxjs';
 
-// Nuestros Módulos y Servicios
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { AuthService } from '../../../../core/services/auth';
 
-// Nuestros DTOs
 import { RegisterUserDTO } from '../../../../core/models/register-user.dto';
 import { RegisterClientDTO } from '../../../../core/models/register-client.dto';
 import { ConsentDTO } from '../../../../core/models/consent.dto';
@@ -25,9 +22,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     ReactiveFormsModule,
     MaterialModule
   ],
-  templateUrl: './register.html', // (Tu preferencia sin .component)
+  templateUrl: './register.html',
   styleUrls: ['./register.css'],
-  providers: [provideNativeDateAdapter()] // Proveedor para MatDatepicker
+  providers: [provideNativeDateAdapter()]
 })
 export class RegisterComponent implements OnInit {
 
@@ -43,20 +40,16 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Este formulario SÍ incluye todos los campos de tu Base de Datos
     this.registerForm = this.fb.group({
-      // --- Info de USER ---
-      username: ['', [Validators.required, Validators.email]], // (tu email de login)
+      username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
 
-      // --- Info de CLIENT ---
       name: ['', Validators.required],
       lastname: ['', Validators.required],
-      mail: ['', [Validators.required, Validators.email]], // (tu email de perfil)
+      mail: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       age: [null, [Validators.required, Validators.min(1)]],
 
-      // --- Campo para calcular la edad ---
       fechaNacimiento: [null, Validators.required]
     });
 
@@ -99,19 +92,16 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    // --- 1. DTO para /User/register ---
     const userDto: RegisterUserDTO = {
       username: this.registerForm.get('username')?.value,
       password: this.registerForm.get('password')?.value,
       authorities: 'ROLE_USER;ROLE_CLIENT'
     };
 
-    // --- 2. Iniciar el proceso de registro en 3 pasos ---
     this.authService.registerUser(userDto).subscribe({
       next: (responseUsuario) => {
         const nuevoUserId = responseUsuario.id;
 
-        // --- 3. DTO para /Clients/registrar ---
         const clientDto: RegisterClientDTO = {
           name: this.registerForm.get('name')?.value,
           lastname: this.registerForm.get('lastname')?.value,
@@ -125,10 +115,8 @@ export class RegisterComponent implements OnInit {
           next: (responseCliente) => {
             const nuevoClienteId = responseCliente.id;
 
-            // --- 4. (Opcional) DTO para /Consents/registrar ---
             if (this.esMenorDeEdad && this.archivoConstancia) {
 
-              // (Aquí iría la lógica de subida de archivo. Por ahora simulamos)
               const urlArchivoSubido = `files/consents/${this.archivoConstancia.name}`;
 
               const consentDto: ConsentDTO = {

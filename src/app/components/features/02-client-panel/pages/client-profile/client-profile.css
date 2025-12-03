@@ -18,7 +18,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #007bff, #6f42c1); /* azul → morado */
+  background: linear-gradient(135deg, #007bff, #6f42c1);
   display: flex;
   align-items: center;
   justify-content: center;

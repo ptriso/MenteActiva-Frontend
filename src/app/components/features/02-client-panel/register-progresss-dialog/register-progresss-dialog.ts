@@ -15,8 +15,8 @@ export interface VideoDTO {
   id: number;
   title: string;
   url: string;
-  duration: number;          // minutos
-  professionalName?: string; // <-- IMPORTANTE: debe llamarse igual que en el backend
+  duration: number;
+  professionalName?: string;
 }
 @Component({
   selector: 'app-register-progresss-dialog',

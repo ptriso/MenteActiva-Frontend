@@ -10,7 +10,6 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
-/* Loading overlay que cubre todo */
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -46,7 +45,6 @@ h1 {
   100% { transform: rotate(360deg); }
 }
 
-/* Ocultar los gráficos mientras cargan, pero mantenerlos en el DOM */
 .charts-grid.hidden {
   opacity: 0;
   pointer-events: none;

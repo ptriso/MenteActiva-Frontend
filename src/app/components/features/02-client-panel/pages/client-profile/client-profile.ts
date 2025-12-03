@@ -78,19 +78,16 @@ export class ClientProfile  implements OnInit {
       ? null
       : Number(rawAge);
 
-    // 👉 Caso sin edad (N/D): NO queremos "Sin consentimiento — requerido"
     if (age === null) {
       return 'No disponible';
     }
 
-    // 👉 Menor de edad
     if (age < 18) {
       return this.hasConsent
         ? 'Registrado (menor de edad)'
         : 'Sin consentimiento — requerido';
     }
 
-    // 👉 Mayor de edad
     return this.hasConsent ? 'Registrado' : 'No registrado';
   }
   get consentClass(): string {

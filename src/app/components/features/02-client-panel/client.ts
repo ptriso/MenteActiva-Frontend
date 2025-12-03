@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-// --- 1. IMPORTA LOS NOMBRES DE CLASE CORRECTOS ---
+
 import { ClientLayout } from './layout/client-layout/client-layout';
 import { ClientDashboard } from './pages/client-dashboard/client-dashboard';
 import { VideoBrowser } from './pages/video-browser/video-browser';
@@ -13,9 +13,8 @@ import {ClientProfile} from './pages/client-profile/client-profile';
 export const CLIENT_ROUTES: Routes = [
   {
     path: '',
-    component: ClientLayout, // <-- 2. USA EL NOMBRE CORRECTO
+    component: ClientLayout,
     children: [
-      // --- 3. USA LOS NOMBRES CORRECTOS AQUÍ TAMBIÉN ---
       { path: 'dashboard', component: ClientDashboard },
       { path: 'videos', component: VideoBrowser },
       { path: 'profesionales', component: ProfessionalBrowser },

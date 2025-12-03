@@ -33,7 +33,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
   citasOcupadas: Set<string> = new Set();
   misHorariosExistentes: ScheduleResponseDTO[] = [];
 
-  // Variable para controlar la suscripción automática
   private updateSubscription: Subscription | undefined;
 
   constructor(
@@ -56,12 +55,10 @@ export class ManageSchedule implements OnInit, OnDestroy {
       jueves: this.crearGrupo(), viernes: this.crearGrupo()
     });
 
-    // INICIAMOS LA ACTUALIZACIÓN AUTOMÁTICA
     this.iniciarAutoUpdate();
   }
 
   ngOnDestroy(): void {
-    // Detenemos el reloj al salir
     if (this.updateSubscription) {
       this.updateSubscription.unsubscribe();
     }
@@ -71,13 +68,12 @@ export class ManageSchedule implements OnInit, OnDestroy {
     return this.fb.group({activo: [false], inicio: ['09:00:00'], fin: ['18:00:00']});
   }
 
-  // --- LÓGICA DE AUTO-UPDATE ---
   iniciarAutoUpdate() {
     const profId = this.authService.getUserId() || 1;
 
     this.updateSubscription = interval(5000) // Cada 5 segundos
       .pipe(
-        startWith(0), // Ejecutar ya
+        startWith(0),
         switchMap(() => {
           return forkJoin({
             schedules: this.profScheduleService.getSchedulesByProfessionalId(Number(profId)),
@@ -85,7 +81,7 @@ export class ManageSchedule implements OnInit, OnDestroy {
           }).pipe(
             catchError(err => {
               console.warn("Error en auto-update:", err);
-              return of(null); // No matar el intervalo si falla una vez
+              return of(null);
             })
           );
         })
@@ -97,12 +93,10 @@ export class ManageSchedule implements OnInit, OnDestroy {
       });
   }
 
-  // Procesar datos recibidos (antes estaba dentro de cargarDatosCompletos)
   procesarDatos(schedules: any[], appointments: any[]) {
     this.misHorariosExistentes = schedules;
     this.citasOcupadas.clear();
 
-    // 1. Detectar Ocupados
     appointments.forEach((app: any) => {
       const sId = app.scheduleId || app.schedule?.id;
       if (sId && app.statusId !== 4) {
@@ -113,9 +107,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
       }
     });
 
-    // 2. Actualizar formulario (Solo si no se está editando activamente para no molestar al usuario)
-    // Nota: Aquí podríamos decidir NO tocar el formulario si el usuario está escribiendo,
-    // pero para simplificar, actualizaremos los switches si vienen datos nuevos.
 
     this.diasSemana.forEach(dia => {
       const fechaStr = format(dia.dateObj, 'yyyy-MM-dd');
@@ -129,7 +120,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
 
         const group = this.scheduleForm.get(dia.key);
 
-        // Solo actualizamos si los valores son diferentes para evitar loops o bloqueos de UI
         if (group && !group.dirty) {
           group.patchValue({
             activo: true,
@@ -140,17 +130,14 @@ export class ManageSchedule implements OnInit, OnDestroy {
       }
     });
 
-    this.cdr.detectChanges(); // Refrescar vista (colores rojos/verdes)
+    this.cdr.detectChanges();
   }
 
-  // --- GUARDADO ---
   GuardarCambios(): void {
     const profId = this.authService.getUserId() || 1;
 
-    // Pausamos la actualización mientras guardamos
     if (this.updateSubscription) this.updateSubscription.unsubscribe();
 
-    //  Construir el horario DESEADO basado en el formulario
     const horariosDeseados: Set<string> = new Set();
 
     this.diasSemana.forEach(diaInfo => {
@@ -167,21 +154,17 @@ export class ManageSchedule implements OnInit, OnDestroy {
       }
     });
 
-    //  Identificar qué ELIMINAR (existen pero ya no están en el formulario)
     const horariosAEliminar = this.misHorariosExistentes.filter(existente => {
       const key = `${existente.date}|${existente.time_start}`;
 
-      //  NO ELIMINAR si tiene una cita ocupada
       const estaOcupado = this.citasOcupadas.has(`${existente.date} ${existente.time_start}`);
       if (estaOcupado) {
-        return false; // No lo eliminamos si hay cita
+        return false;
       }
 
-      //  ELIMINAR si ya no está en el formulario
       return !horariosDeseados.has(key);
     });
 
-    // Identificar qué CREAR (están en el formulario pero no existen)
     const horariosACrear: ScheduleRequestDTO[] = [];
 
     this.diasSemana.forEach(diaInfo => {
@@ -195,7 +178,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
           const start = `${h < 10 ? '0'+h : h}:00:00`;
           const end = `${(h+1) < 10 ? '0'+(h+1) : (h+1)}:00:00`;
 
-          //  Solo crear si NO existe ya
           const yaExiste = this.misHorariosExistentes.some(existente =>
             existente.date === fecha && existente.time_start === start
           );
@@ -212,7 +194,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
       }
     });
 
-    //  Ejecutar ELIMINACIONES
     const deleteRequests = horariosAEliminar.map(horario =>
       this.profScheduleService.deleteSchedule(horario.id!).pipe(
         catchError(err => {
@@ -222,7 +203,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
       )
     );
 
-    //  Ejecutar CREACIONES
     const createRequests = horariosACrear.map(horario =>
       this.profScheduleService.createSchedule(horario).pipe(
         catchError(err => {
@@ -232,7 +212,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
       )
     );
 
-    //  Ejecutar
     const allRequests = [...deleteRequests, ...createRequests];
 
     if (allRequests.length === 0) {
@@ -254,7 +233,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
           { duration: 4000 }
         );
 
-        // Reiniciar auto-update
         this.iniciarAutoUpdate();
       },
       error: (err) => {
@@ -265,7 +243,6 @@ export class ManageSchedule implements OnInit, OnDestroy {
     });
   }
 
-  // --- VISUALES ---
   getEstadoVisual(diaKey: string, dateObj: Date, hora: number): string {
     const group = this.scheduleForm.get(diaKey);
     if (!group || !group.value.activo) return 'oculto';

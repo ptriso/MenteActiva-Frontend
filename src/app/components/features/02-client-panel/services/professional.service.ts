@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
-// (Necesitamos crear este modelo en el siguiente paso)
+
 import { ProfessionalResponseDTO } from '../../../core/models/professional.dto';
 
 @Injectable({
@@ -17,9 +17,6 @@ export class ProfessionalService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Llama a /listartodos [cite: 38]
-   */
   getProfessionals(): Observable<ProfessionalResponseDTO[]> {
     return this.http.get<ProfessionalResponseDTO[]>(`${this.API_URL}/listartodos`);
   }
@@ -30,7 +27,6 @@ export class ProfessionalService {
     this.profileSubject.next(profile);
   }
 
-  // (opcional) para leer sincrónicamente el último valor
   getCurrentProfile(): any | null {
     return this.profileSubject.value;
   }

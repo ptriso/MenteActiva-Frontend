@@ -42,10 +42,8 @@
 
   </mat-sidenav>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <mat-sidenav-content class="main-content">
 
-    <!-- HEADER -->
     <mat-toolbar class="header">
       <span class="welcome">Bienvenido administrador</span>
 
@@ -58,7 +56,6 @@
       </div>
     </mat-toolbar>
 
-    <!-- Menú desplegable solo con Cerrar sesión -->
     <mat-menu #adminMenu="matMenu">
       <button mat-menu-item (click)="logout()" class="logout-item">
         <mat-icon>logout</mat-icon>
@@ -66,7 +63,6 @@
       </button>
     </mat-menu>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-area">
       <router-outlet></router-outlet>
     </main>

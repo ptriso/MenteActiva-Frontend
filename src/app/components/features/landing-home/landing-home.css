@@ -1,7 +1,6 @@
-/* --- 1. GLOBALES Y BOTONES --- */
 :host {
   display: block;
-  background-color: #eaf4ff; /* Fondo azul */
+  background-color: #eaf4ff;
   color: #333;
   overflow-x: hidden;
 }
@@ -16,7 +15,6 @@ h1, h2, h3 {
   color: #263238;
 }
 
-/* Botones reusables */
 .btn {
   padding: 12px 28px !important;
   border-radius: 50px !important;
@@ -29,7 +27,6 @@ h1, h2, h3 {
   border: 3px solid #333 !important;
 }
 
-/* Botón "Unete ahora" (verde nav) */
 .btn-primary {
   background-color: #9DFFC9 !important;
   color: #333 !important;
@@ -40,7 +37,6 @@ h1, h2, h3 {
   box-shadow: 0 6px 15px rgba(0,0,0,0.15) !important;
 }
 
-/* Botón "Más info" (rosa) */
 .btn-secondary {
   background-color: #F0ABFC !important;
   color: #333 !important;
@@ -49,7 +45,6 @@ h1, h2, h3 {
   background-color: #E199EC !important;
 }
 
-/* Botón "Unete a la comunidad" (verde) */
 .btn-green {
   background-color: #9DFFC9 !important;
   color: #222 !important;
@@ -58,25 +53,24 @@ h1, h2, h3 {
   background-color: #87ECCA !important;
 }
 
-/* --- 2. SECCIÓN 1: HEADER Y HERO --- */
 .header {
   padding-top: 100px;
   background-color: #eaf4ff;
   border-bottom: none;
 }
 .navbar {
-  position: fixed;     /* Se queda fija */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;        /* Altura fija */
-  background-color: #ffffff; /* ¡Fondo Blanco! */
+  height: 80px;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5%;       /* Espaciado a los lados */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombra suave para que resalte */
-  z-index: 1000;       /* Asegura que esté siempre encima de todo */
+  padding: 0 5%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
   box-sizing: border-box;
 }
 
@@ -152,7 +146,6 @@ h1, h2, h3 {
   height: auto;
 }
 
-/* --- 3. SECCIÓN 2: MISIÓN/VISIÓN/VALORES --- */
 .mission-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -163,17 +156,17 @@ h1, h2, h3 {
 }
 
 .mission-card {
-  background-color: #F0ABFC; /* Rosa/Lila */
+  background-color: #F0ABFC;
   padding: 2.5rem;
   border-radius: 20px;
   border: 3px solid #333;
-  box-shadow: 8px 8px 0px #333; /* Sombra estilo 2D */
+  box-shadow: 8px 8px 0px #333;
 }
 .mission-card:nth-child(2) {
-  background-color: #B1E1FF; /* Azul claro */
+  background-color: #B1E1FF;
 }
 .mission-card:nth-child(3) {
-  background-color: #FFF0B1; /* Amarillo claro */
+  background-color: #FFF0B1;
 }
 
 .mission-card h3 {
@@ -201,7 +194,6 @@ h1, h2, h3 {
   font-size: 1.2rem;
 }
 
-/* --- 4. SECCIÓN 3: QUÉ OFRECEMOS --- */
 .offer-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -230,8 +222,6 @@ h1, h2, h3 {
   height: auto;
 }
 
-/* --- 5. SECCIÓN 4: CONOCE AL EQUIPO --- */
-/* (Scroller automático) */
 .team-section {
   padding: 6rem 0;
   text-align: center;
@@ -247,7 +237,7 @@ h1, h2, h3 {
 
 .team-scroll-track {
   display: flex;
-  width: calc(300px * 12); /* 6 tarjetas * 2 copias */
+  width: calc(300px * 12);
   animation: scroll 60s linear infinite;
 }
 .team-scroller-container:hover .team-scroll-track {
@@ -256,13 +246,13 @@ h1, h2, h3 {
 
 @keyframes scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* Mueve el ancho de las 6 tarjetas */
+  100% { transform: translateX(-50%); }
 }
 
 .team-card {
   width: 280px;
   margin: 10px;
-  background: #F0ABFC; /* Fondo lila */
+  background: #F0ABFC;
   border-radius: 20px;
   padding: 1.5rem;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -274,7 +264,7 @@ h1, h2, h3 {
   width: 100%;
   height: 280px;
   object-fit: cover;
-  border-radius: 50%; /* Círculo */
+  border-radius: 50%;
   margin-bottom: 1.5rem;
   border: 3px solid #333;
 }
@@ -289,7 +279,6 @@ h1, h2, h3 {
   font-weight: 500;
 }
 
-/* --- 6. SECCIÓN 5: PREGUNTAS FRECUENTES (FAQ) --- */
 .faq-section {
   padding: 6rem 5%;
   max-width: 1000px;
@@ -310,9 +299,8 @@ h1, h2, h3 {
   height: auto;
 }
 
-/* (Estilizando el acordeón de Material) */
 mat-expansion-panel {
-  background: #FADFFC !important; /* Rosa pálido */
+  background: #FADFFC !important;
   border-radius: 15px !important;
   box-shadow: 0 5px 10px rgba(0,0,0,0.05) !important;
   margin-bottom: 1.5rem !important;
@@ -325,7 +313,7 @@ mat-expansion-panel-header {
   padding: 1.5rem !important;
 }
 :host ::ng-deep .mat-expansion-indicator::after {
-  color: #333 !important; /* Cambia el color de la flecha */
+  color: #333 !important;
 }
 mat-expansion-panel p {
   font-family: 'Montserrat', sans-serif;
@@ -334,9 +322,8 @@ mat-expansion-panel p {
   padding: 0 1.5rem 1.5rem 1.5rem;
 }
 
-/* --- 7. SECCIÓN 6: FOOTER --- */
 .footer {
-  background-color: #F0ABFC; /* Fondo lila */
+  background-color: #F0ABFC;
   color: #333;
   padding: 4rem 5% 2rem 5%;
   border-top: 3px solid #333;
@@ -429,6 +416,6 @@ mat-expansion-panel p {
 }
 
 .social-icons a:hover {
-  background-color: #555; /* Cambio de color al pasar el mouse */
+  background-color: #555;
   transform: translateY(-3px);
 }

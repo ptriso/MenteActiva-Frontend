@@ -13,16 +13,11 @@ export class ScheduleService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Llama a /listartodos
-   */
   getSchedules(): Observable<ScheduleResponseDTO[]> {
     return this.http.get<ScheduleResponseDTO[]>(`${this.API_URL}/listartodos`);
   }
 
-  // --- MÉTODO ACTUALIZADO ---
   getSchedulesByProfessionalId(id: number): Observable<ScheduleResponseDTO[]> {
-    // ¡Llama a la nueva ruta eficiente que creaste en el backend!
     return this.http.get<ScheduleResponseDTO[]>(`${this.API_URL}/profesional/${id}`);
   }
 }

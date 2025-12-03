@@ -12,17 +12,14 @@ export class ProfAppointmentsService {
 
   constructor(private http: HttpClient) {}
 
-  // TODAS LAS CITAS DEL PROFESIONAL
   getAppointmentsByProfessional(id: number): Observable<AppointmentProfessionalDTO[]> {
     return this.http.get<AppointmentProfessionalDTO[]>(`${this.baseUrl}/Appointments/profesional/${id}/citas`);
   }
 
-  // PRÓXIMAS CITAS
   getUpcomingAppointments(id: number): Observable<AppointmentProfessionalDTO[]> {
     return this.http.get<AppointmentProfessionalDTO[]>(`${this.baseUrl}/Appointments/profesional/${id}/proximas`);
   }
 
-  // GENERAR CHAT AUTOMÁTICO
   generateChat(appointmentId: number): Observable<any> {
     return this.http.put(`${this.baseUrl}/Chats/auto/${appointmentId}`, {});
   }

@@ -48,15 +48,12 @@ table {
   width: 100%;
 }
 
-/* Estilo para la columna de Video (Negrita) */
 .bold-text {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: #333;
 }
 
-/* --- NUEVO: Forzar fuente en Autor y Duración --- */
-/* Angular Material crea estas clases automáticamente basadas en el nombre de la columna */
 .mat-column-professionalName,
 .mat-column-duration {
   font-family: 'Poppins', sans-serif !important;
@@ -64,7 +61,6 @@ table {
   color: #444;
 }
 
-/* Barra de progreso */
 .progress-bar-wrapper {
   display: flex;
   align-items: center;
@@ -72,7 +68,7 @@ table {
   min-width: 120px;
 }
 .progress-text {
-  font-family: 'Poppins', sans-serif; /* También aquí por si acaso */
+  font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
   width: 35px;
@@ -82,9 +78,8 @@ mat-progress-bar {
   height: 8px;
 }
 
-/* Badges de Estado (Si/No) */
 .status-badge {
-  font-family: 'Poppins', sans-serif; /* También aquí */
+  font-family: 'Poppins', sans-serif;
   padding: 4px 12px;
   border-radius: 999px;
   font-size: 0.85rem;

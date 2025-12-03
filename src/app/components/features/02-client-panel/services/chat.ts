@@ -15,8 +15,7 @@ export class ChatService {
   private authService: AuthService) { }
 
   getChatHistory(): Observable<ChatMessageDTO[]> {
-    // Obtenemos el ID del cliente logueado
-    const clientId = this.authService.getUserId(); // (Asumimos que user_id es client_id)
+    const clientId = this.authService.getUserId();
 
     return this.http.get<ChatMessageDTO[]>(`${this.API_URL}/historial/cliente/${clientId}`);
   }

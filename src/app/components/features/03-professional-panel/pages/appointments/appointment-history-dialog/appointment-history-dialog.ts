@@ -1,5 +1,3 @@
-// appointment-history-dialog.ts
-
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -36,7 +34,7 @@ export class HistoryDialogComponent {
       case 'INASISTENCIA':
         return 'warn';
       default:
-        return 'accent'; // PROGRAMADA
+        return 'accent';
     }
   }
 
@@ -70,6 +68,6 @@ export class HistoryDialogComponent {
 
   formatTime(timeStr: string): string {
     if (!timeStr) return '';
-    return timeStr.substring(0, 5); // "11:00:00" → "11:00"
+    return timeStr.substring(0, 5);
   }
 }

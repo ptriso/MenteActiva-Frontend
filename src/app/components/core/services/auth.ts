@@ -1,10 +1,8 @@
-// src/app/core/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-// Nuestros Modelos
 import { TokenDTO } from '../models/token.dto';
 import { LoginDTO } from '../models/login.dto';
 import { RegisterUserDTO } from '../models/register-user.dto';
@@ -20,9 +18,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Iniciar Sesión (UserController)
-   */
   login(loginDto: LoginDTO): Observable<TokenDTO> {
     return this.http.post<TokenDTO>(`${this.API_URL}/User/login`, loginDto).pipe(
       tap((data: TokenDTO) => {
@@ -40,45 +35,28 @@ export class AuthService {
     );
   }
 
-  /**
-   * Registrar el Usuario base (UserController)
-   */
   registerUser(registerDto: RegisterUserDTO): Observable<any> {
     return this.http.post(`${this.API_URL}/User/register`, registerDto);
   }
 
-  /**
-   * Registrar el Perfil de Cliente (ClientController)
-   */
   registerClientProfile(clientDto: RegisterClientDTO): Observable<any> {
     return this.http.post(`${this.API_URL}/Clients/registrar`, clientDto);
   }
 
-  /**
-   * Registrar el Consentimiento (ConsentsController)
-   */
   registerConsent(consentDto: ConsentDTO): Observable<any> {
     return this.http.post(`${this.API_URL}/Consents/registrar`, consentDto);
   }
 
-  /**
-   * Cerrar Sesión (Lógica de tu profesor)
-   */
   logout(): void {
     localStorage.clear();
   }
 
-  /**
-   * ¿Está logueado?
-   */
+
   isLoggedIn(): boolean {
     return !!localStorage.getItem('jwtToken');
   }
 
-  /**
-   * Obtiene los roles/authorities
-   * Tu backend los separa por ";"
-   */
+
   getAuthorities(): string[] {
     const raw = localStorage.getItem('authorities');
     if (!raw) return [];
@@ -88,16 +66,11 @@ export class AuthService {
       .filter(r => !!r);
   }
 
-  /**
-   * Obtiene el token
-   */
+
   getToken(): string | null {
     return localStorage.getItem('jwtToken');
   }
 
-  /**
-   * Obtiene el ID del usuario logueado desde localStorage.
-   */
   getUserId(): number | null {
     const raw = localStorage.getItem('user_id');
     return raw ? Number(raw) : null;

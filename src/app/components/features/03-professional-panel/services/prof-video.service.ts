@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// (Usaremos el DTO de Video que ya creamos)
 import { VideoResponseDTO, VideoRequestDTO, MostViewedVideoDTO } from '../../../core/models/video.dto';
 
 @Injectable({
@@ -19,17 +18,14 @@ export class ProfVideoService {
     return this.http.get<VideoResponseDTO[]>(`${this.API_URL}/profesional/${profId}?t=${t}`);
   }
 
-  // 2. Crear video (POST)
   createVideo(dto: VideoRequestDTO): Observable<VideoResponseDTO> {
     return this.http.post<VideoResponseDTO>(`${this.API_URL}/registrar`, dto);
   }
 
-  // 3. Actualizar video (PUT)
   updateVideo(id: number, dto: VideoRequestDTO): Observable<VideoResponseDTO> {
     return this.http.put<VideoResponseDTO>(`${this.API_URL}/modificar/${id}`, dto);
   }
 
-  // 4. Eliminar (DELETE)
   deleteVideo(id: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/eliminar/${id}`);
   }

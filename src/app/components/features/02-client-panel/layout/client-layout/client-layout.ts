@@ -1,19 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterModule} from '@angular/router'; // <-- IMPORTANTE
+import {Router, RouterModule} from '@angular/router';
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import {AuthService} from '../../../../core/services/auth';
 import {ClientService} from '../../services/client.service';
-import {RegisterClientDTO} from '../../../../core/models/register-client.dto';
-import {ClientResponseDTO} from '../../../../core/models/client.dto'; // <-- IMPORTANTE
+import {ClientResponseDTO} from '../../../../core/models/client.dto';
 
 @Component({
   selector: 'app-client-layout',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,     // <-- AÑADIR
-    MaterialModule    // <-- AÑADIR
+    RouterModule,
+    MaterialModule
   ],
   templateUrl: './client-layout.html',
   styleUrls: ['./client-layout.css']
@@ -29,14 +28,12 @@ export class ClientLayout implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    // 1. Inicialmente, usa el username por si acaso
     const username = this.authService.getUsername();
     if (username) {
       this.displayName = username;
       this.avatarLetter = username.charAt(0).toUpperCase();
     }
 
-    // 2. Luego, cuando llegue el perfil, lo sobrescribe con "Nombre Apellido"
     const profileId = this.authService.getProfileId();
     if (profileId) {
       this.clientService.getById(profileId).subscribe({
@@ -53,7 +50,7 @@ export class ClientLayout implements OnInit{
 
 
   verPerfil(): void {
-    this.router.navigate(['/cliente/perfil']);   // 👈 ruta que crearemos
+    this.router.navigate(['/cliente/perfil']);
   }
 
   logout(): void {

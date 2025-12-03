@@ -1,19 +1,17 @@
-// my-patients.ts
+
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog'; // 🔥 NUEVO
+import { MatDialog } from '@angular/material/dialog';
 
-// Módulos y Servicios
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { ProfPatientService } from '../../services/prof-patient.service';
 import { UserClientDTO } from '../../../../core/models/user-client.dto';
 import { interval, startWith, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-// 🔥 NUEVO: Importar el diálogo
 import { HistoryDialogComponent } from '../appointments/appointment-history-dialog/appointment-history-dialog';
 
 @Component({
@@ -34,7 +32,6 @@ export class MyPatients implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<UserClientDTO> = new MatTableDataSource<UserClientDTO>();
   displayedColumns: string[] = ['nombreCompleto', 'email', 'telefono', 'acciones'];
 
-  // 🔥 NUEVO: Inyectar MatDialog
   constructor(
     private profPatientService: ProfPatientService,
     private dialog: MatDialog
@@ -71,7 +68,6 @@ export class MyPatients implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // my-patients.ts
 
   verHistorial(clientId: number): void {
     console.log("🔍 Cargando historial del cliente ID:", clientId);
@@ -81,7 +77,6 @@ export class MyPatients implements OnInit, OnDestroy {
       return;
     }
 
-    // 1. Buscar el nombre del paciente
     const patient = this.dataSource.data.find(p =>
       (p.client_id === clientId) || (p.user_id === clientId)
     );
@@ -90,15 +85,12 @@ export class MyPatients implements OnInit, OnDestroy {
       ? `${patient.name} ${patient.lastname}`
       : '';
 
-    // 2. Llamar al servicio
     this.profPatientService.getPatientAppointments(clientId).subscribe({
       next: (appointments) => {
         console.log("✅ Todas las citas del cliente:", appointments);
 
-        // 🔥 FILTRAR SOLO LAS CITAS CON ESTE PROFESIONAL
         const myAppointments = appointments.filter(apt => {
           const fullName = `${apt.professionalName} ${apt.professionalLastname}`;
-          // Comparar con el nombre del profesional logueado
           return fullName.toLowerCase().includes('laura') && fullName.toLowerCase().includes('salazar');
         });
 
@@ -109,7 +101,7 @@ export class MyPatients implements OnInit, OnDestroy {
           maxHeight: '80vh',
           data: {
             clientName: patientName,
-            appointments: myAppointments // 🔥 Solo las filtradas
+            appointments: myAppointments
           }
         });
       },

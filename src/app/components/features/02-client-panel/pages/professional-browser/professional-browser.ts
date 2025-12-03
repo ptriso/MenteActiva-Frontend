@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-// Nuestros Módulos y Servicios
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { ProfessionalService } from '../../services/professional.service';
 import { ProfessionalResponseDTO } from '../../../../core/models/professional.dto';
@@ -35,7 +34,6 @@ export class ProfessionalBrowser implements OnInit {
       },
       error: (err) => {
         console.error("Error al cargar profesionales:", err);
-        // (Aquí podrías usar MatSnackBar)
       }
     });
   }

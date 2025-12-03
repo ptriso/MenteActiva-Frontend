@@ -39,7 +39,6 @@ export class ProfLayout implements OnInit, OnDestroy {
       return;
     }
 
-    // 🔹 1) Me suscribo a los cambios del perfil
     this.professionalService.profile$
       .pipe(takeUntil(this.destroy$))
       .subscribe((prof) => {
@@ -48,10 +47,8 @@ export class ProfLayout implements OnInit, OnDestroy {
         }
       });
 
-    // 🔹 2) Cargo por primera vez desde el backend y lo guardo en el servicio
     this.professionalService.getById(profileId).subscribe({
       next: (prof) => {
-        // esto dispara también el header porque está suscrito
         this.professionalService.setCurrentProfile(prof);
       },
       error: (err) => {

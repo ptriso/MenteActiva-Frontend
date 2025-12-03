@@ -1,7 +1,6 @@
 <h1>📊 Visión General - Estadísticas de la Plataforma</h1>
 <p class="subtitulo">Análisis y métricas del uso de Mente Activa</p>
 
-<!-- Loading overlay -->
 <div *ngIf="isLoading" class="loading-overlay">
   <div class="loading-container">
     <div class="spinner"></div>
@@ -9,7 +8,6 @@
   </div>
 </div>
 
-<!-- Los canvas SIEMPRE están en el DOM, solo ocultos -->
 <div class="charts-grid" [class.hidden]="isLoading">
   <div class="chart-card">
     <canvas id="mostViewedVideosChart"></canvas>

@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '../../material/material.imports';
 
 import { ChatService } from '../../../features/02-client-panel/services/chat';
-import { ChatMessageDTO } from '../../../core/models/chat.dto'; // <-- 1. ASEGÚRATE DE IMPORTAR ESTO
+import { ChatMessageDTO } from '../../../core/models/chat.dto';
 
 @Component({
   selector: 'app-chat-history-dialog',
@@ -31,7 +31,6 @@ export class ChatHistoryDialog implements OnInit {
     this.isLoading = true;
     this.chatService.getChatHistory().subscribe({
 
-      // --- 2. AÑADE EL TIPO AQUÍ ---
       next: (allMessages: ChatMessageDTO[]) => {
         this.messages = allMessages;
         this.isLoading = false;

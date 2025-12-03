@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router'; // <-- Importa Router
-import { filter, map, switchMap } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog'; // <-- Para el Diálogo
-import { MatSnackBar } from '@angular/material/snack-bar'; // <-- Para notificaciones
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-// Módulos y Servicios
+import { forkJoin } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import { ScheduleService } from '../../services/schedule.service';
-import { AppointmentService } from '../../services/appointment.service'; // <-- NUEVO SERVICIO
-import { AuthService } from '../../../../core/services/auth'; // <-- Para saber qué cliente eres
+import { AppointmentService } from '../../services/appointment.service';
+import { AuthService } from '../../../../core/services/auth';
 
-// DTOs y Diálogo
 import { ScheduleResponseDTO } from '../../../../core/models/schedule.dto';
 import {AppointmentRequestDTO, AppointmentResponseDTO} from '../../../../core/models/appointment.dto';
-import { ConfirmAppointmentDialogComponent } from '../../../../shared/components/confirm-appointment-dialog/confirm-appointment-dialog'; // <-- NUESTRO DIÁLOGO
+import { ConfirmAppointmentDialogComponent } from '../../../../shared/components/confirm-appointment-dialog/confirm-appointment-dialog';
 
-import { format, addDays, startOfWeek, isSameDay, isWithinInterval, startOfDay, endOfDay } from 'date-fns';
+import { format, addDays, startOfWeek, isSameDay } from 'date-fns';
 import { es } from 'date-fns/locale';
-import {ProfessionalService} from '../../services/professional.service'; // Para tener los nombres de los días en español
+import {ProfessionalService} from '../../services/professional.service';
 
 @Component({
   selector: 'app-schedule-picker',
@@ -29,7 +27,6 @@ import {ProfessionalService} from '../../services/professional.service'; // Para
   styleUrls: ['./schedule-picker.css'],
 })
 export class SchedulePicker implements OnInit {
-  // para usarlo en el HTML
   format = format;
 
   professionalId: number = 0;
@@ -57,10 +54,9 @@ export class SchedulePicker implements OnInit {
     private router: Router
   ) {}
   private isSchedulePast(sched: ScheduleResponseDTO): boolean {
-    // Combina fecha + hora de inicio
     const start = new Date(`${sched.date}T${sched.time_start}`);
     const now = new Date();
-    return start <= now; // true si ya pasó (fecha u hora)
+    return start <= now;
   }
   ngOnInit(): void {
     const profileId = this.authService.getProfileId();
@@ -88,7 +84,6 @@ export class SchedulePicker implements OnInit {
     });
   }
 
-  // 🔹 Nombre del profesional
   cargarProfesional(id: number): void {
     this.professionalService.getById(id).subscribe({
       next: (prof) => {
@@ -101,7 +96,6 @@ export class SchedulePicker implements OnInit {
     });
   }
 
-  // Horas de la tabla
   generateTimeSlots(): void {
     this.timeSlots = [];
     for (let hour = 8; hour <= 21; hour++) {
@@ -109,7 +103,6 @@ export class SchedulePicker implements OnInit {
     }
   }
 
-  // Días de la semana
   generateWeekDays(startDay: Date): void {
     this.weekDays = [];
     for (let i = 0; i < 5; i++) {
@@ -117,7 +110,6 @@ export class SchedulePicker implements OnInit {
     }
   }
 
-  // Horarios + citas
   cargarHorariosYCitas(): void {
 
     const schedules$ = this.scheduleService.getSchedulesByProfessionalId(
@@ -216,7 +208,7 @@ export class SchedulePicker implements OnInit {
   }
 
   isSlotClickable(schedule: ScheduleResponseDTO | null): boolean {
-    return !!schedule && !schedule.isOccupied && !schedule.isPast; // 👈 ahora también valida isPast
+    return !!schedule && !schedule.isOccupied && !schedule.isPast;
   }
 
   agendarCita(schedule: ScheduleResponseDTO | null): void {
@@ -251,7 +243,7 @@ export class SchedulePicker implements OnInit {
     }
 
     const appointmentDto: AppointmentRequestDTO = {
-      clientId: this.clientId,  // <-- aquí ya es number seguro
+      clientId: this.clientId,
       statusId: 1,
       scheduleId,
     };

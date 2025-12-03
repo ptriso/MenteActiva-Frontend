@@ -23,7 +23,6 @@ export class ProfUpcomingAppointments implements OnInit {
   appointments: AppointmentProfessionalDTO[] = [];
   loading = false;
 
-  // StatusAp del backend
   statusOptions = [
     'PROGRAMADA',
     'CONFIRMADA',
@@ -63,7 +62,6 @@ export class ProfUpcomingAppointments implements OnInit {
     this.router.navigate(['/profesional/appointments']);
   }
 
-  // 🔵 Cambiar estado de una cita
   onStatusChange(a: AppointmentProfessionalDTO): void {
     this.profApptService.updateStatus(a.id, a.status).subscribe({
       next: () => {
@@ -75,7 +73,6 @@ export class ProfUpcomingAppointments implements OnInit {
     });
   }
 
-  // 🔵 Abrir dialog para registrar conclusión
   openSummaryDialog(a: AppointmentProfessionalDTO): void {
     const ref = this.dialog.open(SummaryDialogComponent, {
       width: '520px',
@@ -84,13 +81,10 @@ export class ProfUpcomingAppointments implements OnInit {
 
     ref.afterClosed().subscribe((saved) => {
       if (saved) {
-        // Notificación
         this.snackBar.open('Conclusión registrada para la cita', 'Cerrar', {
           duration: 2500
         });
 
-        // 👇 IMPORTANTE: quitarla de la lista de PRÓXIMAS CITAS
-        // (solo efecto visual en esta pantalla)
         this.appointments = this.appointments.filter(ap => ap.id !== a.id);
       }
     });

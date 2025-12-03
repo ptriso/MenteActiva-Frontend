@@ -23,12 +23,10 @@ export class VideoProgressService {
     return this.http.get<VideoProgressDTO[]>(`${this.API_URL}/listartodos`);
   }
 
-  // 🔹 NUEVO: solo los progresos del cliente actual
   getByClient(clientId: number): Observable<VideoProgressDTO[]> {
     return this.http.get<VideoProgressDTO[]>(`${this.API_URL}/cliente/${clientId}`);
   }
 
-  // 🔹 NUEVO: registrar un progreso
   create(dto: VideoProgressCreateDTO): Observable<VideoProgressDTO> {
     return this.http.post<VideoProgressDTO>(`${this.API_URL}/registrar`, dto);
   }

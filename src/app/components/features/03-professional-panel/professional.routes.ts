@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-// 1. Importa el Layout y la Página que acabamos de crear
+
 import { ProfLayout } from './layout/prof-layout/prof-layout';
 import { ProfDashboard } from './pages/prof-dashboard/prof-dashboard';
 import { ManageSchedule } from './pages/manage-schedule/manage-schedule';
@@ -15,33 +15,31 @@ import {AppointmentsSummaryComponent} from './pages/appointments-summary/appoint
 export const PROFESSIONAL_ROUTES: Routes = [
   {
     path: '',
-    component: ProfLayout, // El Layout es el PADRE
+    component: ProfLayout,
     children: [
-      // Estas son las páginas que se cargan DENTRO
       {
-        path: 'dashboard', // Ruta: /profesional/dashboard
+        path: 'dashboard',
         component: ProfDashboard
       },
 
-      // (Aquí añadiremos 'gestionar-horarios', 'gestionar-videos', etc.)}
       {
-        path: 'calendario', // Ruta: /profesional/calendario
+        path: 'calendario',
         component: ManageSchedule
       },
       {
-        path: 'videos', // Ruta: /profesional/videos (La lista)
+        path: 'videos',
         component: ManageVideos
       },
       {
-        path: 'videos/nuevo', // Ruta: /profesional/videos/nuevo (El formulario)
+        path: 'videos/nuevo',
         component: VideoForm
       },
       {
-        path: 'videos/editar/:id', // Ruta: /profesional/videos/editar/1
+        path: 'videos/editar/:id',
         component: VideoForm
       },
       {
-        path: 'pacientes', // Ruta: /profesional/pacientes
+        path: 'pacientes',
         component: MyPatients
       },
       { path: 'appointments', component: ProfAppointmentsList },

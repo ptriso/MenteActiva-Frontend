@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 
-// Importa todos los módulos de Material que usaremos
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,7 +24,6 @@ import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   exports: [
-    // Exportamos los módulos para que estén disponibles
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,

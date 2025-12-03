@@ -8,19 +8,14 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authorities = authService.getAuthorities();
 
-  // 1. Buscamos el rol de Admin.
-  // (Asumo que tu backend lo llama 'ROLE_ADMIN' o 'ADMIN')
-  // (Tu auth.service los separa por ';')
   if (authorities.includes('ROLE_ADMIN') || authorities.includes('ADMIN')) {
-    return true; // Si es admin, puede pasar
+    return true;
   }
 
-  // 2. Si no es admin, lo sacamos.
-  // Lo redirigimos al dashboard del cliente (si es que es cliente).
   if (authorities.includes('ROLE_USER')) {
     router.navigate(['/cliente']);
   } else {
-    router.navigate(['/auth/login']); // Si no, al login
+    router.navigate(['/auth/login']);
   }
 
   return false;
