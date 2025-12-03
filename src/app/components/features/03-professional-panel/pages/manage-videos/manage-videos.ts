@@ -1,7 +1,9 @@
+// manage-videos.ts
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormControl } from '@angular/forms'; // Para el buscador
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -9,6 +11,7 @@ import { MaterialModule } from '../../../../shared/material/material.imports';
 import { ProfVideoService } from '../../services/prof-video.service';
 import { AuthService } from '../../../../core/services/auth';
 import { VideoResponseDTO } from '../../../../core/models/video.dto';
+import { MostViewedVideoDTO } from '../../../../core/models/video.dto';
 import { ConfirmAppointmentDialogComponent } from '../../../../shared/components/confirm-appointment-dialog/confirm-appointment-dialog';
 
 @Component({
@@ -27,7 +30,7 @@ export class ManageVideos implements OnInit {
 
   listaCompletaVideos: VideoResponseDTO[] = [];
   videosFiltrados: VideoResponseDTO[] = [];
-  videosMasVistos: any[] = []; // Usamos 'any' porque el DTO del ranking es distinto
+  videosMasVistos: MostViewedVideoDTO[] = []; // 🔥 TIPADO CORRECTO
 
   mostrarMasVistos = false;
   searchControl = new FormControl('');
@@ -45,7 +48,6 @@ export class ManageVideos implements OnInit {
     this.escucharBuscador();
   }
 
-  // 1. Carga la lista normal de videos
   cargarVideos(): void {
     const profId = this.authService.getUserId();
 
@@ -62,7 +64,6 @@ export class ManageVideos implements OnInit {
     });
   }
 
-  // 2. Buscador en tiempo real
   escucharBuscador(): void {
     this.searchControl.valueChanges.subscribe(searchTerm => {
       const term = (searchTerm || '').toLowerCase();
@@ -73,27 +74,36 @@ export class ManageVideos implements OnInit {
     });
   }
 
-  // 3. Lógica del Ranking (Filtrado Frontend)
+  // 🔥 MÉTODO CORREGIDO
   toggleMasVistos(): void {
     this.mostrarMasVistos = !this.mostrarMasVistos;
 
+    // Solo carga si aún no se han cargado
     if (this.mostrarMasVistos && this.videosMasVistos.length === 0) {
+      const myId = Number(this.authService.getUserId()); // 🔥 Convertir a número
 
-      const myId = this.authService.getUserId();
+      console.log("Mi ID de profesional:", myId);
 
       this.profVideoService.getMostViewedVideos().subscribe({
-        next: (data) => {
-          console.log("Ranking Global:", data);
-          this.videosMasVistos = data.filter((v: any) => {
-            return Number(v.author_id) === Number(myId);
-          });
+        next: (data: MostViewedVideoDTO[]) => {
+          console.log("📊 Ranking Global recibido:", data);
+
+          // 🔥 FILTRADO CORRECTO
+          this.videosMasVistos = data.filter(video => video.authorId === myId);
+
+          console.log("✅ Videos filtrados para mi ID:", this.videosMasVistos);
+
+          if (this.videosMasVistos.length === 0) {
+            console.warn("⚠️ No tienes videos en el ranking global");
+          }
         },
-        error: (err) => console.error("Error al cargar ranking", err)
+        error: (err) => {
+          console.error("❌ Error al cargar ranking:", err);
+        }
       });
     }
   }
 
-  // 4. Borrar Video
   borrarVideo(id: number): void {
     const dialogRef = this.dialog.open(ConfirmAppointmentDialogComponent, {
       width: '400px',
@@ -107,14 +117,15 @@ export class ManageVideos implements OnInit {
         this.profVideoService.deleteVideo(id).subscribe({
           next: () => {
             this.snackBar.open("Video eliminado", "Ok", { duration: 3000 });
-            this.cargarVideos(); // Recargar lista
-            this.videosMasVistos = [];
+            this.cargarVideos();
+            this.videosMasVistos = []; // Resetear ranking
           },
           error: () => this.snackBar.open("Error al eliminar", "Cerrar")
         });
       }
     });
   }
+
   getDurationInMinutes(duration: any): number {
     const seconds = Number(duration);
     if (isNaN(seconds)) return 0;

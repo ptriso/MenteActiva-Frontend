@@ -3,9 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface MostViewedVideo {
-  titulo: string;
-  autor: string;
-  totalVistas: number;
+  videoId: number;
+  videoTitle: string;
+  totalViews: number;
+  authorName: string;
+  authorLastname: string;
+  authorId: number;
 }
 
 export interface TotalCitasPorProfesional {

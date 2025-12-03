@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 // (Usaremos el DTO de Video que ya creamos)
-import { VideoResponseDTO, VideoRequestDTO } from '../../../core/models/video.dto';
+import { VideoResponseDTO, VideoRequestDTO, MostViewedVideoDTO } from '../../../core/models/video.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class ProfVideoService {
     return this.http.delete(`${this.API_URL}/eliminar/${id}`);
   }
 
-  getMostViewedVideos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API_URL}/VideosMasVistos`);
+  getMostViewedVideos(): Observable<MostViewedVideoDTO[]> {
+    return this.http.get<MostViewedVideoDTO[]>(`${this.API_URL}/VideosMasVistos`);
   }
 }

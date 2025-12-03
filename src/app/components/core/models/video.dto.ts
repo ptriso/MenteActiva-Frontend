@@ -16,3 +16,12 @@ export interface VideoResponseDTO {
   duration: number;
   professionalId: number;
 }
+
+export interface MostViewedVideoDTO {
+  videoId: number;
+  videoTitle: string;
+  totalViews: number;
+  authorName: string;
+  authorLastname: string;
+  authorId: number;
+}

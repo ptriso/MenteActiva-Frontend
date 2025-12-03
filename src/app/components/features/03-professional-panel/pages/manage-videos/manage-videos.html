@@ -20,19 +20,25 @@
 </div>
 
 <div class="most-viewed-section" *ngIf="mostrarMasVistos">
-  <h2>Videos Más Vistos</h2>
+  <h2>📊 Mis Videos Más Vistos</h2>
 
   <div class="ranking-list" *ngIf="videosMasVistos.length > 0; else noData">
     <div class="ranking-item" *ngFor="let video of videosMasVistos; let i = index">
 
-      <div class="rank-number" [class.top-1]="i === 0">{{ i + 1 }}</div>
-
-      <div class="video-info">
-        <div class="video-title">{{ video.video_title }}</div>
+      <!-- Número del ranking -->
+      <div class="rank-number" [class.top-1]="i === 0">
+        {{ i + 1 }}
       </div>
 
+      <!-- Información del video -->
+      <div class="video-info">
+        <div class="video-title">{{ video.videoTitle }}</div>
+        <div class="video-author">{{ video.authorName }} {{ video.authorLastname }}</div>
+      </div>
+
+      <!-- Contador de vistas -->
       <div class="view-count">
-        <i class="fas fa-eye"></i> {{ video.total_views || 0 }}
+        <i class="fas fa-eye"></i> {{ video.totalViews }} vistas
       </div>
 
     </div>
@@ -40,7 +46,9 @@
 
   <ng-template #noData>
     <div class="no-results-small">
-      No hay videos destacados aún.
+      😔 Aún no tienes videos en el ranking global.
+      <br>
+      <small>Los videos aparecen aquí cuando los clientes los visualizan.</small>
     </div>
   </ng-template>
 </div>
