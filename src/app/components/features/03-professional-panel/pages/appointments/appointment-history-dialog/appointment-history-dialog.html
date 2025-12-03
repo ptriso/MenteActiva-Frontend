@@ -1,0 +1,58 @@
+<!-- appointment-history-dialog.html -->
+
+<h2 mat-dialog-title class="dialog-header">
+  <i class="fas fa-history"></i>
+  Historial de Citas: {{ data.clientName }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+  <!-- Mensaje cuando no hay citas -->
+  <div *ngIf="data.appointments.length === 0" class="no-data">
+    <i class="fas fa-calendar-times fa-3x"></i>
+    <p>Este paciente no tiene citas registradas.</p>
+  </div>
+
+  <!-- Lista de citas -->
+  <div *ngIf="data.appointments.length > 0" class="appointments-list">
+    <div
+      *ngFor="let appointment of data.appointments"
+      class="appointment-card"
+      [class.completed]="appointment.status === 'COMPLETADA'"
+      [class.cancelled]="appointment.status === 'CANCELADA' || appointment.status === 'INASISTENCIA'">
+
+      <!-- Encabezado de la cita -->
+      <div class="card-header">
+        <div class="date-info">
+          <i class="fas fa-calendar-day"></i>
+          <span class="date-text">{{ formatDate(appointment.date) }}</span>
+        </div>
+        <mat-chip
+          [color]="getStatusColor(appointment.status)"
+          class="status-chip">
+          {{ getStatusIcon(appointment.status) }} {{ appointment.status }}
+        </mat-chip>
+      </div>
+
+      <!-- Detalles de la cita -->
+      <div class="card-body">
+        <div class="info-row">
+          <i class="fas fa-clock"></i>
+          <span>{{ formatTime(appointment.timeStart) }} - {{ formatTime(appointment.timeEnds) }}</span>
+        </div>
+
+        <div class="info-row">
+          <i class="fas fa-user-md"></i>
+          <span>Dr. {{ appointment.professionalName }} {{ appointment.professionalLastname }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-raised-button color="primary" mat-dialog-close>
+    <i class="fas fa-times"></i> Cerrar
+  </button>
+</mat-dialog-actions>
