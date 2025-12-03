@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 // (Necesitamos crear este DTO)
 import { UserClientDTO } from '../../../core/models/user-client.dto';
 import {tap} from 'rxjs/operators';
+import { AppointmentClientDTO } from '../../../core/models/appointment-client.dto'; // <-- NUEVA IMPORTACIÓN
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import {tap} from 'rxjs/operators';
 export class ProfPatientService {
 
   // Apunta al UserController
-  private API_URL = 'http://localhost:8080/upc/MenteActiva/Clients';
+  private API_URL = 'http://localhost:8080/upc/MenteActiva';
 
   constructor(private http: HttpClient) { }
   getPatients(professionalId: number): Observable<UserClientDTO[]> {
@@ -20,7 +21,7 @@ export class ProfPatientService {
     const headers = { Authorization: `Bearer ${token}` };
 
     // Usamos TU RUTA nueva directamente
-    const url = `${this.API_URL}/listByProfessional/${professionalId}`;
+    const url = `${this.API_URL}/Clients/listByProfessional/${professionalId}`;
 
     console.log("Llamando a la API:", url);
 
@@ -28,4 +29,12 @@ export class ProfPatientService {
       tap(data => console.log("Datos recibidos de listByProfessional:", data))
     );
   }
+
+  // NUEVO
+  getPatientAppointments(clientId: number): Observable<AppointmentClientDTO[]> {
+    // Llama al endpoint de tu backend /upc/MenteActiva/Appointments/cliente/{clientId}
+    const url = `${this.API_URL}/Appointments/cliente/${clientId}`;
+    return this.http.get<AppointmentClientDTO[]>(url);
+  }
+
 }
