@@ -48,30 +48,16 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>Edad</mat-label>
+        <input matInput [value]="form.get('age')?.value ?? 'N/D'" disabled>
+      </mat-form-field>
+
     </div>
 
-    <div class="consent-section">
-      <div class="consent-text">
-        <h3>Consentimiento</h3>
-        <p>
-          El consentimiento de tu apoderado es necesario si eres menor de edad.
-          Si tienes dudas, comunícate con nuestro equipo de soporte.
-        </p>
-      </div>
-
-      <div class="consent-status">
-        <span>Estado: </span>
-        <strong *ngIf="hasConsent === true" class="yes">Registrado</strong>
-        <strong *ngIf="hasConsent === false" class="no">No registrado</strong>
-        <strong *ngIf="hasConsent === null">No disponible</strong>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button mat-flat-button color="primary" class="btn-save"
-              type="submit" [disabled]="form.invalid">
-        Guardar cambios
-      </button>
+    <div class="consent-status">
+      <span>Estado: </span>
+      <strong [ngClass]="consentClass">{{ consentLabel }}</strong>
     </div>
 
   </form>

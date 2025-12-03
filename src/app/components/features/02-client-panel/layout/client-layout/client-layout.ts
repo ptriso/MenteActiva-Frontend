@@ -4,7 +4,8 @@ import {Router, RouterModule} from '@angular/router'; // <-- IMPORTANTE
 import { MaterialModule } from '../../../../shared/material/material.imports';
 import {AuthService} from '../../../../core/services/auth';
 import {ClientService} from '../../services/client.service';
-import {RegisterClientDTO} from '../../../../core/models/register-client.dto'; // <-- IMPORTANTE
+import {RegisterClientDTO} from '../../../../core/models/register-client.dto';
+import {ClientResponseDTO} from '../../../../core/models/client.dto'; // <-- IMPORTANTE
 
 @Component({
   selector: 'app-client-layout',
@@ -39,7 +40,7 @@ export class ClientLayout implements OnInit{
     const profileId = this.authService.getProfileId();
     if (profileId) {
       this.clientService.getById(profileId).subscribe({
-        next: (c: RegisterClientDTO) => {
+        next: (c: ClientResponseDTO) => {
           this.displayName = `${c.name} ${c.lastname}`.trim();
           this.avatarLetter = (c.name?.charAt(0) || this.avatarLetter).toUpperCase();
         },

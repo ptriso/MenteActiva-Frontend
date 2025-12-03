@@ -6,6 +6,7 @@ import {AuthService} from '../../../../core/services/auth';
 import {ClientService} from '../../services/client.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {RegisterClientDTO} from '../../../../core/models/register-client.dto';
+import {ClientResponseDTO} from '../../../../core/models/client.dto';
 
 @Component({
   selector: 'app-client-profile',
@@ -15,7 +16,7 @@ import {RegisterClientDTO} from '../../../../core/models/register-client.dto';
 })
 export class ClientProfile  implements OnInit {
   form!: FormGroup;
-  hasConsent: boolean | null = null; // luego lo conectas con backend
+  hasConsent: boolean | undefined;
   loading = true;
 
   constructor(
@@ -31,6 +32,7 @@ export class ClientProfile  implements OnInit {
       lastname: ['', Validators.required],
       mail: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
+      age: [{value: null, disabled: true}]
     });
 
     const profileId = this.authService.getProfileId();
@@ -40,17 +42,16 @@ export class ClientProfile  implements OnInit {
     }
 
     this.clientService.getById(profileId).subscribe({
-      next: (c: RegisterClientDTO) => {
+      next: (c: ClientResponseDTO) => {
         this.form.patchValue({
           name: c.name,
           lastname: c.lastname,
           mail: c.mail,
           phone: c.phone,
+          age: c.age
         });
 
-        // 🔹 Aquí deberías setear hasConsent en base a tu backend:
-        // this.hasConsent = c.tieneConsentimiento ?? false;
-        this.hasConsent = null; // por ahora "N/A"
+        this.hasConsent = c.hasConsent;
 
         this.loading = false;
       },
@@ -71,7 +72,33 @@ export class ClientProfile  implements OnInit {
       }
     });
   }
+  get consentLabel(): string {
+    const rawAge = this.form.get('age')?.value;
+    const age = (rawAge === null || rawAge === undefined || rawAge === '')
+      ? null
+      : Number(rawAge);
 
+    // 👉 Caso sin edad (N/D): NO queremos "Sin consentimiento — requerido"
+    if (age === null) {
+      return 'No disponible';
+    }
+
+    // 👉 Menor de edad
+    if (age < 18) {
+      return this.hasConsent
+        ? 'Registrado (menor de edad)'
+        : 'Sin consentimiento — requerido';
+    }
+
+    // 👉 Mayor de edad
+    return this.hasConsent ? 'Registrado' : 'No registrado';
+  }
+  get consentClass(): string {
+    const label = this.consentLabel;
+    if (label.startsWith('Registrado')) return 'yes';
+    if (label.startsWith('Sin consentimiento') || label.startsWith('No registrado')) return 'no';
+    return ''; // No disponible
+  }
   guardar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

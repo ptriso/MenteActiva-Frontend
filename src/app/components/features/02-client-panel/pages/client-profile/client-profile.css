@@ -75,10 +75,12 @@
 
 .consent-status .yes {
   color: #2e7d32;
+  font-weight: 600;
 }
 
 .consent-status .no {
   color: #c62828;
+  font-weight: 600;
 }
 
 .actions {

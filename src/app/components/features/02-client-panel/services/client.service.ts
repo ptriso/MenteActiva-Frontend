@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {RegisterClientDTO} from '../../../core/models/register-client.dto';
+import {ClientResponseDTO} from '../../../core/models/client.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,8 @@ export class ClientService {
 
   constructor(private http: HttpClient) {}
 
-  getById(id: number): Observable<RegisterClientDTO> {
-    // 🔹 Necesitas que tu backend tenga GET /Clients/{id} que devuelva ClientResponseDTO
-    return this.http.get<RegisterClientDTO>(`${this.baseUrl}/${id}`);
+  getById(id: number) {
+    return this.http.get<ClientResponseDTO>(`${this.baseUrl}/listar/${id}`);
   }
 
   update(id: number, dto: RegisterClientDTO): Observable<RegisterClientDTO> {
