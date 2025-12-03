@@ -1,0 +1,43 @@
+<!-- register-progress-dialog.html -->
+<h2 mat-dialog-title>Registrar nuevo progreso</h2>
+
+<mat-dialog-content [formGroup]="form" class="dialog-content">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Video</mat-label>
+    <mat-select formControlName="videoId">
+      <mat-option *ngFor="let v of data.videos" [value]="v.id">
+        {{ v.title }} — {{ v.professionalName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="selectedVideo" class="video-info">
+    <h3 class="video-title">{{ selectedVideo.title }}</h3>
+
+    <p *ngIf="selectedVideo.professionalName">
+      <strong>Autor:</strong> {{ selectedVideo.professionalName }}
+    </p>
+
+    <p>
+      <strong>Duración:</strong> {{ selectedVideo.duration }} min
+    </p>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Progreso (%)</mat-label>
+    <input matInput type="number" formControlName="percentage" min="0" max="100">
+  </mat-form-field>
+
+  <div class="completed-info">
+    <span>Completado:</span>
+    <span class="badge" [ngClass]="completedLabel === 'Sí' ? 'badge-yes' : 'badge-no'">
+      {{ completedLabel }}
+    </span>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>
+

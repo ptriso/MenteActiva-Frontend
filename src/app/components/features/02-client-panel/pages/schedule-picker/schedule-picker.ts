@@ -36,26 +36,32 @@ export class SchedulePicker implements OnInit {
   clientId!: number
   professionalName: string = '';
 
-  allProfessionalSchedules: (ScheduleResponseDTO & { dateObject?: Date; isOccupied?: boolean })[] = [];
+  allProfessionalSchedules: ScheduleResponseDTO[] = [];
+
+  scheduleGrid: {
+    [time: string]: { [day: string]: ScheduleResponseDTO | null };
+  } = {};
 
   currentWeekStart: Date = new Date();
   weekDays: Date[] = [];
   timeSlots: string[] = [];
-  scheduleGrid: {
-    [time: string]: { [day: string]: (ScheduleResponseDTO & { isOccupied?: boolean }) | null };
-  } = {};
 
   constructor(
     private scheduleService: ScheduleService,
     private appointmentService: AppointmentService,
-    private professionalService: ProfessionalService, // 🔽
+    private professionalService: ProfessionalService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router
   ) {}
-
+  private isSchedulePast(sched: ScheduleResponseDTO): boolean {
+    // Combina fecha + hora de inicio
+    const start = new Date(`${sched.date}T${sched.time_start}`);
+    const now = new Date();
+    return start <= now; // true si ya pasó (fecha u hora)
+  }
   ngOnInit(): void {
     const profileId = this.authService.getProfileId();
 
@@ -145,11 +151,15 @@ export class SchedulePicker implements OnInit {
             }
           });
 
-        this.allProfessionalSchedules = schedules.map((sched) => ({
-          ...sched,
-          dateObject: new Date(`${sched.date}T${sched.time_start}`),
-          isOccupied: occupiedScheduleIds.has(sched.id),
-        }));
+        this.allProfessionalSchedules = schedules.map((sched) => {
+          const dateObj = new Date(`${sched.date}T${sched.time_start}`);
+          return {
+            ...sched,
+            dateObject: dateObj,
+            isOccupied: occupiedScheduleIds.has(sched.id),
+            isPast: this.isSchedulePast(sched)
+          };
+        });
 
         this.generateWeekDays(this.currentWeekStart);
         this.buildScheduleGrid();
@@ -199,16 +209,17 @@ export class SchedulePicker implements OnInit {
     this.buildScheduleGrid();
   }
 
-  getSlotClass(schedule: (ScheduleResponseDTO & { isOccupied?: boolean }) | null): string {
+  getSlotClass(schedule: ScheduleResponseDTO | null): string {
     if (!schedule) return 'slot-not-available';
+    if (schedule.isPast) return 'slot-past';
     return schedule.isOccupied ? 'slot-occupied' : 'slot-available';
   }
 
-  isSlotClickable(schedule: (ScheduleResponseDTO & { isOccupied?: boolean }) | null): boolean {
-    return !!schedule && !schedule.isOccupied;
+  isSlotClickable(schedule: ScheduleResponseDTO | null): boolean {
+    return !!schedule && !schedule.isOccupied && !schedule.isPast; // 👈 ahora también valida isPast
   }
 
-  agendarCita(schedule: (ScheduleResponseDTO & { isOccupied?: boolean }) | null): void {
+  agendarCita(schedule: ScheduleResponseDTO | null): void {
     if (!this.isSlotClickable(schedule)) return;
 
     const dialogRef = this.dialog.open(ConfirmAppointmentDialogComponent, {

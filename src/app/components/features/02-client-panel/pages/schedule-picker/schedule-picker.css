@@ -12,7 +12,11 @@
 .btn-volver mat-icon {
   margin-right: 8px;
 }
-
+.slot-past {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none; /* si quieres que ni siquiera reciba el click */
+}
 h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 2.2rem;

@@ -1,6 +1,16 @@
 <div class="progress-container">
-  <h1>Mi Progreso</h1>
-  <p class="subtitle">Seguimiento de los videos y recursos que has completado.</p>
+  <div class="header-row">
+    <div>
+      <h1>Mi Progreso</h1>
+      <p class="subtitle">Seguimiento de los videos y recursos que has completado.</p>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="openRegisterDialog()">
+      <mat-icon>add</mat-icon>
+      Registrar nuevo progreso
+    </button>
+  </div>
+
 
   <mat-form-field class="search" appearance="outline">
     <mat-label>Buscar por Título de Video</mat-label>

@@ -24,7 +24,7 @@ export class ProfAppointmentsList implements OnInit {
   appointments: AppointmentProfessionalDTO[] = [];
   loading = false;
 
-  displayedColumns = ['client', 'date', 'time', 'actions'];
+  displayedColumns = ['client', 'date', 'time', 'status', 'actions'];
 
   // 🔵 AQUÍ DEFINIMOS LAS PROPIEDADES QUE TE FALTABAN
   constructor(
@@ -68,6 +68,24 @@ export class ProfAppointmentsList implements OnInit {
           'Cerrar',
           { duration: 3000 }
         );
+      }
+    });
+  }
+  confirmAppointment(a: AppointmentProfessionalDTO): void {
+    this.profApptService.updateStatus(a.id, 'CONFIRMADA').subscribe({
+      next: () => {
+        // Actualizamos el estado en la tabla sin recargar todo
+        a.status = 'CONFIRMADA';
+
+        this.snackBar.open('Cita confirmada correctamente', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+      error: (err) => {
+        console.error('Error al confirmar la cita:', err);
+        this.snackBar.open('No se pudo confirmar la cita', 'Cerrar', {
+          duration: 3000,
+        });
       }
     });
   }

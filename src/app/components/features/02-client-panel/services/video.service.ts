@@ -5,7 +5,15 @@ import { Observable } from 'rxjs';
 // (Necesitamos crear este modelo en el siguiente paso)
 import { VideoResponseDTO } from '../../../core/models/video.dto';
 
-
+export interface VideoDTO {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+  duration: number;
+  professionalId: number;
+  professionalName: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -21,5 +29,8 @@ export class VideoService {
    */
   getVideos(): Observable<VideoResponseDTO[]> { // <-- Cambia any[]
     return this.http.get<VideoResponseDTO[]>(`${this.API_URL}/listartodos`); // <-- Cambia any[]
+  }
+  listAll(): Observable<VideoDTO[]> {
+    return this.http.get<VideoDTO[]>(`${this.API_URL}/listartodos`);
   }
 }
