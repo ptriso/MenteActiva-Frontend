@@ -7,9 +7,14 @@ import {VideoProgressService} from '../../services/video-progress.service';
 import {AuthService} from '../../../../core/services/auth';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import {VideoDTO, VideoService} from '../../services/video.service';
+import {RegisterProgresssDialog} from '../../register-progresss-dialog/register-progresss-dialog';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-client-progress',
+  standalone: true,
   imports: [CommonModule, MaterialModule],
   templateUrl: './client-progress.html',
   styleUrl: './client-progress.css',
@@ -28,7 +33,10 @@ export class ClientProgress implements OnInit, AfterViewInit{
 
   constructor(
     private progressService: VideoProgressService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog,       // 👈 ya con tipo importado
+    private snackBar: MatSnackBar,   // 👈 ya con tipo importado
+    private videoService: VideoService
   ) {}
 
   ngOnInit() {
@@ -73,5 +81,30 @@ export class ClientProgress implements OnInit, AfterViewInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  openRegisterDialog(): void {
+    const clientId = this.authService.getProfileId();
+    if (clientId == null) {
+      this.snackBar.open('Debes iniciar sesión para registrar tu progreso.', 'Cerrar', { duration: 3000 });
+      return;
+    }
+
+    this.videoService.listAll().subscribe({
+      next: (videos: VideoDTO[]) => {
+        const dialogRef = this.dialog.open(RegisterProgresssDialog, {
+          width: '450px',
+          data: { clientId, videos }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.cargarLista();
+          }
+        });
+      },
+      error: () => {
+        this.snackBar.open('No se pudieron cargar los videos.', 'Cerrar', { duration: 3000 });
+      }
+    });
   }
 }

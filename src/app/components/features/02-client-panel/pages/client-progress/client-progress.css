@@ -1,30 +1,44 @@
 .progress-container {
   font-family: 'Poppins', sans-serif;
-  padding: 0 1rem;
+  padding: 0 1rem 2rem;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 h1 {
-  font-family: 'Poppins', sans-serif;
   font-size: 2rem;
-  margin-bottom: 0.5rem;
+  margin: 0;
 }
 
 .subtitle {
-  font-family: 'Poppins', sans-serif;
   color: #666;
-  margin-bottom: 2rem;
+  margin: 0.25rem 0 0;
+}
+
+.header-row button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding-inline: 1.2rem;
 }
 
 .search {
-  font-family: 'Poppins', sans-serif;
   width: 100%;
   margin-bottom: 1rem;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
+
 .table-container {
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   background-color: white;
 }
@@ -64,7 +78,7 @@ table {
   width: 35px;
 }
 mat-progress-bar {
-  border-radius: 4px;
+  border-radius: 999px;
   height: 8px;
 }
 
@@ -72,7 +86,7 @@ mat-progress-bar {
 .status-badge {
   font-family: 'Poppins', sans-serif; /* También aquí */
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
   text-align: center;

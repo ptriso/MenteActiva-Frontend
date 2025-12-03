@@ -7,6 +7,7 @@ export interface ScheduleResponseDTO {
   profesionalId: number;
   dateObject?: Date;
   isOccupied?: boolean;
+  isPast?: boolean;
 }
 
 
