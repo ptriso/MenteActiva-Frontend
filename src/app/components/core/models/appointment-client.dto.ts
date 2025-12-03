@@ -1,5 +1,6 @@
 export interface AppointmentClientDTO {
   id: number;
+  professionalId: number; // 👈 Asegúrate de que este campo existe
   professionalName: string;
   professionalLastname: string;
   date: string;       // "2025-11-10"

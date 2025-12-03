@@ -1,57 +1,83 @@
+/* my-appointments.css (ACTUALIZADO) */
+
 .appointments-container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 32px 40px;
-  background-color: #f5fbff;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   border-radius: 24px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   color: #1f2933;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title i {
+  color: #6d28d9;
 }
 
 .subtitle {
   margin: 0 0 24px;
   color: #6b778c;
-  font-size: 14px;
+  font-size: 15px;
 }
 
+/* Sección */
 .section {
   margin-top: 32px;
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .section-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title i {
+  color: #6d28d9;
 }
 
 /* Tabla */
 .appointments-table {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  background-color: #ffffff;
 }
 
 .appointments-table th.mat-header-cell {
-  background-color: #6d28d9; /* morado como horarios */
+  background-color: #6d28d9;
   color: #ffffff;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
+  padding: 16px;
 }
 
 .appointments-table td.mat-cell {
-  font-size: 13px;
+  font-size: 14px;
   color: #374151;
+  padding: 16px;
 }
 
-/* filas */
+/* Filas */
+.appointments-table tr.mat-row {
+  transition: background-color 0.2s;
+}
+
 .appointments-table tr.mat-row:nth-child(even) {
   background-color: #f9fafb;
 }
@@ -60,27 +86,115 @@
   background-color: #eef2ff;
 }
 
-/* botón cancelar */
-.appointments-table button[mat-button] {
-  font-size: 13px;
-  text-transform: none;
-  font-weight: 500;
-  padding: 0;
+/* Fila destacada (cita de hoy) */
+.highlighted-row {
+  background-color: #fef3c7 !important;
+  font-weight: 600;
 }
 
-/* estado vacío */
+.highlighted-row:hover {
+  background-color: #fde68a !important;
+}
+
+/* Celdas con iconos */
+.professional-cell,
+.date-cell,
+.time-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.professional-cell i {
+  color: #6d28d9;
+}
+
+.date-cell i {
+  color: #3b82f6;
+}
+
+.time-cell i {
+  color: #10b981;
+}
+
+/* 🆕 Grupo de acciones */
+.actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Botones de acción */
+.action-btn {
+  margin: 0 !important;
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+  white-space: nowrap;
+}
+
+.action-btn i {
+  margin-right: 4px;
+}
+
+/* Estado vacío */
 .empty-state {
+  text-align: center;
   margin-top: 32px;
-  padding: 16px 20px;
-  border-radius: 12px;
-  background-color: #e5f2ff;
-  color: #2b4c7e;
-  font-size: 14px;
+  padding: 48px 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
 }
 
-/* progress bar */
-mat-progress-bar {
+.empty-state i {
   margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.empty-state button {
+  background: white !important;
+  color: #6d28d9 !important;
+  font-weight: 600 !important;
+}
+
+/* Progress bar */
+mat-progress-bar {
+  margin-bottom: 24px;
   border-radius: 999px;
   overflow: hidden;
+  height: 6px !important;
+}
+
+/* Chips de estado */
+mat-chip {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .actions-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
